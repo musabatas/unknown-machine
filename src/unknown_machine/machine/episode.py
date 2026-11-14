@@ -35,6 +35,8 @@ E_LAG = "E_LAG"  # replication lag is not zero
 E_FOREIGN = "E_FOREIGN"  # the command is not part of this service's recovery
 E_HEALTHY = "E_HEALTHY"  # restart: the service is not in a crash loop
 
+_NO_COMMAND = object()  # marks a tool that takes no command, as opposed to a bad one
+
 
 class Episode:
     def __init__(self, system: System, budget: int) -> None:
@@ -159,15 +161,20 @@ class Episode:
 
     # ---- internals (lock held) ---------------------------------------------
 
-    def _precheck(self, service: str, cost: int, command: str | None = None) -> dict | None:
-        """Refuse without charging when the call cannot be executed at all."""
+    def _precheck(self, service: object, cost: int, command: object = _NO_COMMAND) -> dict | None:
+        """Refuse without charging when the call cannot be executed at all.
+
+        Arguments come straight from the agent, so they may be of any type.
+        """
         self._calls += 1
         if self._finished:
             return self._close({"outcome": REFUSED, "code": E_FINISHED})
         spec = self._system.service(service) if isinstance(service, str) else None
         if spec is None:
             return self._close({"outcome": REFUSED, "code": E_UNKNOWN})
-        if command is not None and command not in spec.commands:
+        if command is not _NO_COMMAND and (
+            not isinstance(command, str) or command not in spec.commands
+        ):
             return self._close({"outcome": REFUSED, "code": E_UNKNOWN})
         if self._budget - self._used < cost:
             return self._close({"outcome": REFUSED, "code": E_WINDOW})
