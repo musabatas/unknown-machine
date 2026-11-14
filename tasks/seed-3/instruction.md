@@ -1,0 +1,71 @@
+You are the on-call engineer for a legacy production system. It is down. The last administrator has left and there is no documentation. You have one maintenance window to bring it back, and some commands destroy data if they are used at the wrong moment.
+
+You work only through the `machine` MCP server. Nothing you write to disk or say is scored: your score is computed by the system from its own final state.
+
+## The system
+
+It has 5 to 8 services, known only by internal codenames. Each has one role: `storage`, `database`, `middleware`, `application` or `gateway`. The codename tells you nothing about the role; `inspect` does.
+
+A service is brought up by applying its pending commands in the right order. The order is not documented, and some commands also need other services to be serving first. A service whose pending list is empty is `serving`.
+
+Facts you can rely on:
+
+- `inspect` lists every pending register and the command that clears it. Commands that no pending register asks for are never needed, and some of them destroy data.
+- The last command of every service is `start` (`cutover` for the gateway). The other pending commands come before it, in an order you have to find.
+- `dry_run` always tells the truth about what a command would do in the current state.
+- Each service reacts to a given kind of mistake the same way every time. If applying a command too early (`E_ORDER`) is refused on a service once, it is always refused on that service; if it crashes or destroys data once, it always does. The same holds, separately, for running a command before a service it depends on (`E_DEP`). Different services react differently.
+
+## Tools and what they cost
+
+The window is counted in minutes. `status` shows how many are left.
+
+| Tool | Effect | Cost |
+|---|---|---|
+| `status()` | Mode and command list of every service, banked tiers, window left | 0 |
+| `inspect(service)` | Role, pending registers with the command that clears each, replication lag where it applies | 2 |
+| `dry_run(service, command)` | What the command would do now: `ok`, `refused`, `crash` or `data_loss`, with a code. Changes nothing | 4 |
+| `run(service, command)` | Executes the command. Charged whatever the outcome | 1 |
+| `restart(service)` | Clears a crash loop | 4 |
+| `finish()` | Ends the window | 0 |
+
+The window is too short to dry-run everything. When it reaches zero the episode ends by itself.
+
+## Outcomes and codes
+
+- `ok`: the command was applied.
+- `refused`: nothing changed.
+- `crash`: the service is in a crash loop and accepts nothing until you `restart` it. Every crash also adds 1 to replication lag.
+- `data_loss`: the service's data is gone for good. It can never serve, and neither can anything that depends on it.
+
+| Code | Meaning |
+|---|---|
+| `E_ORDER` | Another command of this service has to be applied first |
+| `E_DEP` | A service this command depends on is not serving |
+| `E_DONE` | Already applied, nothing to do |
+| `E_LAG` | Replication lag is not zero |
+| `E_FOREIGN` | The command is not part of this service's recovery |
+| `E_CRASHED` | The service is in a crash loop |
+| `E_LOST` | The service has lost its data |
+| `E_HEALTHY` | `restart` on a service that is not in a crash loop |
+| `E_WINDOW` | Not enough window left for this tool |
+| `E_UNKNOWN` | No such service or command |
+| `E_FINISHED` | The window has ended |
+
+## Replication lag
+
+One database reports `replication_lag` in its `inspect` output and accepts the command `sync`, which lowers the lag by 1 once that database is serving. The gateway's `cutover` destroys the gateway's data unless the lag is 0.
+
+## Score
+
+Tiers are banked by the system the moment they are reached and stay banked.
+
+| Tier | Reached when | Points |
+|---|---|---|
+| 1 | every `storage` service is serving | 0.10 |
+| 2 | and every `database` service | 0.15 |
+| 3 | and every `middleware` and `application` service | 0.25 |
+| 4 | and the `gateway` (traffic cut over) | 0.50 |
+
+Each service that loses its data costs 0.15. The score is between 0 and 1.
+
+Bring the system as far up as you can without losing data, then call `finish()`.
