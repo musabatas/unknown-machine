@@ -118,8 +118,9 @@ Agent runs so far, one run each:
 | `level-1/seed-0` | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 85 of 146 | Solved it, in less window than the reference (102) |
 | `level-2/seed-0` | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 282 of 360 | Solved it by repeating dry runs; used more window than the reference (252) |
 | `level-3/seed-3` | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 339 of 713 | Solved it in far less window than the reference (499). It took single dry runs where the worst case was a crash, and ran every `start` unchecked |
+| `level-3/seed-0` | OpenCode, `openai/gpt-6.1-sol` | 0.00 | 1073 of 1443 | Ran `start` on a database unchecked while another service of the same layer was still down; that was a dependency, and the data was gone. The reference scores 1.0 here in 1010 minutes |
 
-**No gap against a frontier model has been shown.** `gpt-6.1-sol` scored 1.0 on one task of each level, and at levels 1 and 3 it was more economical than the reference. Two caveats on reading that: it is one run per task, and at level 3 the model was lucky as well as good (3 of its 60 dry runs were wrong, where the stated reliabilities predict about 10, and several commands it ran unchecked could have destroyed data on a different seed). Neither caveat changes the result.
+Levels 1 and 2 do not separate a frontier model from the reference. Level 3 does on one of the two seeds run so far, and the reason is the same in both runs: the model checks the order of a service's commands carefully, and runs `start` unchecked as soon as the layer below is up, although the task says a command may need any other service. On seed 3 no such dependency was in its way; on seed 0 one was, and it destroys data. These are single runs.
 
 ## Repository
 

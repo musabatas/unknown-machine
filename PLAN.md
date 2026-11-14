@@ -254,17 +254,23 @@ Judging context (Junction participant guide): the challenge prize is decided by 
 | 2026-11-14 | level-1/seed-0 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | Solved in 85 of 146 minutes; the reference used 102. Level 1 shows no gap against a frontier model | USD 0.08 |
 | 2026-11-14 | level-2/seed-0 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | Solved in 282 of 360 minutes; the reference used 252. It repeated dry runs on services with low accuracy, more often than needed | USD 0.19 |
 | 2026-11-14 | level-3/seed-3 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | Solved in 339 of 713 minutes with 146 calls; the reference used 499. 60 dry runs against the reference's 101: one dry run where the worst case was a crash, repeats only where it was data loss, and every `start` run unchecked. Only 3 of its dry runs were wrong (about 10 expected) | USD 0.31 |
+| 2026-11-14 | level-3/seed-0 | OpenCode, `openai/gpt-6.1-sol` | 0.00 | Tier 1 banked, then it lost a database: it applied two preparation commands and `start` on `moss` with no dry run, and `start` met a dependency inside the layer that was not serving yet. With tier 2 out of reach it kept dry-running to 1073 of 1443 minutes (321 calls). The reference scores 1.0 on this seed in 1010 minutes | USD 0.93 |
 | 2026-11-14 | level-1/seed-0 | OpenCode, `openai/gpt-5.4-mini` | 0.00 | Inspected all seven services, then ran pending commands directly, never dry-running. Three services came up because their wrong-order mistakes were only refused. It treated the fourth the same way: `migrate` on the second database, out of order, destroyed its data (0.10 for tier 1, minus 0.15). It called `finish` at once, with 119 of 146 minutes unused | USD 0.08 |
 
 The small model's mistake is the one the task is built around: two refusals on one service were taken as evidence about a different service. The frontier model does not make it. It dry-runs where the reaction is unknown and stops once it has seen a service only refuse, which is the reference's own policy; that is why levels 2 and 3 were added.
 
-Gate result so far: **failed.** One frontier run per level, all 1.0. What the level 3 run shows about why:
+Gate result after one frontier run per level: **failed**, all 1.0. What the first level 3 run (seed 3) showed about why:
 
 - The window does not bind. The reference is over-cautious (it repeats dry runs where the worst case is only a crash, and dry-runs `start` twice), and the window is its cost divided by 0.7, so the agent finished with half the window unused.
 - Unchecked risks are rarely punished. The agent ran `start` blind on services that destroy data on a missing dependency; dependencies inside a layer are rare enough that this paid off.
 - One run is not a distribution. The agent's dry runs were wrong half as often as expected on this run.
 
-Next step, in this order: make the reference as economical as the agent was (dial 1 then means something), raise how often a blind `start` meets a missing dependency (dial 5), then measure three runs on one task before spending on more.
+What was tried next:
+
+- Making the reference more economical does not work. A sweep of its tolerances saves at most 5% of its cost before it starts losing data, so a tighter window would squeeze the reference before the agent.
+- The second level 3 run (seed 0) scored 0.00. The difference from seed 3 was predicted before the run from the systems alone: an agent that brings services up in alphabetical order inside a layer meets three dependencies that destroy data on seed 0 and none on seed 3. The agent checks order carefully and dependencies inside a layer carelessly.
+
+So the gap exists where a system has such dependencies, and not elsewhere. Next: one run on each remaining level 3 seed to see how the score follows that property, then repeat runs on one task.
 
 ## 12. Risks
 
