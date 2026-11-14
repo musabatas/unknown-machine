@@ -87,19 +87,27 @@ It must run unchanged on every seed. That is the proof that the information need
 
 ## 5. Harbor integration
 
+Required by AfterQuery (organiser announcement on the Junction Discord, 2026-11-14). This overrides anything else in this section:
+
+- Framework: Harbor (https://github.com/laude-institute/harbor). The environment is a Harbor task: `instruction.md`, `task.toml`, `environment/Dockerfile`, `tests/`, `solution/`.
+- Harness: OpenCode, run as `harbor run -p ./my-task -a opencode -m <provider/model>`.
+- Reward: the verifier writes one score between 0 and 1 to `/logs/verifier/reward.txt`. Partial credit is welcome.
+- Submission must include at least one Harbor run log with its score, and a short README (what the agent has to do, why it is hard, how it is scored). A hand-written README is preferred.
+- AfterQuery provides no inference credits. Frontier runs are paid from the team's Google, OpenAI and Modal credits.
+- No scoring skeleton was distributed, so the implementation language inside the container is our choice.
+- They explicitly want post-training experiments alongside the environment.
+
 Verified against docs.harborframework.com on 2026-11-14:
 
-- Task layout: `instruction.md`, `task.toml`, `environment/` (Dockerfile + `docker-compose.yaml`), `solution/solve.sh`, `tests/test.sh`.
-- The machine runs as a sidecar service in `docker-compose.yaml` and is declared with `[[environment.mcp_servers]]` (`transport = "streamable-http"`, `url = "http://machine:8000/mcp"`).
-- Local run: `harbor run -p <task> -a <agent> -m <model> -k <attempts>`; OpenCode is run as `--agent acp:opencode`; the `oracle` agent executes `solution/`.
+- A task may use `environment/docker-compose.yaml` for sidecars. The machine runs as a sidecar and is declared with `[[environment.mcp_servers]]` (`transport = "streamable-http"`, `url = "http://machine:8000/mcp"`).
+- `-k <attempts>` repeats a task; the `oracle` agent executes `solution/`.
 - With a separate verifier environment, in-memory state is not visible to the verifier, so the server must write the episode result to a file.
 
-Not verified; settle from the AfterQuery starter kit in hour 0:
+Not verified; settle with the mentors or by a first run:
 
-- Whether OpenCode auto-registers MCP servers declared in `task.toml` (docs name Claude Code and Codex).
-- The scoring skeleton's expected reward output format and location.
+- Whether OpenCode auto-registers MCP servers declared in `task.toml` (docs name Claude Code and Codex). If it does not, the task image ships an OpenCode config that registers the server.
+- How `tests/` obtains the score from the sidecar without the agent being able to forge it.
 - How the do-nothing and stop-early baselines are invoked by the judges.
-- Whether the verifier can hold a secret the agent container cannot read.
 
 Consequence to design around: the agent container can reach the sidecar over HTTP, so the agent may script its own exploration loop. Budget, state and seed therefore live only in the sidecar.
 
@@ -160,7 +168,7 @@ Six people, roles A to F. Hours count from the moment the team starts building, 
 
 | Window | Work | Owner |
 |---|---|---|
-| H0-H1 | Read starter kit; run its example task end to end with OpenCode; answer section 5 unknowns with the mentors | A, B |
+| H0-H1 | Install Harbor; run a minimal task with a sidecar end to end with OpenCode and write `reward.txt`; answer section 5 unknowns with the mentors | A, B |
 | H0-H2 | Simulator core with one hand-written system; score function; determinism test | C, D |
 | H0-H2 | Reference solver against the simulator core (in-process) | E |
 | H1-H3 | MCP server + Harbor task wrapping the hand-written system | A, B |
@@ -169,11 +177,13 @@ Six people, roles A to F. Hours count from the moment the team starts building, 
 | H4-H6 | Frontier agent, 3 seeds x 3 runs; read every trajectory; first failure taxonomy | A, B, E |
 | **H6** | **Gate decision against section 1** | all |
 | H6-H20 | Dials, phase 2 layer, trajectory viewer, `scripts/eval.sh`, README | split by area |
-| H20-H36 | Stretch: fine-tune a small open model on reference trajectories from generated seeds, evaluate on held-out seeds | E + one |
+| H20-H36 | Post-training experiment (the organisers ask for it, and it is the tiebreaker): fine-tune a small open model on reference trajectories from generated seeds on Modal, evaluate on held-out seeds | E + one |
 | H36-end | Freeze code; rerun everything from a clean clone; demo and write-up | all |
 
 ## 10. Deliverables for judging
 
+- At least one Harbor run log with its score, showing a model playing the environment (required for submission).
+- A short hand-written README: what the agent has to do, why it is hard, how it is scored (required for submission).
 - One command that runs: reference, three agent runs, do-nothing, stop-early, and prints the table.
 - Results table with per-seed scores and spread.
 - Failure taxonomy: each agent mistake as (step, decision taken, decision available, cost in score), with trajectory excerpts.
@@ -191,5 +201,6 @@ Judging context (Junction participant guide): the challenge prize is decided by 
 | Gap exists but for an unfair-looking reason | Trajectories show tool misuse or misread output | Fix tool descriptions and outputs; re-measure |
 | Rules feel arbitrary to judges | Mentor review at H3 | Tighten operational templates; explain each rule in the README |
 | Codenames leak roles, so prior knowledge replaces exploration | Agent reaches T2 without `inspect` or `dry_run` | Regenerate the codename list; add the leak check to the exploit tests |
-| Stretch goal eats core time | Core not frozen by H20 | Drop the stretch goal |
-| Harness differs from the public Harbor docs | Found in H0-H1 | Follow the starter kit; update section 5 |
+| Post-training experiment eats core time | Core not frozen by H20 | Cut it to one small run; never at the cost of the reproducible evaluation |
+| Harness differs from the public Harbor docs | Found in H0-H1 | Follow the organiser announcement and the mentors; update section 5 |
+| Frontier runs exhaust the team's own credits | Spend tracked per run from the first gate run | Develop against the in-process simulator and scripted baselines; batch frontier runs; fix seeds and run count before starting |

@@ -39,7 +39,7 @@ Create a directory when its first real code lands, not before. `tasks/` is gener
 ## Tooling
 
 - Python 3.12 or newer, Poetry. Never `pip install`; add dependencies with `poetry add` and commit `poetry.lock`.
-- Before adding or changing a call into Harbor, the MCP SDK or OpenCode, read the current documentation for the installed version. The AfterQuery starter kit overrides public Harbor docs where they differ; record the difference in `PLAN.md` section 5.
+- Before adding or changing a call into Harbor, the MCP SDK or OpenCode, read the current documentation for the installed version. The organiser requirements in `PLAN.md` section 5 (Harbor task format, `-a opencode`, score in `/logs/verifier/reward.txt`) override public Harbor docs where they differ; record any new difference there.
 - Checks, scoped to what changed:
 
 ```
