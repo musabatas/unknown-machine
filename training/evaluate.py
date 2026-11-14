@@ -191,12 +191,29 @@ def play_scripted(name: str, seeds: range) -> list[dict]:
 
 
 def _row(seed: int, result: dict, steps: int, invalid: int, unparsable: int) -> dict:
+    needed = {
+        (spec["codename"], step["command"])
+        for spec in result["system"]["services"]
+        for step in spec["steps"]
+    }
     return {
         "seed": seed,
         "score": result["score"],
         "data_lost": len(result["data_lost"]),
         "window_used": result["window_used"],
         "window_total": result["window_total"],
+        # The score has no step below the first tier (0.10), so it cannot tell a policy that
+        # did nothing from one that got halfway there. These two can.
+        "commands_done": len(
+            needed
+            & {
+                (entry["service"], entry["command"])
+                for entry in result["log"]
+                if entry["tool"] == RUN and entry["outcome"] == "ok"
+            }
+        ),
+        "commands_total": len(needed),
+        "tiers": len(result["tiers_banked"]),
         "steps": steps,
         "invalid": invalid,
         "unparsable": unparsable,
@@ -209,6 +226,12 @@ def summary(rows: list[dict]) -> dict:
         "episodes": len(rows),
         "mean_score": round(statistics.mean(row["score"] for row in rows), 4),
         "data_loss_share": round(sum(row["data_lost"] > 0 for row in rows) / len(rows), 4),
+        # Share of the system's commands run successfully at least once, and tiers reached
+        # (of four), whatever data loss later took off the score.
+        "mean_commands_done_share": round(
+            statistics.mean(row["commands_done"] / row["commands_total"] for row in rows), 4
+        ),
+        "mean_tiers_banked": round(statistics.mean(row["tiers"] for row in rows), 2),
         "mean_window_used": round(statistics.mean(row["window_used"] for row in rows), 1),
         "mean_window_share": round(
             statistics.mean(row["window_used"] / row["window_total"] for row in rows), 4
