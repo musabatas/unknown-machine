@@ -1,0 +1,206 @@
+{
+  "services": {
+    "basalt": {
+      "mode": "serving",
+      "commands": [
+        "attach",
+        "format",
+        "fsck",
+        "reinit",
+        "replay-journal",
+        "resize",
+        "scrub",
+        "start",
+        "verify-raid"
+      ]
+    },
+    "bramble": {
+      "mode": "stopped",
+      "commands": [
+        "compile-assets",
+        "factory-reset",
+        "load-config",
+        "migrate-sessions",
+        "register",
+        "rollback",
+        "seed-flags",
+        "start",
+        "warm-cache"
+      ]
+    },
+    "flint": {
+      "mode": "stopped",
+      "commands": [
+        "compile-assets",
+        "factory-reset",
+        "load-config",
+        "migrate-sessions",
+        "register",
+        "rollback",
+        "seed-flags",
+        "start",
+        "warm-cache"
+      ]
+    },
+    "heron": {
+      "mode": "stopped",
+      "commands": [
+        "compact",
+        "drain",
+        "purge",
+        "rebalance",
+        "reconnect",
+        "rehydrate",
+        "reset-offsets",
+        "rotate-keys",
+        "start"
+      ]
+    },
+    "kestrel": {
+      "mode": "serving",
+      "commands": [
+        "attach",
+        "format",
+        "fsck",
+        "reinit",
+        "replay-journal",
+        "resize",
+        "scrub",
+        "start",
+        "verify-raid"
+      ]
+    },
+    "larch": {
+      "mode": "stopped",
+      "commands": [
+        "drop-wal",
+        "migrate",
+        "promote",
+        "recover",
+        "reindex",
+        "reinit",
+        "start",
+        "unlock",
+        "vacuum"
+      ]
+    },
+    "marrow": {
+      "mode": "stopped",
+      "commands": [
+        "compact",
+        "drain",
+        "purge",
+        "rebalance",
+        "reconnect",
+        "rehydrate",
+        "reset-offsets",
+        "rotate-keys",
+        "start"
+      ]
+    },
+    "moss": {
+      "mode": "stopped",
+      "commands": [
+        "drop-wal",
+        "migrate",
+        "promote",
+        "recover",
+        "reindex",
+        "reinit",
+        "start",
+        "unlock",
+        "vacuum"
+      ]
+    },
+    "onyx": {
+      "mode": "stopped",
+      "commands": [
+        "compile-assets",
+        "factory-reset",
+        "load-config",
+        "migrate-sessions",
+        "register",
+        "rollback",
+        "seed-flags",
+        "start",
+        "warm-cache"
+      ]
+    },
+    "pumice": {
+      "mode": "stopped",
+      "commands": [
+        "drop-wal",
+        "migrate",
+        "promote",
+        "recover",
+        "reindex",
+        "reinit",
+        "start",
+        "sync",
+        "unlock",
+        "vacuum"
+      ]
+    },
+    "quartz": {
+      "mode": "serving",
+      "commands": [
+        "attach",
+        "format",
+        "fsck",
+        "reinit",
+        "replay-journal",
+        "resize",
+        "scrub",
+        "start",
+        "verify-raid"
+      ]
+    },
+    "tallow": {
+      "mode": "stopped",
+      "commands": [
+        "compact",
+        "drain",
+        "purge",
+        "rebalance",
+        "reconnect",
+        "rehydrate",
+        "reset-offsets",
+        "rotate-keys",
+        "start"
+      ]
+    },
+    "thistle": {
+      "mode": "stopped",
+      "commands": [
+        "compact",
+        "drain",
+        "purge",
+        "rebalance",
+        "reconnect",
+        "rehydrate",
+        "reset-offsets",
+        "rotate-keys",
+        "start"
+      ]
+    },
+    "wren": {
+      "mode": "stopped",
+      "commands": [
+        "cutover",
+        "flush-routes",
+        "force-failover",
+        "health-gate",
+        "pin-upstreams",
+        "reload-acl",
+        "renew-cert",
+        "sync-routes",
+        "warm-tls"
+      ]
+    }
+  },
+  "tiers_banked": [
+    1
+  ],
+  "window_remaining": 984,
+  "finished": true
+}

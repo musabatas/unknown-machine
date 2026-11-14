@@ -1,0 +1,124 @@
+{
+    "schema_version": 1,
+    "id": "9eacf3d3-bf2c-4bed-ae04-69b2cafd180c",
+    "task_name": "unknown-machine/level-4-seed-0",
+    "trial_name": "seed-0__sT24Aai",
+    "trial_uri": "file://<repo>/jobs/eval-1114-174254-legacy-l4s0-nothing/seed-0__sT24Aai",
+    "task_id": {
+        "path": "<repo>/tasks/level-4/seed-0"
+    },
+    "source": null,
+    "task_checksum": "806a90d869d56078419b0095ca703fcd6a2e9f5cb47209bcc4dbd968dc071786",
+    "config": {
+        "schema_version": 1,
+        "task": {
+            "path": "<repo>/tasks/level-4/seed-0",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": null
+        },
+        "trial_name": "seed-0__sT24Aai",
+        "trials_dir": "jobs/eval-1114-174254-legacy-l4s0-nothing",
+        "install_only": false,
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "base_url": null,
+            "model_api_key_name": null,
+            "model_api_format": null,
+            "skip_model_parsing": false,
+            "n_concurrent": null,
+            "concurrency_group": null,
+            "skills": [],
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "resume_trajectory": false,
+            "load_trajectory": null,
+            "extra_allowed_hosts": [],
+            "kwargs": {},
+            "mcp_servers": []
+        },
+        "user_agent": null,
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "stream": false,
+            "cpu_enforcement_policy": "auto",
+            "memory_enforcement_policy": "auto",
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "override_tpu": null,
+            "mounts": null,
+            "extra_docker_compose": [],
+            "kwargs": {},
+            "extra_allowed_hosts": []
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "override_error_policy": {},
+        "artifacts": [],
+        "extra_instruction_paths": [],
+        "extra_instructions": [],
+        "job_id": "eb0f121d-0263-4d0a-8d10-3396fb66e1de",
+        "source_trial": null
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "model_usage": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "verifier_environment_mode": "shared",
+    "exception_info": null,
+    "started_at": "2026-11-14T15:43:08.984640Z",
+    "finished_at": "2026-11-14T15:43:18.098298Z",
+    "environment_setup": {
+        "started_at": "2026-11-14T15:43:09.005038Z",
+        "finished_at": "2026-11-14T15:43:13.682760Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-11-14T15:43:13.682837Z",
+        "finished_at": "2026-11-14T15:43:13.682889Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-11-14T15:43:13.682959Z",
+        "finished_at": "2026-11-14T15:43:13.683511Z"
+    },
+    "verifier": {
+        "started_at": "2026-11-14T15:43:13.879868Z",
+        "finished_at": "2026-11-14T15:43:14.185886Z"
+    },
+    "step_results": null,
+    "reward_valid": true
+}

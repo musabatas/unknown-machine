@@ -21,7 +21,13 @@ Or all of it in one command, which runs the reference, do-nothing, stop-early an
 ./scripts/eval.sh --level 4 --seeds 0 --model openai/gpt-6.1-sol --env-file .env
 ```
 
-On it the reference scores 1.00 and `gpt-6.1-sol` scored 0.00 in three runs out of three; the logs are in `runs/`. The repository holds more tasks than this one: four levels of difficulty with five seeds each, and the hardest two levels again in two other scenarios. Levels 1 and 2 are solved by a frontier model and are here to show where the difficulty comes from, not to be judged on. Everything below explains the task, the levels and the measurements.
+That command, run on 2026-11-14 (`runs/eval-1114-174254-legacy-l4s0-*`):
+
+| Reference | Do nothing | Stop early | `gpt-6.1-sol`, three runs |
+|---|---|---|---|
+| 1.00 | 0.00 | 0.10 | 0.00, 0.00, 0.00 |
+
+All three agent runs ended by their own `finish`, with no error. Each destroyed a service's data with a command it had not checked. A smaller model, `gpt-5.4-mini`, scored 0.10 on the same task for the opposite reason: it destroyed nothing and spent the whole window on dry runs. The repository holds more tasks than this one: four levels of difficulty with five seeds each, and the hardest two levels again in two other scenarios. Levels 1 and 2 are solved by a frontier model and are here to show where the difficulty comes from, not to be judged on. Everything below explains the task, the levels and the measurements.
 
 ## What the agent has to do
 
@@ -162,11 +168,11 @@ Level 4 so far, `gpt-6.1-sol` against the reference's 1.00 on every task:
 
 | Task | Runs that count | Scores | What happened |
 |---|---|---|---|
-| `level-4/seed-0` | 3 | 0.00, 0.00, 0.00 | All three destroyed the same database with an unchecked command |
-| `level-4/seed-2` | 2 | 0.00, 0.00 | Both destroyed the same database |
-| `level-4/seed-3` | 1 | 0.00 | Above |
+| `level-4/seed-0` | 3 complete, 3 cut off | 0.00 six times | Five destroyed the database `moss` with an unchecked `start`, one a storage service the same way |
+| `level-4/seed-2` | 2 cut off | 0.00, 0.00 | Both destroyed the same database |
+| `level-4/seed-3` | 1 complete | 0.00 | Above |
 
-Six runs, six zeros. Read this with its limits. Nine runs were started at once on seeds 0, 1 and 2, and none of them reached `finish`: the provider's rate limit ended two and the account's spending limit ended the other seven. The five counted above had already destroyed a database when they were cut off, and with a database gone no further tier can be banked, so their score could not have changed. The other four (all three on seed 1, one on seed 2) were cut off with no data lost and prove nothing; they are not counted. Seeds 1 and 4 have no complete run yet.
+Nine runs, nine zeros. Read this with its limits. Four of the nine are complete runs. The other five come from a batch of nine started at once on seeds 0, 1 and 2, none of which reached `finish`: the provider's rate limit ended two and the account's spending limit ended seven. Those five had already destroyed a database when they were cut off, and with a database gone no further tier can be banked, so their score could not have changed. The remaining four of that batch (all three on seed 1, one on seed 2) were cut off with no data lost and prove nothing; they are not counted.
 
 The logs of the counted runs are in `runs/`.
 
