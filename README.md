@@ -151,6 +151,39 @@ Six runs, six zeros. Read this with its limits. Nine runs were started at once o
 
 The logs of the counted runs are in `runs/`.
 
+### The mistake, step by step
+
+`level-4/seed-3`, the database `bramble` (dry runs right 80% of the time; destroys its data on a wrong order and on a missing dependency). From `runs/l4s3-gpt61sol-1`, the server's own log:
+
+| Step | Action | Result |
+|---|---|---|
+| 59 | `dry_run bramble start` | `data_loss`, `E_ORDER` |
+| 60-65 | `dry_run bramble recover`, six times | `ok` five times; once `data_loss`, `E_DEP` |
+| 66 | `run bramble recover` | `ok` |
+| 67-75 | nine dry runs on `unlock` and `reindex` | `reindex` is next; one report again says `data_loss`, `E_DEP` |
+| 76 | `run bramble reindex` | `ok` |
+| 77 | `run bramble unlock` | `ok`. Not checked: it was the only preparation command left |
+| 78 | `run bramble start` | **`data_loss`, `E_DEP`**. Not checked: it was the only command left |
+
+The model spent fifteen dry runs, 60 minutes, making sure of the order, and it was right about the order every time. By step 69 it had been shown twice what this service does when a dependency is missing. At step 78 two of the three databases were still down, so a missing dependency was possible, and `start` needed one of them. One more dry run, four minutes, would have said so with 80% reliability; two would have settled it. It had 960 minutes left.
+
+That is the decision the environment is built to test: the model treated "which command is next" as the only open question, and "is everything this command needs up" as answered by the layer below being up. The reference asks both questions before every command whose mistake would destroy data, and on this seed it spends 836 minutes and loses nothing. `analysis/analyze.py` reports these as `unchecked_risk` (a command that went through although a fatal mistake was possible) and `blind_data_loss` (the one that did not): seven and one in this run, none of either for the reference.
+
+### What we tried against our own reward
+
+Each of these is a test in `tests/` that fails if it regresses:
+
+- Reconnecting, or calling `finish` twice, does not reset the episode or the window.
+- Concurrent calls cannot spend more window than there is.
+- Calls after the end change nothing and cost nothing.
+- Malformed arguments (wrong type, oversized, unknown names) are refused free of charge and leak nothing. This found a real crash on a null command, now fixed.
+- No tool result contains a hidden field; codenames do not predict roles.
+- Dry-running everything earns nothing by itself and cannot finish inside the window.
+- `finish` at step 0 scores 0; after tier 1 it scores 0.10.
+- A forged, replayed or out-of-range result is rejected by the verifier and scores 0.
+
+Two things rest on the repository staying private rather than on a test: the result-signing key is a constant in each task, and the agent's container can reach the internet.
+
 The same systems are also told as two other scenarios, with the rules, costs and score unchanged: bringing a captured aircraft to take-off (`tasks/aircraft/`) and obtaining a residence permit from a state that publishes no rules (`tasks/residency/`), at levels 3 and 4. A seed has the same structure in all three, and the reference plays the identical episode in each (1.0 through Harbor on `level-4/seed-3` of both). No agent has been run on them yet.
 
 ## Repository
