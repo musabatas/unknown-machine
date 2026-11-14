@@ -1,0 +1,181 @@
+{
+  "services": {
+    "arvo": {
+      "mode": "serving",
+      "commands": [
+        "align-inertial",
+        "boot-computers",
+        "calibrate-air-data",
+        "engage",
+        "load-database",
+        "test-displays",
+        "tune-radios",
+        "wipe-memory",
+        "zeroize"
+      ]
+    },
+    "cendra": {
+      "mode": "serving",
+      "commands": [
+        "arm-backup",
+        "check-reservoir",
+        "cycle-valves",
+        "dump-fluid",
+        "engage",
+        "overpressure",
+        "pressurize",
+        "prime-pumps",
+        "purge-air"
+      ]
+    },
+    "dursk": {
+      "mode": "serving",
+      "commands": [
+        "bleed-compressor",
+        "check-oil",
+        "dry-crank",
+        "engage",
+        "hot-start",
+        "light-igniters",
+        "motor-starter",
+        "open-fuel",
+        "stabilize-idle"
+      ]
+    },
+    "ivesk": {
+      "mode": "serving",
+      "commands": [
+        "align-inertial",
+        "boot-computers",
+        "calibrate-air-data",
+        "engage",
+        "load-database",
+        "test-displays",
+        "tune-radios",
+        "wipe-memory",
+        "zeroize"
+      ]
+    },
+    "lumo": {
+      "mode": "serving",
+      "commands": [
+        "close-breakers",
+        "connect-battery",
+        "engage",
+        "jettison-battery",
+        "short-bus",
+        "spin-apu",
+        "sync-generators",
+        "test-ground",
+        "warm-inverters"
+      ]
+    },
+    "nesto": {
+      "mode": "serving",
+      "commands": [
+        "arm-stability",
+        "blow-canopy",
+        "cut-cables",
+        "free-controls",
+        "release-brakes",
+        "set-flaps",
+        "set-trim",
+        "takeoff",
+        "test-surfaces"
+      ]
+    },
+    "pesh": {
+      "mode": "serving",
+      "commands": [
+        "close-breakers",
+        "connect-battery",
+        "engage",
+        "jettison-battery",
+        "short-bus",
+        "spin-apu",
+        "sync-generators",
+        "test-ground",
+        "warm-inverters"
+      ]
+    },
+    "quorn": {
+      "mode": "serving",
+      "commands": [
+        "bleed-compressor",
+        "check-oil",
+        "dry-crank",
+        "engage",
+        "hot-start",
+        "light-igniters",
+        "motor-starter",
+        "open-fuel",
+        "stabilize-idle"
+      ]
+    },
+    "selto": {
+      "mode": "serving",
+      "commands": [
+        "arm-backup",
+        "check-reservoir",
+        "cycle-valves",
+        "dump-fluid",
+        "engage",
+        "overpressure",
+        "pressurize",
+        "prime-pumps",
+        "purge-air"
+      ]
+    },
+    "tarn": {
+      "mode": "serving",
+      "commands": [
+        "close-breakers",
+        "connect-battery",
+        "engage",
+        "jettison-battery",
+        "short-bus",
+        "spin-apu",
+        "sync-generators",
+        "test-ground",
+        "warm-inverters"
+      ]
+    },
+    "ulvik": {
+      "mode": "serving",
+      "commands": [
+        "arm-backup",
+        "balance",
+        "check-reservoir",
+        "cycle-valves",
+        "dump-fluid",
+        "engage",
+        "overpressure",
+        "pressurize",
+        "prime-pumps",
+        "purge-air"
+      ]
+    },
+    "vesh": {
+      "mode": "serving",
+      "commands": [
+        "align-inertial",
+        "boot-computers",
+        "calibrate-air-data",
+        "engage",
+        "load-database",
+        "test-displays",
+        "tune-radios",
+        "wipe-memory",
+        "zeroize"
+      ]
+    }
+  },
+  "tiers_banked": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "window_remaining": 359,
+  "finished": true
+}

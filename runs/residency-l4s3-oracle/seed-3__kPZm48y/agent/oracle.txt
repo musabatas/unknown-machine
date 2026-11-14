@@ -1,0 +1,181 @@
+{
+  "services": {
+    "amber": {
+      "mode": "serving",
+      "commands": [
+        "cancel-cover",
+        "enroll",
+        "medical-exam",
+        "name-doctor",
+        "opt-out",
+        "pay-premium",
+        "submit",
+        "vaccinate",
+        "waive-history"
+      ]
+    },
+    "cedar": {
+      "mode": "serving",
+      "commands": [
+        "assess",
+        "clear-debts",
+        "close-account",
+        "declare-income",
+        "declare-insolvency",
+        "open-account",
+        "pay-stamp",
+        "prove-funds",
+        "submit"
+      ]
+    },
+    "dune": {
+      "mode": "serving",
+      "commands": [
+        "dispute-contract",
+        "join-fund",
+        "pass-interview",
+        "recognize-diploma",
+        "register-employer",
+        "resign",
+        "sign-contract",
+        "sponsor",
+        "submit"
+      ]
+    },
+    "iris": {
+      "mode": "serving",
+      "commands": [
+        "cancel-cover",
+        "enroll",
+        "medical-exam",
+        "name-doctor",
+        "opt-out",
+        "pay-premium",
+        "submit",
+        "vaccinate",
+        "waive-history"
+      ]
+    },
+    "lotus": {
+      "mode": "serving",
+      "commands": [
+        "annul-record",
+        "certify-birth",
+        "legalize",
+        "register-address",
+        "renounce",
+        "submit",
+        "take-photo",
+        "translate",
+        "verify-identity"
+      ]
+    },
+    "nova": {
+      "mode": "serving",
+      "commands": [
+        "background-check",
+        "book-slot",
+        "collect",
+        "give-fingerprints",
+        "language-test",
+        "overstay",
+        "pay-fee",
+        "sign-pledge",
+        "withdraw"
+      ]
+    },
+    "pearl": {
+      "mode": "serving",
+      "commands": [
+        "annul-record",
+        "certify-birth",
+        "legalize",
+        "register-address",
+        "renounce",
+        "submit",
+        "take-photo",
+        "translate",
+        "verify-identity"
+      ]
+    },
+    "quill": {
+      "mode": "serving",
+      "commands": [
+        "dispute-contract",
+        "join-fund",
+        "pass-interview",
+        "recognize-diploma",
+        "register-employer",
+        "resign",
+        "sign-contract",
+        "sponsor",
+        "submit"
+      ]
+    },
+    "sage": {
+      "mode": "serving",
+      "commands": [
+        "assess",
+        "clear-debts",
+        "close-account",
+        "declare-income",
+        "declare-insolvency",
+        "open-account",
+        "pay-stamp",
+        "prove-funds",
+        "submit"
+      ]
+    },
+    "tulip": {
+      "mode": "serving",
+      "commands": [
+        "annul-record",
+        "certify-birth",
+        "legalize",
+        "register-address",
+        "renounce",
+        "submit",
+        "take-photo",
+        "translate",
+        "verify-identity"
+      ]
+    },
+    "umber": {
+      "mode": "serving",
+      "commands": [
+        "assess",
+        "clear-debts",
+        "close-account",
+        "declare-income",
+        "declare-insolvency",
+        "open-account",
+        "pay-stamp",
+        "prove-funds",
+        "settle",
+        "submit"
+      ]
+    },
+    "violet": {
+      "mode": "serving",
+      "commands": [
+        "cancel-cover",
+        "enroll",
+        "medical-exam",
+        "name-doctor",
+        "opt-out",
+        "pay-premium",
+        "submit",
+        "vaccinate",
+        "waive-history"
+      ]
+    }
+  },
+  "tiers_banked": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "window_remaining": 359,
+  "finished": true
+}

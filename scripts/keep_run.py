@@ -6,9 +6,11 @@ Kept per trial: Harbor's own result, config and log, the agent's trajectory and
 console output, and the verifier's output with the signed episode. Left out: the
 agent's local database and snapshots, which are large and add nothing to the log.
 Absolute paths of the machine the run was made on are replaced, so the logs carry
-no user name.
+no user name, and so are the account identifiers a failed API call writes into the
+agent's output.
 """
 
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -45,6 +47,15 @@ def replacements() -> list[tuple[str, str]]:
     return pairs
 
 
+# A failed API call is logged with the provider's whole response: the organisation
+# id of the account and its session cookies. Neither belongs in a kept log.
+ACCOUNT = (
+    (re.compile(r"\borg-[A-Za-z0-9]{8,}"), "<organisation>"),
+    (re.compile(r'(\\?"set-cookie\\?":\s*\\?")[^"]*', re.IGNORECASE), r"\1<removed>"),
+    (re.compile(r"\b(__cf_bm|_cfuvid)=[^;\"\\ ]+"), r"\1=<removed>"),
+)
+
+
 def keep(job: Path) -> Path:
     if not (job / "result.json").is_file():
         raise SystemExit(f"{job}: not a Harbor job directory (no result.json).")
@@ -57,6 +68,8 @@ def keep(job: Path) -> Path:
             text = source.read_text(encoding="utf-8", errors="replace")
             for old, new in swaps:
                 text = text.replace(old, new)
+            for pattern_, replacement in ACCOUNT:
+                text = pattern_.sub(replacement, text)
             destination = target / source.relative_to(job)
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_text(text, encoding="utf-8")

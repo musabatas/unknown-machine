@@ -83,7 +83,7 @@ To add three agent runs per task:
 ./scripts/eval.sh --model openai/gpt-6.1-sol --env-file .env
 ```
 
-Both run all four levels; `--level 3` limits them to one, and `--seeds 3` to one task.
+Both run all four levels; `--level 3` limits them to one, `--seeds 3` to one task, and `--theme aircraft` or `--theme residency` runs the other scenarios. Run agent evaluations one task at a time: nine concurrent agent runs exceeded the provider's rate limit.
 
 A single run:
 
@@ -139,6 +139,20 @@ Levels 1 and 2 do not separate a frontier model from the reference. At level 3, 
 
 The reason is one habit. The model checks the order of a service's commands carefully, and it runs `start` unchecked as soon as the layer below is up, although the task says a command may need any other service. Whether that costs anything depends on the system: the order in which it brings a layer up meets a dependency that destroys data on seed 0 and on no other level 3 seed. That was read off the systems before the runs on seeds 0, 1, 2 and 4, and all four went as predicted. Level 4 puts such dependencies into every system.
 
+Level 4 so far, `gpt-6.1-sol` against the reference's 1.00 on every task:
+
+| Task | Runs that count | Scores | What happened |
+|---|---|---|---|
+| `level-4/seed-0` | 3 | 0.00, 0.00, 0.00 | All three destroyed the same database with an unchecked command |
+| `level-4/seed-2` | 2 | 0.00, 0.00 | Both destroyed the same database |
+| `level-4/seed-3` | 1 | 0.00 | Above |
+
+Six runs, six zeros. Read this with its limits. Nine runs were started at once on seeds 0, 1 and 2, and none of them reached `finish`: the provider's rate limit ended two and the account's spending limit ended the other seven. The five counted above had already destroyed a database when they were cut off, and with a database gone no further tier can be banked, so their score could not have changed. The other four (all three on seed 1, one on seed 2) were cut off with no data lost and prove nothing; they are not counted. Seeds 1 and 4 have no complete run yet.
+
+The logs of the counted runs are in `runs/`.
+
+The same systems are also told as two other scenarios, with the rules, costs and score unchanged: bringing a captured aircraft to take-off (`tasks/aircraft/`) and obtaining a residence permit from a state that publishes no rules (`tasks/residency/`), at levels 3 and 4. A seed has the same structure in all three, and the reference plays the identical episode in each (1.0 through Harbor on `level-4/seed-3` of both). No agent has been run on them yet.
+
 ## Repository
 
 | Path | Contents |
@@ -148,6 +162,8 @@ The reason is one habit. The model checks the order of a service's commands care
 | `src/unknown_machine/server/app.py` | MCP server and verifier endpoint around one episode |
 | `scripts/task_template/`, `scripts/make_tasks.py` | The Harbor task and the generator that stamps one per seed |
 | `tasks/level-1` to `level-4` | The evaluation tasks, five seeds per level |
+| `tasks/aircraft`, `tasks/residency` | The same systems at levels 3 and 4, told as two other scenarios |
+| `runs/` | Harbor logs of the runs reported below (`scripts/keep_run.py` copies them from `jobs/`) |
 | `tests/` | Rules of the simulator, baseline scores, reward exploits |
 | `analysis/analyze.py` | Episode log to decisions |
 | `viewer/index.html`, `scripts/watch.py`, `scripts/make_replay.py` | Live view of a run in progress, and replay of a finished one |
