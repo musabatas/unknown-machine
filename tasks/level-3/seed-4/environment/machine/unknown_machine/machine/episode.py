@@ -164,8 +164,32 @@ class Episode:
                 "window_total": self._budget,
                 "finished": self._finished,
                 "calls": self._calls,
+                "system": self._describe_system(),
                 "log": list(self._log),
             }
+
+    def _describe_system(self) -> dict:
+        """The hidden rules, for replaying and analysing an episode after it is over."""
+        return {
+            "seed": self._system.seed,
+            "level": self._system.level,
+            "initial_lag": self._system.initial_lag,
+            "lag_service": self._system.lag_service,
+            "services": [
+                {
+                    "codename": spec.codename,
+                    "role": spec.role,
+                    "accuracy": spec.accuracy,
+                    "order_violation": spec.order_violation,
+                    "dependency_violation": spec.dependency_violation,
+                    "steps": [
+                        {"command": step.command, "requires": list(step.requires)}
+                        for step in spec.steps
+                    ],
+                }
+                for spec in self._system.services
+            ],
+        }
 
     # ---- internals (lock held) ---------------------------------------------
 
