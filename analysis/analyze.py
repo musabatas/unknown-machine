@@ -15,6 +15,11 @@ Categories, each tied to a decision the agent made:
   trusted_wrong_dry_run  ran a command that crashed or destroyed data after dry-running
                      it, on a service whose dry runs are not exact: too few readings
                      for what was at stake
+  unchecked_risk     ran a command that went through, with no dry run on that service
+                     since its last change, although a mistake was possible from what
+                     the agent could know and this service answers that mistake by
+                     destroying its data: the score was kept by luck. Needs the system
+                     description in the result, so older episode files do not report it
   foreign            touched a command no pending register asked for
   redundant_dry_run  dry-ran the same command again with nothing changed since, on a
                      service whose dry runs are exact
@@ -30,6 +35,54 @@ from pathlib import Path
 COSTS = {"run": 1, "inspect": 2, "dry_run": 4, "restart": 4}
 DESTRUCTIVE = ("crash", "data_loss")
 KINDS = ("E_ORDER", "E_DEP")
+FINAL_COMMANDS = ("start", "cutover")
+LAYER = {"storage": 1, "database": 2, "middleware": 3, "application": 4, "gateway": 5}
+
+
+class _Risk:
+    """Which mistakes were possible, from the agent's side, when it ran a command."""
+
+    def __init__(self, system: dict) -> None:
+        self.specs = {spec["codename"]: spec for spec in system["services"]}
+        self.done = {name: 0 for name in self.specs}
+        self.lost: set[str] = set()
+        self.ruled_out: dict[str, set[str]] = {name: set() for name in self.specs}
+
+    def serving(self, name: str) -> bool:
+        return self.done[name] == len(self.specs[name]["steps"]) and name not in self.lost
+
+    def fatal_mistakes(self, name: str, order_checked: bool, dependency_checked: bool) -> list[str]:
+        """Kinds of mistake an unchecked run on this service could have been, that would
+        have destroyed its data."""
+        spec = self.specs[name]
+        fatal = []
+        # Every preparation command still pending could be the next one, unless a real
+        # refusal has ruled it out; the final command is known to come last.
+        open_order = len(spec["steps"]) - 1 - self.done[name] - len(self.ruled_out[name])
+        if not order_checked and open_order > 1 and spec["order_violation"] == "data_loss":
+            fatal.append("wrong order")
+        below = (
+            other
+            for other in self.specs
+            if other != name and LAYER[self.specs[other]["role"]] <= LAYER[spec["role"]]
+        )
+        if (
+            not dependency_checked
+            and spec["dependency_violation"] == "data_loss"
+            and not all(map(self.serving, below))
+        ):
+            fatal.append("missing dependency")
+        return fatal
+
+    def record(self, entry: dict) -> None:
+        name = entry["service"]
+        if entry["outcome"] == "ok" and entry["command"] != "sync":
+            self.done[name] += 1
+            self.ruled_out[name].clear()
+        elif entry["outcome"] == "data_loss":
+            self.lost.add(name)
+        elif entry["code"] == "E_ORDER":
+            self.ruled_out[name].add(entry["command"])
 
 
 def analyze(result: dict) -> dict:
@@ -43,6 +96,8 @@ def analyze(result: dict) -> dict:
     accuracy: dict[str, float] = {}  # stated dry-run accuracy per service
     inspected: set[str] = set()
     lag_service = next((entry["service"] for entry in log if entry["command"] == "sync"), None)
+    risk = _Risk(result["system"]) if "system" in result else None
+    order_checked: set[str] = set()  # services dry-run since their own last step
 
     def note(category: str, step: int, entry: dict, detail: str, cost: int) -> None:
         findings.append(
@@ -85,6 +140,7 @@ def analyze(result: dict) -> dict:
                     COSTS["dry_run"],
                 )
             previewed.add(pair)
+            order_checked.add(service)
             previews[pair] += 1
             last_preview[pair] = outcome
 
@@ -103,10 +159,36 @@ def analyze(result: dict) -> dict:
                         f"whose dry runs are right {accuracy.get(service, 1.0):.0%} of the time",
                         cost,
                     )
+            if risk and outcome == "ok" and command != "sync":
+                # A dry run speaks about the order until its service moves, and about
+                # dependencies until the set of serving services does.
+                fatal = risk.fatal_mistakes(
+                    service,
+                    order_checked=service in order_checked,
+                    dependency_checked=any(name == service for name, _ in previewed),
+                )
+                if fatal:
+                    note(
+                        "unchecked_risk",
+                        step,
+                        entry,
+                        f"no dry run, and a {' or '.join(fatal)} would have destroyed its data",
+                        0,
+                    )
+            if risk:
+                risk.record(entry)
+            if outcome == "ok":
+                order_checked.discard(service)
             if outcome == "ok" or outcome in DESTRUCTIVE:
-                previewed.clear()
-                previews.clear()
-                last_preview.clear()
+                # What a dry run said stays valid until its own service moves, or until
+                # the set of serving services does (a final command, a crash, a loss).
+                everything = command in FINAL_COMMANDS or outcome in DESTRUCTIVE
+                for record in (previewed, previews, last_preview):
+                    for stale in [p for p in record if everything or p[0] == service]:
+                        if isinstance(record, set):
+                            record.discard(stale)
+                        else:
+                            del record[stale]
 
         if code in KINDS and outcome != "ok":
             known[(service, code)] = outcome
@@ -149,6 +231,7 @@ def main() -> None:
                 "blind_data_loss",
                 "blind_crash",
                 "trusted_wrong_dry_run",
+                "unchecked_risk",
                 "foreign",
             ):
                 print(
