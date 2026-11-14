@@ -237,7 +237,7 @@ As of Saturday 14 Nov. Hacking opened Friday 13 Nov 19:30; submissions opened Sa
 | **Gate: frontier agent, 3 runs per task, against section 1** | **Level 3: not met (agent mean 0.80 over five seeds). Level 4: six counted runs on three seeds, all 0.00 against the reference's 1.00; seeds 1 and 4 have no complete run (section 11)** |
 | Read the frontier trajectories; write the failure taxonomy from `analysis/analyze.py` output | Open, after the gate |
 | Turn dials if the gate fails (section 6) | Open, after the gate |
-| Post-training experiment: fine-tune a small open model on reference trajectories, evaluate on held-out seeds | Open: `scripts/export_trajectories.py` produces the data; training not started |
+| Post-training experiment: fine-tune a small open model on reference trajectories, evaluate on held-out seeds | Done once, locally (`training/README.md`): Qwen2.5-0.5B with LoRA, level 1, 40 held-out seeds. Negative: the fine-tuned model scores 0.00 against the reference's 1.00; it copies the reference in 69% of its states but only 36% of the ones where the reference dry-runs. One small model, a quarter of an epoch, one run |
 | Hand-written README, demo video, submission | Open: team |
 | Rotate the signing key per run and cut the agent's network | Not needed: the repository stays private (section 7) |
 

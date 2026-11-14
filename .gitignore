@@ -15,6 +15,9 @@ dist/
 jobs/
 trials/
 
+# Post-training experiment: datasets and adapters are rebuilt, never committed
+training/artifacts/
+
 # Agent tooling
 .claude/worktrees/
 .playwright-cli/

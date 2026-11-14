@@ -43,6 +43,10 @@ tasks/level-<l>/seed-<n>/  generated evaluation tasks, five seeds per level
 tasks/smoke/          hand-maintained harness smoke test
 tests/                simulator rules, baseline scores, exploits
 analysis/analyze.py   episode log -> decisions that cost score or window
+training/             post-training experiment: a small model fine-tuned on the reference's
+                      decisions, scored on held-out seeds. Optional dependency group,
+                      Apple Silicon only; its README owns the method and the numbers
+runs/                 kept Harbor logs of the reported runs (scripts/keep_run.py)
 viewer/index.html     replay of one episode; make_replay.py embeds an episode into it.
                       It restates tier points and tool costs to recompute the episode,
                       and warns when its result differs from the recorded one
