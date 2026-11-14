@@ -1,0 +1,1130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unknown Machine replay</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --paper: #f3f1ea;
+  --paper-2: #e9e6dc;
+  --ink: #16150f;
+  --ink-2: #55524a;
+  --line: #bdb8a9;
+  --accent: #c8321a;
+  --on-accent: #ffffff;
+  --accent-soft: color-mix(in srgb, var(--accent) 20%, var(--paper));
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --fs-0: 11px;
+  --fs-1: 12px;
+  --fs-2: 14px;
+  --fs-3: 18px;
+  --fs-4: 28px;
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --hair: 1px;
+  --heavy: 2px;
+  --pip: 12px;
+  --side: 372px;
+  --pulse: 420ms;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #121210;
+    --paper-2: #1c1c19;
+    --ink: #ecebe4;
+    --ink-2: #a8a598;
+    --line: #45443c;
+    --accent: #ff6a4a;
+    --on-accent: #121210;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font: var(--fs-2)/1.35 var(--font-ui);
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+button, select, input { font: inherit; color: inherit; }
+:focus-visible { outline: var(--heavy) solid var(--ink); outline-offset: 2px; }
+[hidden] { display: none !important; }
+.mono { font-family: var(--font-mono); }
+.label {
+  font-size: var(--fs-0);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  margin: 0;
+  font-weight: 600;
+}
+.btn {
+  background: var(--paper);
+  border: var(--hair) solid var(--ink);
+  padding: var(--s-1) var(--s-3);
+  min-height: 32px;
+  cursor: pointer;
+  border-radius: 0;
+}
+.btn:hover { background: var(--ink); color: var(--paper); }
+
+/* ---- header ---- */
+.top {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-2) var(--s-4);
+  border-bottom: var(--heavy) solid var(--ink);
+  flex-wrap: wrap;
+}
+.top h1 { font-size: var(--fs-2); margin: 0; letter-spacing: 0.09em; text-transform: uppercase; }
+.top h1 span { font-weight: 400; color: var(--ink-2); }
+#meta { margin: 0; flex: 1 1 auto; font-family: var(--font-mono); font-size: var(--fs-1); color: var(--ink-2); }
+
+#warn {
+  margin: var(--s-2) var(--s-4) 0;
+  padding: var(--s-2) var(--s-3);
+  border: var(--heavy) solid var(--accent);
+  font-size: var(--fs-1);
+}
+#warn strong { color: var(--accent); }
+#warn ul { margin: var(--s-1) 0 0; padding-left: var(--s-4); font-family: var(--font-mono); }
+
+/* ---- empty state ---- */
+#empty {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: var(--s-4);
+}
+.drop {
+  border: var(--heavy) dashed var(--line);
+  padding: 48px var(--s-4);
+  width: min(560px, 100%);
+  text-align: center;
+}
+.drop p { margin: 0 0 var(--s-3); }
+.drop .hint { color: var(--ink-2); font-size: var(--fs-1); margin: var(--s-3) 0 0; }
+body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink); outline-offset: -6px; }
+
+/* ---- app grid ---- */
+#app {
+  flex: 1;
+  display: grid;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "meters" "call" "stage" "keys" "log" "transport";
+}
+.meters { grid-area: meters; }
+.stage { grid-area: stage; }
+.call { grid-area: call; }
+.keys { grid-area: keys; }
+.log { grid-area: log; }
+.transport { grid-area: transport; }
+.panel { border: var(--hair) solid var(--line); padding: var(--s-2) var(--s-3); min-height: 0; display: flex; flex-direction: column; }
+.panel > .label { margin-bottom: var(--s-1); }
+
+/* ---- meters ---- */
+.meters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border: var(--hair) solid var(--line);
+}
+.meter { padding: var(--s-2) var(--s-3); border-right: var(--hair) solid var(--line); border-bottom: var(--hair) solid var(--line); min-width: 0; }
+.meter .value { font-family: var(--font-mono); font-size: var(--fs-3); font-weight: 700; line-height: 1.2; }
+.meter .value small { font-size: var(--fs-1); font-weight: 400; color: var(--ink-2); }
+.meter .sub { font-family: var(--font-mono); font-size: var(--fs-0); color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar { height: 8px; border: var(--hair) solid var(--ink); margin-top: var(--s-1); }
+.bar i { display: block; height: 100%; background: var(--ink); width: 0; }
+.tiers { display: flex; gap: var(--s-1); margin-top: 2px; }
+.tier {
+  flex: 1;
+  border: var(--hair) solid var(--line);
+  padding: 2px var(--s-1);
+  font-family: var(--font-mono);
+  font-size: var(--fs-0);
+  color: var(--ink-2);
+  line-height: 1.25;
+}
+.tier b { display: block; font-size: var(--fs-2); }
+.tier.banked { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+#m-lost.has { color: var(--accent); font-weight: 700; }
+
+/* ---- stage ---- */
+.stage { border: var(--hair) solid var(--line); min-height: 0; overflow: auto; display: flex; flex-direction: column; }
+.stage-inner { position: relative; flex: 1; display: flex; flex-direction: column; min-height: min-content; }
+#edges { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.edge { fill: none; stroke: var(--line); stroke-width: 1; stroke-dasharray: 3 4; }
+.edge.met { stroke: var(--ink-2); stroke-dasharray: none; }
+.edge.active { stroke: var(--ink); stroke-width: 2.25; }
+.edge.dead { stroke: var(--accent); stroke-dasharray: 2 5; }
+.layer {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  padding: var(--s-3) var(--s-3) 18px;
+  border-bottom: var(--hair) solid var(--line);
+}
+.layer:last-of-type { border-bottom: 0; }
+.layer-name { display: flex; gap: var(--s-2); align-items: baseline; }
+.layer-name b { font-family: var(--font-mono); font-size: var(--fs-1); }
+.cards { display: flex; flex-wrap: wrap; gap: 18px var(--s-4); justify-content: center; align-items: center; flex: 1; }
+.card {
+  position: relative;
+  flex: 0 1 228px;
+  min-width: 160px;
+  background: var(--paper);
+  border: var(--hair) dashed var(--ink-2);
+  padding: 5px var(--s-2) 6px;
+  font-size: var(--fs-0);
+  line-height: 1.3;
+}
+.card .name { font-family: var(--font-mono); font-size: var(--fs-2); font-weight: 700; display: flex; justify-content: space-between; gap: var(--s-2); align-items: baseline; }
+.card .state { font-family: var(--font-ui); font-size: var(--fs-0); letter-spacing: 0.07em; text-transform: uppercase; font-weight: 600; white-space: nowrap; }
+.card .info { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 var(--s-2); white-space: nowrap; }
+.card .info > span:first-child, .card .aside { opacity: 0.8; }
+.card .rules { font-family: var(--font-mono); display: flex; gap: var(--s-2); }
+.card .rules span { opacity: 0.8; }
+.card .aside { margin-left: auto; white-space: nowrap; }
+.card .rules .fatal { color: var(--accent); font-weight: 700; opacity: 1; }
+.pips { display: flex; align-items: center; gap: 3px; margin: 3px 0 5px; }
+.pip {
+  position: relative;
+  width: var(--pip);
+  height: var(--pip);
+  border: var(--hair) solid currentColor;
+  opacity: 0.45;
+}
+.pip.done { background: currentColor; opacity: 1; }
+.pip.next { border-width: 3px; opacity: 1; }
+.pip.target::after {
+  content: "";
+  position: absolute;
+  left: -3px; right: -3px; bottom: -6px;
+  height: 2px;
+  background: currentColor;
+}
+/* states: stopped = dashed outline, partial = solid outline, serving = solid fill,
+   crash loop = hatched with a heavy border, data lost = the accent. */
+.card.partial { border-style: solid; border-color: var(--ink); }
+.card.serving { border-style: solid; border-color: var(--ink); background: var(--ink); color: var(--paper); }
+.card.serving .rules .fatal { color: inherit; } /* the danger is past once it serves; keeps contrast on the fill */
+.card.crashed {
+  border: var(--heavy) solid var(--ink);
+  background: repeating-linear-gradient(135deg, var(--line) 0 2px, var(--paper) 2px 7px);
+}
+.card.crashed .state { background: var(--ink); color: var(--paper); padding: 0 var(--s-1); }
+.card.lost {
+  border: var(--heavy) solid var(--accent);
+  background:
+    repeating-linear-gradient(45deg, var(--accent-soft) 0 2px, transparent 2px 7px),
+    repeating-linear-gradient(135deg, var(--accent-soft) 0 2px, var(--paper) 2px 7px);
+}
+.card.lost .name > span:first-child { text-decoration: line-through; text-decoration-thickness: 2px; }
+.card.lost .state { background: var(--accent); color: var(--on-accent); padding: 0 var(--s-1); }
+.card.acting { outline: var(--heavy) solid var(--ink); outline-offset: 3px; }
+.card.acting.alarm { outline-color: var(--accent); outline-width: 3px; }
+.card.acting.alarm .pip.target::after { background: var(--accent); }
+.card.pulse { animation: pulse var(--pulse) ease-out 1; }
+@keyframes pulse {
+  from { outline-offset: 12px; outline-color: transparent; }
+  to { outline-offset: 3px; }
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-4);
+  padding: var(--s-1) var(--s-3);
+  border-top: var(--hair) solid var(--line);
+  font-size: var(--fs-0);
+  color: var(--ink-2);
+  margin: 0;
+  list-style: none;
+}
+.legend li { display: flex; align-items: center; gap: 5px; }
+.legend .pip, .legend .sw { color: var(--ink); flex: none; }
+.sw { width: 18px; height: var(--pip); border: var(--hair) dashed var(--ink-2); }
+.sw.partial { border: var(--hair) solid var(--ink); }
+.sw.serving { border: var(--hair) solid var(--ink); background: var(--ink); }
+.sw.crashed { border: var(--heavy) solid var(--ink); background: repeating-linear-gradient(135deg, var(--line) 0 2px, var(--paper) 2px 5px); }
+.sw.lost { border: var(--heavy) solid var(--accent); background: repeating-linear-gradient(135deg, var(--accent-soft) 0 2px, var(--paper) 2px 5px); }
+
+/* ---- current call ---- */
+.call { gap: var(--s-1); overflow: auto; }
+.call-head { display: flex; justify-content: space-between; gap: var(--s-2); }
+#c-line { font-family: var(--font-mono); font-size: var(--fs-3); font-weight: 700; margin: 0; overflow-wrap: anywhere; line-height: 1.2; }
+#c-line .tool { font-weight: 400; }
+#c-result, #c-note { margin: 0; font-size: var(--fs-1); }
+#c-result b { font-family: var(--font-mono); font-size: var(--fs-2); }
+#c-note { color: var(--ink-2); min-height: 1.35em; }
+.banner {
+  margin: 2px 0 0;
+  padding: var(--s-1) var(--s-2);
+  font-size: var(--fs-1);
+  border: var(--heavy) solid var(--ink);
+}
+.banner b { display: block; font-size: var(--fs-2); letter-spacing: 0.07em; text-transform: uppercase; }
+.banner.tier b, .banner.end b { display: inline; margin-right: var(--s-2); }
+.banner.tier { background: var(--ink); color: var(--paper); }
+.banner.loss { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.banner.crash {
+  border-color: var(--accent);
+  background: repeating-linear-gradient(135deg, var(--accent-soft) 0 3px, var(--paper) 3px 9px);
+}
+.banner.wrong { border-color: var(--accent); }
+.banner.crash b, .banner.wrong b { color: var(--accent); }
+
+/* ---- key moments and log ---- */
+.scroll { overflow: auto; min-height: 0; flex: 1; margin: 0; padding: 0; list-style: none; max-height: 260px; }
+.keys .none { color: var(--ink-2); font-size: var(--fs-1); margin: 0; }
+.key {
+  display: grid;
+  grid-template-columns: 34px 14px minmax(0, 1fr);
+  gap: var(--s-2);
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: var(--hair) solid var(--line);
+  padding: 3px var(--s-1);
+  min-height: 26px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--fs-1);
+}
+.key:hover { background: var(--paper-2); }
+.key[aria-current="true"] { background: var(--ink); color: var(--paper); }
+.key .n { color: var(--ink-2); text-align: right; }
+.key[aria-current="true"] .n { color: inherit; }
+.key .what { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.glyph { width: 12px; height: 12px; border: var(--heavy) solid var(--accent); display: block; }
+.glyph.loss { background: var(--accent); }
+.glyph.crash { background: repeating-linear-gradient(135deg, var(--accent) 0 2px, transparent 2px 4px); }
+.glyph.wrong { border-radius: 50%; }
+.logrow {
+  display: grid;
+  grid-template-columns: 34px 56px minmax(0, 1fr) auto;
+  gap: var(--s-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-1);
+  padding: 0 var(--s-1);
+  line-height: 1.3;
+  border-left: 3px solid transparent;
+  white-space: nowrap;
+}
+.logrow .n { color: var(--ink-2); text-align: right; }
+.logrow .what { overflow: hidden; text-overflow: ellipsis; }
+.logrow.keyrow { border-left-color: var(--accent); }
+.logrow.keyrow .res { color: var(--accent); font-weight: 700; }
+.logrow[aria-current="true"] { background: var(--ink); color: var(--paper); }
+.logrow[aria-current="true"] .n, .logrow[aria-current="true"] .res { color: inherit; }
+
+/* ---- transport ---- */
+.transport {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-3);
+  border: var(--hair) solid var(--ink);
+  padding: var(--s-2) var(--s-3);
+  background: var(--paper);
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+}
+.transport .btns { display: flex; gap: var(--s-1); }
+.transport .btn { min-width: 40px; font-family: var(--font-mono); font-size: var(--fs-1); }
+#play { min-width: 68px; font-weight: 700; }
+.scrub { position: relative; flex: 1 1 240px; height: 34px; }
+#marks { position: absolute; left: 7px; right: 7px; top: 0; height: 9px; }
+#marks i { position: absolute; top: 0; width: 3px; margin-left: -1.5px; height: 9px; background: var(--accent); }
+#marks i.crash { background: repeating-linear-gradient(var(--accent) 0 2px, transparent 2px 4px); }
+#marks i.wrong { width: 1px; margin-left: -0.5px; top: 4px; height: 5px; }
+#seek { position: absolute; left: 0; right: 0; bottom: 2px; width: 100%; margin: 0; height: 20px; appearance: none; -webkit-appearance: none; background: none; cursor: pointer; }
+#seek::-webkit-slider-runnable-track { height: 4px; background: var(--line); }
+#seek::-moz-range-track { height: 4px; background: var(--line); }
+#seek::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 20px; margin-top: -8px; background: var(--ink); border: 0; border-radius: 0; }
+#seek::-moz-range-thumb { width: 14px; height: 20px; background: var(--ink); border: 0; border-radius: 0; }
+#count { font-family: var(--font-mono); font-size: var(--fs-1); min-width: 9ch; text-align: right; }
+.speed { display: flex; align-items: center; gap: var(--s-1); }
+.speed select { background: var(--paper); border: var(--hair) solid var(--ink); min-height: 32px; border-radius: 0; padding: 0 var(--s-1); font-family: var(--font-mono); font-size: var(--fs-1); }
+.kbd { font-size: var(--fs-0); color: var(--ink-2); margin: 0; }
+
+@media (min-width: 620px) {
+  .meters { grid-template-columns: 1.3fr 1fr 1.5fr 1fr; }
+  .meter { border-bottom: 0; }
+  .meter:last-child { border-right: 0; }
+}
+@media (min-width: 980px) {
+  body { height: 100dvh; min-height: 600px; }
+  #app {
+    min-height: 0;
+    padding: var(--s-2) var(--s-4) var(--s-3);
+    gap: var(--s-2) var(--s-3);
+    grid-template-columns: minmax(0, 1fr) var(--side);
+    grid-template-rows: auto 186px minmax(0, 1fr) minmax(0, 1.6fr) auto;
+    grid-template-areas:
+      "meters meters"
+      "stage call"
+      "stage keys"
+      "stage log"
+      "transport transport";
+  }
+  .scroll { max-height: none; }
+  .transport { position: static; }
+  .layer { flex-direction: row; align-items: stretch; padding: var(--s-2) var(--s-3) 16px; }
+  .layer-name { flex: 0 0 92px; flex-direction: column; gap: 0; justify-content: center; }
+}
+@media (max-width: 619px) {
+  .kbd { display: none; }
+  .meter:nth-child(1), .meter:nth-child(3) { grid-column: span 2; border-right: 0; }
+  .meter:nth-child(3) { order: 1; border-bottom: 0; }
+  .meter:nth-child(4) { border-right: 0; }
+  .meter .sub { white-space: normal; }
+  .card { flex-basis: 160px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card.pulse { animation: none; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Unknown Machine <span>replay</span></h1>
+  <p id="meta"></p>
+  <button class="btn" id="open" type="button">Open episode</button>
+  <input id="file" type="file" accept="application/json,.json" hidden aria-label="Episode JSON file">
+</header>
+
+<div id="warn" role="alert" hidden></div>
+
+<section id="empty" aria-label="Load an episode">
+  <div class="drop">
+    <p>Drop an episode JSON here, or choose a file.</p>
+    <button class="btn" id="open2" type="button">Choose file</button>
+    <p class="hint" id="empty-hint">The file is the verifier's <span class="mono">episode.json</span>. It is read in this page and sent nowhere.</p>
+  </div>
+</section>
+
+<main id="app" hidden>
+  <section class="meters" aria-label="Meters">
+    <div class="meter">
+      <p class="label">Window</p>
+      <div class="value"><span id="m-window">0</span> <small>/ <span id="m-total">0</span> min</small></div>
+      <div class="bar" aria-hidden="true"><i id="m-bar"></i></div>
+    </div>
+    <div class="meter">
+      <p class="label">Score so far</p>
+      <div class="value" id="m-score">0.00</div>
+      <div class="sub"><span id="m-banked">0.00</span> banked, <span id="m-lost">0 lost</span></div>
+    </div>
+    <div class="meter">
+      <p class="label">Tiers banked</p>
+      <div class="tiers" id="m-tiers"></div>
+    </div>
+    <div class="meter">
+      <p class="label">Replication lag</p>
+      <div class="value" id="m-lag">0</div>
+      <div class="sub" id="m-lagsub"></div>
+    </div>
+  </section>
+
+  <section class="stage" aria-label="System">
+    <div class="stage-inner" id="stage">
+      <svg id="edges" aria-hidden="true"></svg>
+    </div>
+    <ul class="legend" aria-label="Legend">
+      <li><span class="pip done"></span>step done</li>
+      <li><span class="pip next"></span>next</li>
+      <li><span class="pip"></span>pending</li>
+      <li><span class="sw"></span>stopped</li>
+      <li><span class="sw partial"></span>partial</li>
+      <li><span class="sw serving"></span>serving</li>
+      <li><span class="sw crashed"></span>crash loop</li>
+      <li><span class="sw lost"></span>data lost</li>
+      <li>ord, dep: what a too-early or missing-dependency command does</li>
+    </ul>
+  </section>
+
+  <section class="panel call" aria-label="Current call" aria-live="polite">
+    <div class="call-head"><p class="label" id="c-step"></p><p class="label" id="c-cost"></p></div>
+    <p id="c-line"></p>
+    <p id="c-result"></p>
+    <p id="c-note"></p>
+    <div id="c-banners"></div>
+  </section>
+
+  <section class="panel keys" aria-label="Key moments">
+    <div class="call-head"><p class="label">Key moments</p><p class="label" id="k-count"></p></div>
+    <ol class="scroll" id="k-list"></ol>
+  </section>
+
+  <section class="panel log" aria-label="Event log">
+    <p class="label">Event log</p>
+    <ol class="scroll" id="l-list"></ol>
+  </section>
+
+  <footer class="transport" aria-label="Playback">
+    <div class="btns">
+      <button class="btn" id="first" type="button" aria-label="Go to start">|&lt;</button>
+      <button class="btn" id="back" type="button" aria-label="Step back">&lt;</button>
+      <button class="btn" id="play" type="button" aria-pressed="false">Play</button>
+      <button class="btn" id="fwd" type="button" aria-label="Step forward">&gt;</button>
+      <button class="btn" id="last" type="button" aria-label="Go to end">&gt;|</button>
+    </div>
+    <div class="scrub">
+      <div id="marks" aria-hidden="true"></div>
+      <input id="seek" type="range" min="0" max="0" step="1" value="0" aria-label="Step">
+    </div>
+    <span id="count"></span>
+    <label class="speed"><span class="label">Speed</span>
+      <select id="speed">
+        <option value="0.5">0.5x</option>
+        <option value="1" selected>1x</option>
+        <option value="2">2x</option>
+        <option value="4">4x</option>
+        <option value="8">8x</option>
+      </select>
+    </label>
+    <p class="kbd">space: play or pause. left and right arrows: step.</p>
+  </footer>
+</main>
+
+<!--EPISODE-->
+<script>
+"use strict";
+/* core:start  (pure replay logic, no DOM; also run under node for verification) */
+const ROLES = ["storage", "database", "middleware", "application", "gateway"];
+const ROLE_LAYER = { storage: 1, database: 2, middleware: 3, application: 4, gateway: 5 };
+const TIER_MAX_LAYER = { 1: 1, 2: 2, 3: 4, 4: 5 };
+const TIER_POINTS = { 1: 0.10, 2: 0.15, 3: 0.25, 4: 0.50 };
+const LOSS_PENALTY = 0.15;
+const COST = { run: 1, inspect: 2, dry_run: 4, restart: 4 };
+const SYNC = "sync";
+const CODE_TEXT = {
+  E_ORDER: "another command of this service has to be applied first",
+  E_DEP: "a service this command depends on is not serving",
+  E_DONE: "already applied, nothing to do",
+  E_LAG: "replication lag is not zero",
+  E_FOREIGN: "the command is not part of this service's recovery",
+  E_CRASHED: "the service is in a crash loop",
+  E_LOST: "the service has lost its data",
+};
+
+function validateEpisode(ep) {
+  if (!ep || typeof ep !== "object" || !Array.isArray(ep.log)) {
+    return "This is not an episode file: it has no log.";
+  }
+  if (!ep.system || !Array.isArray(ep.system.services)) {
+    return "This episode has no 'system' field. It was recorded before the environment stored "
+      + "the hidden rules with the result, so it cannot be replayed. Record the episode again.";
+  }
+  for (const s of ep.system.services) {
+    if (!(s.role in ROLE_LAYER) || !Array.isArray(s.steps)) {
+      return "Service '" + s.codename + "' has an unknown role or no steps.";
+    }
+  }
+  return null;
+}
+
+function tierPoints(banked) {
+  return banked.reduce((sum, t) => sum + TIER_POINTS[t], 0);
+}
+
+function scoreOf(banked, lostCount) {
+  const raw = tierPoints(banked) - LOSS_PENALTY * lostCount;
+  return Math.round(Math.min(1, Math.max(0, raw)) * 10000) / 10000;
+}
+
+function isServing(spec, frame) {
+  const n = spec.codename;
+  return frame.progress[n] === spec.steps.length && !frame.crashed.has(n) && !frame.lost.has(n);
+}
+
+function modeOf(spec, frame) {
+  const n = spec.codename;
+  if (frame.lost.has(n)) return "lost";
+  if (frame.crashed.has(n)) return "crashed";
+  const done = frame.progress[n];
+  if (done === spec.steps.length) return "serving";
+  return done ? "partial" : "stopped";
+}
+
+/* What a command really does in `frame`. Null when the log alone cannot tell (commands that
+   are not recovery steps: their reaction is not part of the recorded rules). */
+function evaluate(ep, byName, frame, service, command) {
+  const spec = byName[service];
+  if (!spec) return null;
+  if (frame.lost.has(service)) return { outcome: "refused", code: "E_LOST" };
+  if (frame.crashed.has(service)) return { outcome: "refused", code: "E_CRASHED" };
+  if (command === SYNC && !spec.steps.some((s) => s.command === SYNC)) {
+    if (!isServing(spec, frame)) return { outcome: "refused", code: "E_ORDER" };
+    if (frame.lag === 0) return { outcome: "refused", code: "E_DONE" };
+    return { outcome: "ok", code: null };
+  }
+  const index = spec.steps.findIndex((s) => s.command === command);
+  if (index < 0) return null;
+  const done = frame.progress[service];
+  if (index < done) return { outcome: "refused", code: "E_DONE" };
+  if (index > done) return { outcome: spec.order_violation, code: "E_ORDER" };
+  const unmet = spec.steps[index].requires.some((r) => !byName[r] || !isServing(byName[r], frame));
+  if (unmet) return { outcome: spec.dependency_violation, code: "E_DEP" };
+  if (index === spec.steps.length - 1 && spec.role === "gateway" && frame.lag > 0) {
+    return { outcome: "data_loss", code: "E_LAG" };
+  }
+  return { outcome: "ok", code: null };
+}
+
+/* frames[i] is the state after the first i log entries; frames[0] is the initial state. */
+function buildFrames(ep) {
+  const services = ep.system.services;
+  const byName = Object.fromEntries(services.map((s) => [s.codename, s]));
+  let cur = {
+    progress: Object.fromEntries(services.map((s) => [s.codename, 0])),
+    crashed: new Set(),
+    lost: new Set(),
+    lag: ep.system.initial_lag || 0,
+    banked: [],
+    window: 0,
+    score: 0,
+    truth: null,
+  };
+  const frames = [cur];
+  for (const e of ep.log) {
+    const next = {
+      progress: { ...cur.progress },
+      crashed: new Set(cur.crashed),
+      lost: new Set(cur.lost),
+      lag: cur.lag,
+      banked: cur.banked.slice(),
+      window: cur.window + (COST[e.tool] || 0),
+      score: 0,
+      truth: e.command == null ? null : evaluate(ep, byName, cur, e.service, e.command),
+    };
+    if (e.tool === "run" && e.service in next.progress) {
+      if (e.outcome === "ok") {
+        if (e.command === SYNC && !byName[e.service].steps.some((s) => s.command === SYNC)) next.lag -= 1;
+        else next.progress[e.service] += 1;
+      } else if (e.outcome === "crash") {
+        next.crashed.add(e.service);
+        next.lag += 1;
+      } else if (e.outcome === "data_loss") {
+        next.lost.add(e.service);
+      }
+    } else if (e.tool === "restart" && e.outcome === "ok") {
+      next.crashed.delete(e.service);
+    }
+    if (e.tool === "run" || e.tool === "restart") {
+      for (const tier of [1, 2, 3, 4]) {
+        if (next.banked.includes(tier)) continue;
+        const members = services.filter((s) => ROLE_LAYER[s.role] <= TIER_MAX_LAYER[tier]);
+        if (members.every((s) => isServing(s, next))) next.banked.push(tier);
+      }
+    }
+    next.score = scoreOf(next.banked, next.lost.size);
+    frames.push(next);
+    cur = next;
+  }
+  return frames;
+}
+
+function keyMoments(ep) {
+  const out = [];
+  ep.log.forEach((e, i) => {
+    if (e.tool === "run" && e.outcome === "data_loss") out.push({ step: i + 1, kind: "loss" });
+    else if (e.tool === "run" && e.outcome === "crash") out.push({ step: i + 1, kind: "crash" });
+    else if (e.tool === "dry_run" && e.accurate === false) out.push({ step: i + 1, kind: "wrong" });
+  });
+  return out;
+}
+
+/* Every way the replayed state disagrees with what the episode recorded. Empty when sound. */
+function verifyReplay(ep, frames) {
+  const problems = [];
+  const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  ep.log.forEach((e, i) => {
+    const f = frames[i + 1];
+    const at = "step " + (i + 1) + " (" + e.tool + " " + e.service + (e.command ? " " + e.command : "") + "): ";
+    if (!(e.tool in COST)) problems.push(at + "unknown tool");
+    if (typeof e.window_used === "number" && e.window_used !== f.window) {
+      problems.push(at + "window " + f.window + " replayed, " + e.window_used + " recorded");
+    }
+    if (Array.isArray(e.tiers_banked) && !same(e.tiers_banked, f.banked.slice().sort())) {
+      problems.push(at + "tiers [" + f.banked + "] replayed, [" + e.tiers_banked + "] recorded");
+    }
+    if (f.truth && (e.tool === "run" || (e.tool === "dry_run" && e.accurate !== false))) {
+      if (f.truth.outcome !== e.outcome || f.truth.code !== e.code) {
+        problems.push(at + "rules give " + f.truth.outcome + " " + f.truth.code
+          + ", log has " + e.outcome + " " + e.code);
+      }
+    }
+  });
+  const end = frames[frames.length - 1];
+  if (Array.isArray(ep.tiers_banked) && !same(ep.tiers_banked.slice().sort(), end.banked.slice().sort())) {
+    problems.push("final tiers: [" + end.banked + "] replayed, [" + ep.tiers_banked + "] recorded");
+  }
+  if (Array.isArray(ep.data_lost) && !same(ep.data_lost.slice().sort(), [...end.lost].sort())) {
+    problems.push("final lost services: [" + [...end.lost].sort() + "] replayed, [" + ep.data_lost + "] recorded");
+  }
+  if (typeof ep.window_used === "number" && ep.window_used !== end.window) {
+    problems.push("final window: " + end.window + " replayed, " + ep.window_used + " recorded");
+  }
+  if (typeof ep.score === "number" && Math.abs(ep.score - end.score) > 1e-9) {
+    problems.push("final score: " + end.score + " replayed, " + ep.score + " recorded");
+  }
+  return problems;
+}
+/* core:end */
+
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, cls, text) => {
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text != null) node.textContent = text;
+    return node;
+  };
+  const SVG = "http://www.w3.org/2000/svg";
+  const STEP_MS = 700;
+  const KEY_DWELL = 3;
+  const LOG_ROWS = 12;
+  const STATE_TEXT = { stopped: "stopped", partial: "partial", serving: "serving", crashed: "crash loop", lost: "data lost" };
+  const SHORT = { refused: "refuse", crash: "crash", data_loss: "loss" };
+  const KEY_TEXT = { loss: "data destroyed", crash: "crash", wrong: "forecast wrong" };
+
+  let ep = null, frames = [], keys = [], keyByStep = {}, byName = {};
+  let cards = {}, edges = [], keyButtons = [];
+  let pos = 0, playing = false, timer = null;
+
+  function fmt(x) { return x.toFixed(2); }
+  function callText(e) { return e.tool + " " + e.service + (e.command ? " " + e.command : ""); }
+
+  /* ---------- loading ---------- */
+  function showWarn(title, items) {
+    const box = $("warn");
+    box.textContent = "";
+    if (!title) { box.hidden = true; return; }
+    box.append(el("strong", null, title));
+    if (items && items.length) {
+      const ul = el("ul");
+      items.slice(0, 8).forEach((t) => ul.append(el("li", null, t)));
+      if (items.length > 8) ul.append(el("li", null, "and " + (items.length - 8) + " more"));
+      box.append(ul);
+    }
+    box.hidden = false;
+  }
+
+  function load(data, label) {
+    const error = validateEpisode(data);
+    if (error) { showWarn(error); return; }
+    stop();
+    ep = data;
+    frames = buildFrames(ep);
+    keys = keyMoments(ep);
+    keyByStep = Object.fromEntries(keys.map((k) => [k.step, k]));
+    byName = Object.fromEntries(ep.system.services.map((s) => [s.codename, s]));
+    const problems = verifyReplay(ep, frames);
+    showWarn(problems.length ? "Replay disagrees with the recorded episode. What is shown may be wrong." : null, problems);
+    const sys = ep.system;
+    const head = "seed " + sys.seed + ", level " + sys.level;
+    $("meta").textContent = (label ? label + " / " : "") + head + " / " + sys.services.length
+      + " services / " + ep.log.length + " steps";
+    document.title = "Replay: " + (label || head);
+    $("empty").hidden = true;
+    $("app").hidden = false;
+    buildStage();
+    buildMeters();
+    buildKeys();
+    $("seek").max = String(ep.log.length);
+    pos = 0;
+    render(false);
+    drawEdges();
+  }
+
+  function loadText(text, label) {
+    let data;
+    try { data = JSON.parse(text); } catch (err) { showWarn("Not valid JSON: " + err.message); return; }
+    load(data, label);
+  }
+
+  function loadFile(file) {
+    if (!file) return;
+    file.text().then((text) => loadText(text, file.name.replace(/\.json$/i, "")));
+  }
+
+  /* ---------- build ---------- */
+  function buildStage() {
+    const stage = $("stage");
+    stage.querySelectorAll(".layer").forEach((n) => n.remove());
+    cards = {};
+    for (const role of ROLES.slice().reverse()) {
+      const members = ep.system.services.filter((s) => s.role === role);
+      const layer = el("div", "layer");
+      const name = el("div", "layer-name");
+      name.append(el("b", null, "L" + ROLE_LAYER[role]), el("span", "label", role));
+      const row = el("div", "cards");
+      for (const spec of members) row.append(buildCard(spec));
+      layer.append(name, row);
+      stage.append(layer);
+    }
+    edges = [];
+    const svg = $("edges");
+    svg.textContent = "";
+    for (const spec of ep.system.services) {
+      const deps = [...new Set(spec.steps.flatMap((s) => s.requires))].filter((d) => d in cards);
+      deps.forEach((dep, k) => {
+        const path = document.createElementNS(SVG, "path");
+        path.setAttribute("class", "edge");
+        svg.append(path);
+        edges.push({ from: spec.codename, to: dep, k, n: deps.length, path });
+      });
+    }
+  }
+
+  function buildCard(spec) {
+    const card = el("div", "card");
+    const name = el("div", "name");
+    const state = el("span", "state");
+    name.append(el("span", null, spec.codename), state);
+    const pipRow = el("div", "pips");
+    const pips = spec.steps.map((step, i) => {
+      const pip = el("span", "pip");
+      pip.title = (i + 1) + ". " + step.command + (step.requires.length ? " (needs " + step.requires.join(", ") + ")" : "");
+      pipRow.append(pip);
+      return pip;
+    });
+    const lag = el("span", "aside");
+    pipRow.append(lag);
+    const info = el("div", "info");
+    const rules = el("span", "rules");
+    for (const [tag, outcome] of [["ord", spec.order_violation], ["dep", spec.dependency_violation]]) {
+      const r = el("span", outcome === "data_loss" ? "fatal" : null, tag + ":" + (SHORT[outcome] || outcome));
+      r.title = (tag === "ord" ? "A command applied too early: " : "A command applied before a dependency serves: ") + outcome;
+      rules.append(r);
+    }
+    info.append(el("span", null, spec.role), rules);
+    card.append(name, pipRow, info);
+    cards[spec.codename] = { card, state, pips, lag, spec };
+    return card;
+  }
+
+  function buildMeters() {
+    const box = $("m-tiers");
+    box.textContent = "";
+    for (const t of [1, 2, 3, 4]) {
+      const cell = el("div", "tier");
+      cell.id = "tier-" + t;
+      cell.append(el("b", null, "T" + t), document.createTextNode("+" + fmt(TIER_POINTS[t])));
+      box.append(cell);
+    }
+    $("m-total").textContent = ep.window_total;
+    $("m-lagsub").textContent = ep.system.lag_service ? "sync on " + ep.system.lag_service : "";
+  }
+
+  function buildKeys() {
+    const list = $("k-list");
+    list.textContent = "";
+    keyButtons = [];
+    const count = { loss: 0, crash: 0, wrong: 0 };
+    keys.forEach((k) => {
+      count[k.kind] += 1;
+      const e = ep.log[k.step - 1];
+      const li = el("li");
+      const b = el("button", "key");
+      b.type = "button";
+      b.append(el("span", "n", String(k.step)), el("span", "glyph " + k.kind),
+        el("span", "what", KEY_TEXT[k.kind] + ": " + callText(e)));
+      b.setAttribute("aria-label", "Step " + k.step + ", " + KEY_TEXT[k.kind] + ": " + callText(e));
+      b.addEventListener("click", () => { stop(); go(k.step, true); });
+      li.append(b);
+      list.append(li);
+      keyButtons.push({ step: k.step, b });
+    });
+    $("k-count").textContent = count.loss + " destroyed / " + count.crash + " crash / " + count.wrong + " wrong";
+    if (!keys.length) list.append(el("li", "none", "No destroyed data, no crashes and no wrong forecasts in this episode."));
+    const marks = $("marks");
+    marks.textContent = "";
+    keys.forEach((k) => {
+      const m = el("i", k.kind);
+      m.style.left = (100 * k.step / Math.max(1, ep.log.length)) + "%";
+      marks.append(m);
+    });
+  }
+
+  /* ---------- edges ---------- */
+  function drawEdges() {
+    if (!ep) return;
+    const stage = $("stage");
+    const base = stage.getBoundingClientRect();
+    const svg = $("edges");
+    svg.setAttribute("viewBox", "0 0 " + base.width + " " + base.height);
+    for (const edge of edges) {
+      const a = cards[edge.from].card.getBoundingClientRect();
+      const b = cards[edge.to].card.getBoundingClientRect();
+      const spread = (edge.k - (edge.n - 1) / 2) * 9;
+      const ax = a.left - base.left + a.width / 2 + spread;
+      const bx = b.left - base.left + b.width / 2;
+      let d;
+      if (Math.abs(a.top - b.top) < a.height / 2) {
+        const y = Math.max(a.bottom, b.bottom) - base.top;
+        d = "M" + ax + " " + y + " C" + ax + " " + (y + 16) + " " + bx + " " + (y + 16) + " " + bx + " " + y;
+      } else {
+        const up = a.top < b.top;
+        const ay = (up ? a.bottom : a.top) - base.top;
+        const by = (up ? b.top : b.bottom) - base.top;
+        const mid = (ay + by) / 2;
+        d = "M" + ax + " " + ay + " C" + ax + " " + mid + " " + bx + " " + mid + " " + bx + " " + by;
+      }
+      edge.path.setAttribute("d", d);
+    }
+  }
+
+  /* ---------- render ---------- */
+  function render(animate) {
+    const frame = frames[pos];
+    const e = pos > 0 ? ep.log[pos - 1] : null;
+    const key = keyByStep[pos] || null;
+    const total = ep.log.length;
+
+    // meters
+    $("m-window").textContent = frame.window;
+    $("m-bar").style.width = Math.min(100, 100 * frame.window / Math.max(1, ep.window_total)) + "%";
+    $("m-score").textContent = fmt(frame.score);
+    $("m-banked").textContent = fmt(tierPoints(frame.banked));
+    const lost = $("m-lost");
+    lost.textContent = frame.lost.size ? frame.lost.size + " lost, -" + fmt(LOSS_PENALTY * frame.lost.size) : "0 lost";
+    lost.classList.toggle("has", frame.lost.size > 0);
+    for (const t of [1, 2, 3, 4]) $("tier-" + t).classList.toggle("banked", frame.banked.includes(t));
+    $("m-lag").textContent = frame.lag;
+
+    // services
+    for (const name in cards) {
+      const c = cards[name];
+      const mode = modeOf(c.spec, frame);
+      const done = frame.progress[name];
+      const acting = !!e && e.service === name;
+      c.card.className = "card " + mode + (acting ? " acting" : "") + (acting && key ? " alarm" : "");
+      c.state.textContent = STATE_TEXT[mode] + (mode === "partial" || mode === "crashed" || mode === "lost"
+        ? " " + done + "/" + c.spec.steps.length : "");
+      c.pips.forEach((pip, i) => {
+        const target = acting && e.command === c.spec.steps[i].command;
+        const next = i === done && mode !== "lost";
+        pip.className = "pip" + (i < done ? " done" : next ? " next" : "") + (target ? " target" : "");
+      });
+      c.lag.textContent = [
+        name === ep.system.lag_service ? "lag " + frame.lag : "",
+        c.spec.accuracy < 1 ? "dry run " + Math.round(c.spec.accuracy * 100) + "%" : "",
+      ].filter(Boolean).join(" / ");
+      if (acting && animate) {
+        void c.card.offsetWidth;
+        c.card.classList.add("pulse");
+      }
+    }
+    for (const edge of edges) {
+      const dep = cards[edge.to].spec;
+      const cls = frame.lost.has(edge.to) ? " dead" : isServing(dep, frame) ? " met" : "";
+      edge.path.setAttribute("class", "edge" + cls + (e && e.service === edge.from ? " active" : ""));
+    }
+
+    renderCall(frame, e, key, total);
+    renderLog();
+    keyButtons.forEach((k) => {
+      const current = k.step === pos;
+      k.b.setAttribute("aria-current", current ? "true" : "false");
+      if (current) {
+        const list = $("k-list");
+        const top = k.b.offsetTop - list.offsetTop;
+        if (top < list.scrollTop || top + k.b.offsetHeight > list.scrollTop + list.clientHeight) {
+          list.scrollTop = top - list.clientHeight / 2;
+        }
+      }
+    });
+
+    const seek = $("seek");
+    seek.value = String(pos);
+    seek.setAttribute("aria-valuetext", e ? "Step " + pos + " of " + total + ": " + callText(e) + ", " + e.outcome
+      : "Start, before the first call");
+    $("count").textContent = pos + " / " + total;
+    const play = $("play");
+    play.textContent = playing ? "Pause" : "Play";
+    play.setAttribute("aria-pressed", playing ? "true" : "false");
+  }
+
+  function banner(kind, title, text) {
+    const b = el("p", "banner " + kind);
+    b.append(el("b", null, title), document.createTextNode(text));
+    return b;
+  }
+
+  function renderCall(frame, e, key, total) {
+    const banners = $("c-banners");
+    banners.textContent = "";
+    const line = $("c-line"), result = $("c-result"), note = $("c-note");
+    line.textContent = result.textContent = note.textContent = "";
+    if (!e) {
+      $("c-step").textContent = "Start";
+      $("c-cost").textContent = "";
+      line.textContent = "System down";
+      result.textContent = ep.system.services.length + " services stopped, replication lag " + frame.lag
+        + ", window " + ep.window_total + " min.";
+      return;
+    }
+    $("c-step").textContent = "Step " + pos + " of " + total;
+    $("c-cost").textContent = "+" + (COST[e.tool] || 0) + " min";
+    line.append(el("span", "tool", e.tool + " "), document.createTextNode(e.service + (e.command ? " " + e.command : "")));
+    result.append(document.createTextNode(e.tool === "dry_run" ? "forecast " : "outcome "),
+      el("b", null, e.outcome + (e.code ? " " + e.code : "")));
+    const meaning = e.code && CODE_TEXT[e.code] ? e.code + ": " + CODE_TEXT[e.code] + ". " : "";
+    if (e.tool === "dry_run") {
+      const pct = typeof e.accuracy === "number" ? Math.round(e.accuracy * 100) + "%" : "100%";
+      note.textContent = meaning + (e.accurate === false ? "" : "Forecast right. ") + "Dry runs here are right " + pct + " of the time.";
+    } else {
+      note.textContent = meaning;
+    }
+
+    const prev = frames[pos - 1];
+    if (key && key.kind === "loss") {
+      banners.append(banner("loss", "Data destroyed: " + e.service,
+        "Gone for good. -" + fmt(LOSS_PENALTY) + ", and nothing that depends on it can serve."));
+    } else if (key && key.kind === "crash") {
+      banners.append(banner("crash", "Crash loop: " + e.service,
+        "Replication lag +1. A restart costs " + COST.restart + " min."));
+    } else if (key && key.kind === "wrong") {
+      const t = frame.truth;
+      banners.append(banner("wrong", "Forecast wrong",
+        "The agent was told " + e.outcome + (e.code ? " " + e.code : "") + ". Running it now would really give "
+        + (t ? t.outcome + (t.code ? " " + t.code : "") : "something else") + "."));
+    }
+    for (const t of frame.banked) {
+      if (!prev.banked.includes(t)) banners.append(banner("tier", "Tier " + t + " banked", "+" + fmt(TIER_POINTS[t])));
+    }
+    if (pos === total) {
+      const why = ep.window_used >= ep.window_total ? "window exhausted" : ep.finished ? "agent called finish" : "episode not finished";
+      banners.append(banner("end", "End: score " + fmt(frame.score), why + ", " + frame.window + " of " + ep.window_total + " min used."));
+    }
+  }
+
+  function renderLog() {
+    const list = $("l-list");
+    list.textContent = "";
+    for (let i = Math.max(1, pos - LOG_ROWS + 1); i <= pos; i++) {
+      const e = ep.log[i - 1];
+      const row = el("li", "logrow" + (keyByStep[i] ? " keyrow" : ""));
+      row.append(el("span", "n", String(i)), el("span", null, e.tool),
+        el("span", "what", e.service + (e.command ? " " + e.command : "")),
+        el("span", "res", (keyByStep[i] && keyByStep[i].kind === "wrong" ? "wrong: " : "") + e.outcome + (e.code ? " " + e.code : "")));
+      if (i === pos) row.setAttribute("aria-current", "true");
+      list.append(row);
+    }
+    if (pos === 0) list.append(el("li", "logrow", ""));
+    list.scrollTop = list.scrollHeight;
+  }
+
+  /* ---------- playback ---------- */
+  function go(to, animate) {
+    if (!ep) return;
+    pos = Math.max(0, Math.min(ep.log.length, to));
+    render(animate);
+  }
+
+  function schedule() {
+    clearTimeout(timer);
+    if (!playing) return;
+    const speed = parseFloat($("speed").value) || 1;
+    const dwell = keyByStep[pos] ? Math.max(STEP_MS * KEY_DWELL / speed, 1200) : STEP_MS / speed;
+    timer = setTimeout(() => {
+      if (pos >= ep.log.length) { stop(); return; }
+      go(pos + 1, true);
+      if (pos >= ep.log.length) stop(); else schedule();
+    }, dwell);
+  }
+
+  function stop() {
+    playing = false;
+    clearTimeout(timer);
+    if (ep) render(false);
+  }
+
+  function toggle() {
+    if (!ep) return;
+    if (playing) { stop(); return; }
+    if (pos >= ep.log.length) pos = 0;
+    playing = true;
+    render(false);
+    schedule();
+  }
+
+  /* ---------- wiring ---------- */
+  $("open").addEventListener("click", () => $("file").click());
+  $("open2").addEventListener("click", () => $("file").click());
+  $("file").addEventListener("change", (ev) => { loadFile(ev.target.files[0]); ev.target.value = ""; });
+  $("play").addEventListener("click", toggle);
+  $("first").addEventListener("click", () => { stop(); go(0, false); });
+  $("last").addEventListener("click", () => { stop(); go(ep.log.length, true); });
+  $("back").addEventListener("click", () => { stop(); go(pos - 1, true); });
+  $("fwd").addEventListener("click", () => { stop(); go(pos + 1, true); });
+  $("seek").addEventListener("input", (ev) => {
+    const to = parseInt(ev.target.value, 10) || 0; // read before stop() re-renders the old position
+    stop();
+    go(to, false);
+  });
+  $("speed").addEventListener("change", schedule);
+
+  document.addEventListener("keydown", (ev) => {
+    if (!ep || ev.altKey || ev.ctrlKey || ev.metaKey) return;
+    const tag = ev.target.tagName;
+    const isSeek = ev.target.id === "seek";
+    if (ev.key === " " || ev.code === "Space") {
+      if (tag === "BUTTON" || tag === "SELECT") return;
+      ev.preventDefault();
+      toggle();
+    } else if (ev.key === "ArrowLeft" || ev.key === "ArrowRight") {
+      if (isSeek || tag === "SELECT") return;
+      ev.preventDefault();
+      stop();
+      go(pos + (ev.key === "ArrowRight" ? 1 : -1), true);
+    }
+  });
+
+  let depth = 0;
+  window.addEventListener("dragenter", (ev) => { ev.preventDefault(); depth += 1; document.body.classList.add("dragging"); });
+  window.addEventListener("dragleave", () => { depth -= 1; if (depth <= 0) { depth = 0; document.body.classList.remove("dragging"); } });
+  window.addEventListener("dragover", (ev) => ev.preventDefault());
+  window.addEventListener("drop", (ev) => {
+    ev.preventDefault();
+    depth = 0;
+    document.body.classList.remove("dragging");
+    loadFile(ev.dataTransfer && ev.dataTransfer.files[0]);
+  });
+
+  if (typeof ResizeObserver === "function") new ResizeObserver(drawEdges).observe($("stage"));
+  window.addEventListener("resize", drawEdges);
+
+  const wanted = new URLSearchParams(location.search).get("episode");
+  if (window.EPISODE) {
+    load(window.EPISODE, window.EPISODE_LABEL || "");
+  } else if (wanted) {
+    if (/^https?:$/.test(location.protocol)) {
+      fetch(new URL(wanted, location.href))
+        .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+        .then((text) => loadText(text, wanted.split("/").pop().replace(/\.json$/i, "")))
+        .catch((err) => showWarn("Could not load " + wanted + ": " + err.message));
+    } else {
+      $("empty-hint").textContent = "The episode query only works when this page is served over http. Drop the file here instead.";
+    }
+  }
+})();
+</script>
+</body>
+</html>

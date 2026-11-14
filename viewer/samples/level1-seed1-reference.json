@@ -1,0 +1,676 @@
+{
+ "score": 1.0,
+ "tiers_banked": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "data_lost": [],
+ "window_used": 78,
+ "window_total": 112,
+ "finished": true,
+ "calls": 39,
+ "system": {
+  "seed": 1,
+  "level": 1,
+  "initial_lag": 1,
+  "lag_service": "pumice",
+  "services": [
+   {
+    "codename": "cobalt",
+    "role": "storage",
+    "accuracy": 1.0,
+    "order_violation": "crash",
+    "dependency_violation": "data_loss",
+    "steps": [
+     {
+      "command": "scrub",
+      "requires": []
+     },
+     {
+      "command": "fsck",
+      "requires": []
+     },
+     {
+      "command": "start",
+      "requires": []
+     }
+    ]
+   },
+   {
+    "codename": "heron",
+    "role": "gateway",
+    "accuracy": 1.0,
+    "order_violation": "refused",
+    "dependency_violation": "refused",
+    "steps": [
+     {
+      "command": "health-gate",
+      "requires": [
+       "osprey"
+      ]
+     },
+     {
+      "command": "renew-cert",
+      "requires": []
+     },
+     {
+      "command": "sync-routes",
+      "requires": []
+     },
+     {
+      "command": "cutover",
+      "requires": [
+       "moss",
+       "osprey"
+      ]
+     }
+    ]
+   },
+   {
+    "codename": "moss",
+    "role": "application",
+    "accuracy": 1.0,
+    "order_violation": "refused",
+    "dependency_violation": "crash",
+    "steps": [
+     {
+      "command": "compile-assets",
+      "requires": []
+     },
+     {
+      "command": "register",
+      "requires": []
+     },
+     {
+      "command": "warm-cache",
+      "requires": []
+     },
+     {
+      "command": "start",
+      "requires": [
+       "osprey",
+       "pumice"
+      ]
+     }
+    ]
+   },
+   {
+    "codename": "osprey",
+    "role": "middleware",
+    "accuracy": 1.0,
+    "order_violation": "data_loss",
+    "dependency_violation": "data_loss",
+    "steps": [
+     {
+      "command": "rebalance",
+      "requires": []
+     },
+     {
+      "command": "rotate-keys",
+      "requires": [
+       "pumice"
+      ]
+     },
+     {
+      "command": "start",
+      "requires": [
+       "pumice"
+      ]
+     }
+    ]
+   },
+   {
+    "codename": "pumice",
+    "role": "database",
+    "accuracy": 1.0,
+    "order_violation": "refused",
+    "dependency_violation": "refused",
+    "steps": [
+     {
+      "command": "migrate",
+      "requires": []
+     },
+     {
+      "command": "reindex",
+      "requires": [
+       "cobalt"
+      ]
+     },
+     {
+      "command": "recover",
+      "requires": [
+       "cobalt"
+      ]
+     },
+     {
+      "command": "start",
+      "requires": [
+       "cobalt"
+      ]
+     }
+    ]
+   },
+   {
+    "codename": "thistle",
+    "role": "middleware",
+    "accuracy": 1.0,
+    "order_violation": "data_loss",
+    "dependency_violation": "data_loss",
+    "steps": [
+     {
+      "command": "rotate-keys",
+      "requires": []
+     },
+     {
+      "command": "drain",
+      "requires": []
+     },
+     {
+      "command": "start",
+      "requires": [
+       "pumice"
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "log": [
+  {
+   "tool": "inspect",
+   "service": "cobalt",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 2,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "heron",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 4,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "moss",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 6,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "osprey",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 8,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "pumice",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 10,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "thistle",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 12,
+   "tiers_banked": []
+  },
+  {
+   "tool": "dry_run",
+   "service": "cobalt",
+   "command": "fsck",
+   "outcome": "crash",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 16,
+   "tiers_banked": [],
+   "accuracy": 1.0
+  },
+  {
+   "tool": "run",
+   "service": "cobalt",
+   "command": "scrub",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 17,
+   "tiers_banked": []
+  },
+  {
+   "tool": "run",
+   "service": "cobalt",
+   "command": "fsck",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 18,
+   "tiers_banked": []
+  },
+  {
+   "tool": "run",
+   "service": "cobalt",
+   "command": "start",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 19,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "pumice",
+   "command": "migrate",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 23,
+   "tiers_banked": [
+    1
+   ],
+   "accuracy": 1.0
+  },
+  {
+   "tool": "run",
+   "service": "pumice",
+   "command": "migrate",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 24,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "pumice",
+   "command": "recover",
+   "outcome": "refused",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 28,
+   "tiers_banked": [
+    1
+   ],
+   "accuracy": 1.0
+  },
+  {
+   "tool": "run",
+   "service": "pumice",
+   "command": "reindex",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 29,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "pumice",
+   "command": "recover",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 30,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "pumice",
+   "command": "start",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 31,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "osprey",
+   "command": "rebalance",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 35,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 1.0
+  },
+  {
+   "tool": "run",
+   "service": "osprey",
+   "command": "rebalance",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 36,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "osprey",
+   "command": "rotate-keys",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 40,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 1.0
+  },
+  {
+   "tool": "run",
+   "service": "osprey",
+   "command": "rotate-keys",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 41,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "osprey",
+   "command": "start",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 45,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 1.0
+  },
+  {
+   "tool": "run",
+   "service": "osprey",
+   "command": "start",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 46,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "thistle",
+   "command": "drain",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 50,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 1.0
+  },
+  {
+   "tool": "run",
+   "service": "thistle",
+   "command": "rotate-keys",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 51,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "thistle",
+   "command": "drain",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 52,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "thistle",
+   "command": "start",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 53,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "moss",
+   "command": "compile-assets",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 57,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 1.0
+  },
+  {
+   "tool": "run",
+   "service": "moss",
+   "command": "compile-assets",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 58,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "moss",
+   "command": "register",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 62,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 1.0
+  },
+  {
+   "tool": "run",
+   "service": "moss",
+   "command": "register",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 63,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "moss",
+   "command": "warm-cache",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 64,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "moss",
+   "command": "start",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 65,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "heron",
+   "command": "health-gate",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 69,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 1.0
+  },
+  {
+   "tool": "run",
+   "service": "heron",
+   "command": "health-gate",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 70,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "heron",
+   "command": "renew-cert",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 74,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 1.0
+  },
+  {
+   "tool": "run",
+   "service": "heron",
+   "command": "renew-cert",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 75,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "heron",
+   "command": "sync-routes",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 76,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "pumice",
+   "command": "sync",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 77,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "heron",
+   "command": "cutover",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 78,
+   "tiers_banked": [
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ ]
+}

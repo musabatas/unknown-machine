@@ -1,0 +1,594 @@
+{
+ "score": 0.0,
+ "tiers_banked": [
+  1
+ ],
+ "data_lost": [
+  "marrow",
+  "pumice",
+  "tern"
+ ],
+ "window_used": 53,
+ "window_total": 149,
+ "finished": true,
+ "calls": 34,
+ "system": {
+  "seed": 0,
+  "level": 1,
+  "initial_lag": 2,
+  "lag_service": "pumice",
+  "services": [
+   {
+    "codename": "kestrel",
+    "role": "storage",
+    "accuracy": 1.0,
+    "order_violation": "data_loss",
+    "dependency_violation": "data_loss",
+    "steps": [
+     {
+      "command": "replay-journal",
+      "requires": []
+     },
+     {
+      "command": "scrub",
+      "requires": []
+     },
+     {
+      "command": "start",
+      "requires": []
+     }
+    ]
+   },
+   {
+    "codename": "larch",
+    "role": "middleware",
+    "accuracy": 1.0,
+    "order_violation": "crash",
+    "dependency_violation": "refused",
+    "steps": [
+     {
+      "command": "rehydrate",
+      "requires": []
+     },
+     {
+      "command": "rotate-keys",
+      "requires": []
+     },
+     {
+      "command": "drain",
+      "requires": []
+     },
+     {
+      "command": "start",
+      "requires": [
+       "pumice",
+       "quartz"
+      ]
+     }
+    ]
+   },
+   {
+    "codename": "marrow",
+    "role": "gateway",
+    "accuracy": 1.0,
+    "order_violation": "crash",
+    "dependency_violation": "data_loss",
+    "steps": [
+     {
+      "command": "renew-cert",
+      "requires": []
+     },
+     {
+      "command": "health-gate",
+      "requires": []
+     },
+     {
+      "command": "cutover",
+      "requires": [
+       "tern"
+      ]
+     }
+    ]
+   },
+   {
+    "codename": "moss",
+    "role": "database",
+    "accuracy": 1.0,
+    "order_violation": "refused",
+    "dependency_violation": "crash",
+    "steps": [
+     {
+      "command": "migrate",
+      "requires": []
+     },
+     {
+      "command": "reindex",
+      "requires": [
+       "kestrel"
+      ]
+     },
+     {
+      "command": "unlock",
+      "requires": []
+     },
+     {
+      "command": "start",
+      "requires": [
+       "kestrel"
+      ]
+     }
+    ]
+   },
+   {
+    "codename": "pumice",
+    "role": "database",
+    "accuracy": 1.0,
+    "order_violation": "data_loss",
+    "dependency_violation": "data_loss",
+    "steps": [
+     {
+      "command": "unlock",
+      "requires": [
+       "kestrel"
+      ]
+     },
+     {
+      "command": "reindex",
+      "requires": []
+     },
+     {
+      "command": "migrate",
+      "requires": []
+     },
+     {
+      "command": "start",
+      "requires": [
+       "kestrel"
+      ]
+     }
+    ]
+   },
+   {
+    "codename": "quartz",
+    "role": "storage",
+    "accuracy": 1.0,
+    "order_violation": "refused",
+    "dependency_violation": "crash",
+    "steps": [
+     {
+      "command": "attach",
+      "requires": []
+     },
+     {
+      "command": "fsck",
+      "requires": []
+     },
+     {
+      "command": "start",
+      "requires": [
+       "kestrel"
+      ]
+     }
+    ]
+   },
+   {
+    "codename": "tern",
+    "role": "application",
+    "accuracy": 1.0,
+    "order_violation": "crash",
+    "dependency_violation": "data_loss",
+    "steps": [
+     {
+      "command": "register",
+      "requires": [
+       "kestrel",
+       "pumice"
+      ]
+     },
+     {
+      "command": "load-config",
+      "requires": [
+       "kestrel",
+       "larch",
+       "pumice"
+      ]
+     },
+     {
+      "command": "start",
+      "requires": [
+       "kestrel",
+       "larch",
+       "pumice"
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "log": [
+  {
+   "tool": "inspect",
+   "service": "kestrel",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 2,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "larch",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 4,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "marrow",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 6,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "moss",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 8,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "pumice",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 10,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "quartz",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 12,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "tern",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 14,
+   "tiers_banked": []
+  },
+  {
+   "tool": "run",
+   "service": "kestrel",
+   "command": "replay-journal",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 15,
+   "tiers_banked": []
+  },
+  {
+   "tool": "run",
+   "service": "kestrel",
+   "command": "scrub",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 16,
+   "tiers_banked": []
+  },
+  {
+   "tool": "run",
+   "service": "kestrel",
+   "command": "start",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 17,
+   "tiers_banked": []
+  },
+  {
+   "tool": "run",
+   "service": "quartz",
+   "command": "attach",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 18,
+   "tiers_banked": []
+  },
+  {
+   "tool": "run",
+   "service": "quartz",
+   "command": "fsck",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 19,
+   "tiers_banked": []
+  },
+  {
+   "tool": "run",
+   "service": "quartz",
+   "command": "start",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 20,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "moss",
+   "command": "migrate",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 21,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "moss",
+   "command": "reindex",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 22,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "moss",
+   "command": "unlock",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 23,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "moss",
+   "command": "start",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 24,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "pumice",
+   "command": "migrate",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 25,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "larch",
+   "command": "drain",
+   "outcome": "crash",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 26,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "restart",
+   "service": "larch",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 30,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "larch",
+   "command": "rehydrate",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 31,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "larch",
+   "command": "drain",
+   "outcome": "crash",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 32,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "restart",
+   "service": "larch",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 36,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "larch",
+   "command": "rotate-keys",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 37,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "larch",
+   "command": "drain",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 38,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "larch",
+   "command": "start",
+   "outcome": "refused",
+   "code": "E_DEP",
+   "accurate": true,
+   "window_used": 39,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "tern",
+   "command": "load-config",
+   "outcome": "crash",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 40,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "restart",
+   "service": "tern",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 44,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "tern",
+   "command": "register",
+   "outcome": "data_loss",
+   "code": "E_DEP",
+   "accurate": true,
+   "window_used": 45,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "marrow",
+   "command": "health-gate",
+   "outcome": "crash",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 46,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "restart",
+   "service": "marrow",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 50,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "marrow",
+   "command": "renew-cert",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 51,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "marrow",
+   "command": "health-gate",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 52,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "marrow",
+   "command": "cutover",
+   "outcome": "data_loss",
+   "code": "E_DEP",
+   "accurate": true,
+   "window_used": 53,
+   "tiers_banked": [
+    1
+   ]
+  }
+ ]
+}

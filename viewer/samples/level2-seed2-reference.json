@@ -1,0 +1,1348 @@
+{
+ "score": 1.0,
+ "tiers_banked": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "data_lost": [],
+ "window_used": 273,
+ "window_total": 390,
+ "finished": true,
+ "calls": 88,
+ "system": {
+  "seed": 2,
+  "level": 2,
+  "initial_lag": 2,
+  "lag_service": "garnet",
+  "services": [
+   {
+    "codename": "garnet",
+    "role": "database",
+    "accuracy": 0.9,
+    "order_violation": "refused",
+    "dependency_violation": "refused",
+    "steps": [
+     {
+      "command": "reindex",
+      "requires": []
+     },
+     {
+      "command": "recover",
+      "requires": []
+     },
+     {
+      "command": "unlock",
+      "requires": []
+     },
+     {
+      "command": "start",
+      "requires": [
+       "marrow"
+      ]
+     }
+    ]
+   },
+   {
+    "codename": "larch",
+    "role": "gateway",
+    "accuracy": 0.7,
+    "order_violation": "data_loss",
+    "dependency_violation": "crash",
+    "steps": [
+     {
+      "command": "pin-upstreams",
+      "requires": []
+     },
+     {
+      "command": "health-gate",
+      "requires": []
+     },
+     {
+      "command": "sync-routes",
+      "requires": []
+     },
+     {
+      "command": "cutover",
+      "requires": [
+       "tern"
+      ]
+     }
+    ]
+   },
+   {
+    "codename": "marrow",
+    "role": "storage",
+    "accuracy": 0.9,
+    "order_violation": "crash",
+    "dependency_violation": "refused",
+    "steps": [
+     {
+      "command": "replay-journal",
+      "requires": []
+     },
+     {
+      "command": "attach",
+      "requires": []
+     },
+     {
+      "command": "fsck",
+      "requires": []
+     },
+     {
+      "command": "start",
+      "requires": []
+     }
+    ]
+   },
+   {
+    "codename": "tern",
+    "role": "application",
+    "accuracy": 0.8,
+    "order_violation": "data_loss",
+    "dependency_violation": "refused",
+    "steps": [
+     {
+      "command": "load-config",
+      "requires": [
+       "wren"
+      ]
+     },
+     {
+      "command": "compile-assets",
+      "requires": [
+       "garnet"
+      ]
+     },
+     {
+      "command": "register",
+      "requires": []
+     },
+     {
+      "command": "start",
+      "requires": [
+       "garnet",
+       "wren"
+      ]
+     }
+    ]
+   },
+   {
+    "codename": "wren",
+    "role": "middleware",
+    "accuracy": 0.7,
+    "order_violation": "data_loss",
+    "dependency_violation": "data_loss",
+    "steps": [
+     {
+      "command": "rotate-keys",
+      "requires": []
+     },
+     {
+      "command": "drain",
+      "requires": [
+       "marrow"
+      ]
+     },
+     {
+      "command": "start",
+      "requires": [
+       "garnet",
+       "marrow"
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "log": [
+  {
+   "tool": "inspect",
+   "service": "garnet",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 2,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "larch",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 4,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "marrow",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 6,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "tern",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 8,
+   "tiers_banked": []
+  },
+  {
+   "tool": "inspect",
+   "service": "wren",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 10,
+   "tiers_banked": []
+  },
+  {
+   "tool": "dry_run",
+   "service": "marrow",
+   "command": "attach",
+   "outcome": "ok",
+   "code": null,
+   "accurate": false,
+   "window_used": 14,
+   "tiers_banked": [],
+   "accuracy": 0.9
+  },
+  {
+   "tool": "dry_run",
+   "service": "marrow",
+   "command": "attach",
+   "outcome": "crash",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 18,
+   "tiers_banked": [],
+   "accuracy": 0.9
+  },
+  {
+   "tool": "dry_run",
+   "service": "marrow",
+   "command": "attach",
+   "outcome": "ok",
+   "code": null,
+   "accurate": false,
+   "window_used": 22,
+   "tiers_banked": [],
+   "accuracy": 0.9
+  },
+  {
+   "tool": "run",
+   "service": "marrow",
+   "command": "attach",
+   "outcome": "crash",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 23,
+   "tiers_banked": []
+  },
+  {
+   "tool": "restart",
+   "service": "marrow",
+   "command": null,
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 27,
+   "tiers_banked": []
+  },
+  {
+   "tool": "dry_run",
+   "service": "marrow",
+   "command": "fsck",
+   "outcome": "crash",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 31,
+   "tiers_banked": [],
+   "accuracy": 0.9
+  },
+  {
+   "tool": "run",
+   "service": "marrow",
+   "command": "replay-journal",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 32,
+   "tiers_banked": []
+  },
+  {
+   "tool": "dry_run",
+   "service": "marrow",
+   "command": "attach",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 36,
+   "tiers_banked": [],
+   "accuracy": 0.9
+  },
+  {
+   "tool": "run",
+   "service": "marrow",
+   "command": "attach",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 37,
+   "tiers_banked": []
+  },
+  {
+   "tool": "run",
+   "service": "marrow",
+   "command": "fsck",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 38,
+   "tiers_banked": []
+  },
+  {
+   "tool": "run",
+   "service": "marrow",
+   "command": "start",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 39,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "garnet",
+   "command": "recover",
+   "outcome": "refused",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 43,
+   "tiers_banked": [
+    1
+   ],
+   "accuracy": 0.9
+  },
+  {
+   "tool": "run",
+   "service": "garnet",
+   "command": "reindex",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 44,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "garnet",
+   "command": "recover",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 45,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "garnet",
+   "command": "unlock",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 46,
+   "tiers_banked": [
+    1
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "garnet",
+   "command": "start",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 47,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "wren",
+   "command": "drain",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 51,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "wren",
+   "command": "rotate-keys",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": false,
+   "window_used": 55,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "wren",
+   "command": "drain",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 59,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "wren",
+   "command": "rotate-keys",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 63,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "wren",
+   "command": "rotate-keys",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 67,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "wren",
+   "command": "rotate-keys",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 71,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "wren",
+   "command": "rotate-keys",
+   "outcome": "data_loss",
+   "code": "E_DEP",
+   "accurate": false,
+   "window_used": 75,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "wren",
+   "command": "rotate-keys",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 79,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "run",
+   "service": "wren",
+   "command": "rotate-keys",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 80,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "wren",
+   "command": "drain",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 81,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "wren",
+   "command": "start",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 82,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "compile-assets",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 86,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "load-config",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": false,
+   "window_used": 90,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "register",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 94,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "compile-assets",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 98,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "load-config",
+   "outcome": "refused",
+   "code": "E_DEP",
+   "accurate": false,
+   "window_used": 102,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "load-config",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": false,
+   "window_used": 106,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "register",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 110,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "load-config",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 114,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "load-config",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 118,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "load-config",
+   "outcome": "refused",
+   "code": "E_DEP",
+   "accurate": false,
+   "window_used": 122,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "load-config",
+   "outcome": "refused",
+   "code": "E_DEP",
+   "accurate": false,
+   "window_used": 126,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "load-config",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 130,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "load-config",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 134,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "run",
+   "service": "tern",
+   "command": "load-config",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 135,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "compile-assets",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": false,
+   "window_used": 139,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "register",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 143,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "compile-assets",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 147,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "compile-assets",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": false,
+   "window_used": 151,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "compile-assets",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 155,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "compile-assets",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 159,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "dry_run",
+   "service": "tern",
+   "command": "compile-assets",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 163,
+   "tiers_banked": [
+    1,
+    2
+   ],
+   "accuracy": 0.8
+  },
+  {
+   "tool": "run",
+   "service": "tern",
+   "command": "compile-assets",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 164,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "tern",
+   "command": "register",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 165,
+   "tiers_banked": [
+    1,
+    2
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "tern",
+   "command": "start",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 166,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "health-gate",
+   "outcome": "crash",
+   "code": "E_DEP",
+   "accurate": false,
+   "window_used": 170,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "health-gate",
+   "outcome": "crash",
+   "code": "E_DEP",
+   "accurate": false,
+   "window_used": 174,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "health-gate",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 178,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "pin-upstreams",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 182,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "pin-upstreams",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 186,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "pin-upstreams",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": false,
+   "window_used": 190,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "pin-upstreams",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": false,
+   "window_used": 194,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "sync-routes",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 198,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "pin-upstreams",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": false,
+   "window_used": 202,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "sync-routes",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 206,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "health-gate",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 210,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "pin-upstreams",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": false,
+   "window_used": 214,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "sync-routes",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 218,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "pin-upstreams",
+   "outcome": "crash",
+   "code": "E_DEP",
+   "accurate": false,
+   "window_used": 222,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "health-gate",
+   "outcome": "data_loss",
+   "code": "E_ORDER",
+   "accurate": true,
+   "window_used": 226,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "pin-upstreams",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 230,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "pin-upstreams",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 234,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "pin-upstreams",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 238,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "pin-upstreams",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 242,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "run",
+   "service": "larch",
+   "command": "pin-upstreams",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 243,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "health-gate",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 247,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "health-gate",
+   "outcome": "crash",
+   "code": "E_DEP",
+   "accurate": false,
+   "window_used": 251,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "health-gate",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 255,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "health-gate",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 259,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "health-gate",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 263,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "dry_run",
+   "service": "larch",
+   "command": "health-gate",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 267,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ],
+   "accuracy": 0.7
+  },
+  {
+   "tool": "run",
+   "service": "larch",
+   "command": "health-gate",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 268,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "larch",
+   "command": "sync-routes",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 269,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "garnet",
+   "command": "sync",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 270,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "garnet",
+   "command": "sync",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 271,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "garnet",
+   "command": "sync",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 272,
+   "tiers_banked": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "tool": "run",
+   "service": "larch",
+   "command": "cutover",
+   "outcome": "ok",
+   "code": null,
+   "accurate": true,
+   "window_used": 273,
+   "tiers_banked": [
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ ]
+}

@@ -98,6 +98,14 @@ Every run is kept under `jobs/`. To see which decisions cost an agent score or w
 poetry run python analysis/analyze.py jobs/<job-name>
 ```
 
+To watch an episode step by step, with the hidden rules of every service shown next to what the agent did:
+
+```
+poetry run python scripts/make_replay.py jobs/<job-name> --out replays/
+```
+
+This writes one self-contained HTML page per episode; open it by double-click. `viewer/samples/` holds six recorded episodes of the scripted policies.
+
 ## Results
 
 Through Harbor, the reference scores 1.0 and the do-nothing agent 0.0 on all five level 1 tasks. The reference also scores 1.0 on `level-2/seed-0` (252 of 360 window minutes) and `level-3/seed-3` (499 of 713).
@@ -124,6 +132,7 @@ Agent runs so far, one run each:
 | `tasks/level-1` to `level-3` | The evaluation tasks, five seeds per level |
 | `tests/` | Rules of the simulator, baseline scores, reward exploits |
 | `analysis/analyze.py` | Episode log to decisions |
+| `viewer/index.html`, `scripts/make_replay.py` | Step-by-step replay of an episode |
 | `PLAN.md` | Design, measurements, open items |
 | `AGENTS.md` | Rules for contributors and coding agents |
 

@@ -40,6 +40,9 @@ tasks/level-<l>/seed-<n>/  generated evaluation tasks, five seeds per level
 tasks/smoke/          hand-maintained harness smoke test
 tests/                simulator rules, baseline scores, exploits
 analysis/analyze.py   episode log -> decisions that cost score or window
+viewer/index.html     replay of one episode; make_replay.py embeds an episode into it.
+                      It restates tier points and tool costs to recompute the episode,
+                      and warns when its result differs from the recorded one
 ```
 
 `tasks/level-*/seed-*` is generated: change `src/` or `scripts/task_template/`, then run `poetry run python scripts/make_tasks.py` and commit the output with the change. Never edit a generated task by hand; it would differ from what the generator produces and from the other seeds. `tasks/smoke/` is the one hand-maintained task: a toy that proves the harness wiring (sidecar, MCP, signed result, reward file).
