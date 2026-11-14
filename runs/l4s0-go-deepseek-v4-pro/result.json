@@ -1,0 +1,40 @@
+{
+    "schema_version": 1,
+    "id": "9464ec7b-dbe6-486c-b49a-a26d14c6ad3f",
+    "started_at": "2026-11-14T18:07:25.581033",
+    "updated_at": "2026-11-14T18:25:23.996455",
+    "finished_at": "2026-11-14T18:25:23.996455",
+    "n_total_trials": 1,
+    "stats": {
+        "n_completed_trials": 1,
+        "n_errored_trials": 0,
+        "n_running_trials": 0,
+        "n_pending_trials": 0,
+        "n_cancelled_trials": 0,
+        "n_retries": 0,
+        "evals": {
+            "opencode__opencode-go/deepseek-v4-pro__adhoc": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "pass_at_k": {},
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "seed-0__B2piHXp"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        },
+        "n_input_tokens": 3206489,
+        "n_cache_tokens": 3087872,
+        "n_output_tokens": 9372,
+        "cost_usd": 0.27947638399999997
+    }
+}

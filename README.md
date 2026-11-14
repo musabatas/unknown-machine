@@ -164,15 +164,30 @@ Levels 1 and 2 do not separate a frontier model from the reference. At level 3, 
 
 The reason is one habit. The model checks the order of a service's commands carefully, and it runs `start` unchecked as soon as the layer below is up, although the task says a command may need any other service. Whether that costs anything depends on the system: the order in which it brings a layer up meets a dependency that destroys data on seed 0 and on no other level 3 seed. That was read off the systems before the runs on seeds 0, 1, 2 and 4, and all four went as predicted. Level 4 puts such dependencies into every system.
 
-Level 4 so far, `gpt-6.1-sol` against the reference's 1.00 on every task:
+Level 4, `gpt-6.1-sol` against the reference's 1.00 on every task. Complete runs only: each ended by the agent's own `finish`, with no error.
 
-| Task | Runs that count | Scores | What happened |
+| Task | Complete runs | Scores | Runs that destroyed data |
 |---|---|---|---|
-| `level-4/seed-0` | 3 complete, 3 cut off | 0.00 six times | Five destroyed the database `moss` with an unchecked `start`, one a storage service the same way |
-| `level-4/seed-2` | 2 cut off | 0.00, 0.00 | Both destroyed the same database |
-| `level-4/seed-3` | 1 complete | 0.00 | Above |
+| `level-4/seed-0` (submitted) | 3 | 0.00, 0.00, 0.00 | 3 |
+| `level-4/seed-1` | 3 | 1.00, 0.10, 1.00 | 1 |
+| `level-4/seed-2` | 3 | 0.00, 0.00, 1.00 | 2 |
+| `level-4/seed-3` | 4 | 0.00, 1.00, 1.00, 0.00 | 2 |
+| `level-4/seed-4` | 3 | 1.00, 0.10, 1.00 | 1 |
 
-Nine runs, nine zeros. Read this with its limits. Four of the nine are complete runs. The other five come from a batch of nine started at once on seeds 0, 1 and 2, none of which reached `finish`: the provider's rate limit ended two and the account's spending limit ended seven. Those five had already destroyed a database when they were cut off, and with a database gone no further tier can be banked, so their score could not have changed. The remaining four of that batch (all three on seed 1, one on seed 2) were cut off with no data lost and prove nothing; they are not counted.
+Sixteen complete runs, mean 0.45, and nine of them destroyed a service's data. Read this with its limits:
+
+- **The gap is not the same on every task.** On seed 0 the model lost data in every run. On the other four seeds it solved the task in eight runs of thirteen and lost data in the other five. Level 4 does not lock the model out; it makes the unchecked `start` expensive often enough to halve its score, and on seed 0 the model's order of work meets such a dependency every time.
+- **The same task swings between 1.00 and 0.00 across identical runs.** Three runs per task are few; the per-task means above are rough.
+- **Five further runs are not in the table.** They come from a batch of nine started at once on seeds 0, 1 and 2, none of which reached `finish`: the provider's rate limit ended two and the account's spending limit ended seven. Five of them (three on seed 0, two on seed 2) had already destroyed a database when they were cut off, so their score of 0.00 could not have changed; the other four were cut off with no data lost and prove nothing.
+
+Other models on the submitted task, one complete run each through OpenCode:
+
+| Model | Score | What happened |
+|---|---|---|
+| `gpt-6-luna` | 0.25 | Destroyed nothing, reached tier 2, used 1158 of 1170 minutes |
+| `gpt-5.4-mini` | 0.10 | Destroyed nothing, reached tier 1, used the whole window |
+| `deepseek-v4-pro` | 0.00 | Destroyed two services' data before any tier |
+| `deepseek-v4.1-flash` | 0.00 | Destroyed a storage service's data before any tier |
 
 The logs of the counted runs are in `runs/`.
 

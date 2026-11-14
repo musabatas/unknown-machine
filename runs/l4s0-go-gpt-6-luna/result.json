@@ -1,0 +1,40 @@
+{
+    "schema_version": 1,
+    "id": "c0692684-acfc-47ce-811e-f67bbd26634d",
+    "started_at": "2026-11-14T17:58:04.636085",
+    "updated_at": "2026-11-14T18:07:22.678973",
+    "finished_at": "2026-11-14T18:07:22.678973",
+    "n_total_trials": 1,
+    "stats": {
+        "n_completed_trials": 1,
+        "n_errored_trials": 0,
+        "n_running_trials": 0,
+        "n_pending_trials": 0,
+        "n_cancelled_trials": 0,
+        "n_retries": 0,
+        "evals": {
+            "opencode__opencode-go/gpt-6-luna__adhoc": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.25
+                    }
+                ],
+                "pass_at_k": {},
+                "reward_stats": {
+                    "reward": {
+                        "0.25": [
+                            "seed-0__PjnHwr5"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        },
+        "n_input_tokens": 2031511,
+        "n_cache_tokens": 2031298,
+        "n_output_tokens": 8441,
+        "cost_usd": 0.038009280000000006
+    }
+}
