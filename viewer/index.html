@@ -805,7 +805,7 @@ button.col { cursor: pointer; }
 @keyframes bank-deck { from { box-shadow: inset 0 0 0 6px var(--ink), inset 0 0 60px var(--glow); } to { box-shadow: inset 0 0 0 0 var(--ink), inset 0 0 0 transparent; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage-inner::before, .stage .edge.met, .stage .edge.have, .stage .card .pip.next, .stage .card.crashed, .stage .card.serving .core::after, .stage.fx-bank { animation: none; }
+  .stage-inner::before, .stage .edge.met, .stage .edge.have, .stage .card .pip.next:not(.target), .stage .card.crashed, .stage .card.serving .core::after, .stage.fx-bank { animation: none; }
   .col.live { animation: none; }
   .edge.need, .tile.fx-loss, .rung.fx-bank { animation: none; }
   .tile.fx-loss::after { display: none; }
@@ -1970,7 +1970,15 @@ function verifyReplay(ep, frames) {
     return [...tasks.values()].sort((a, b) => b.level - a.level || rank(a.theme).localeCompare(rank(b.theme)) || a.seed - b.seed);
   }
 
+  /* The filters are rebuilt only when they would read differently. A live run changes the
+     run list on every poll; rebuilding the buttons each time dropped clicks and focus. */
+  let filtersShown = "";
   function renderFilters(all, columns) {
+    const levels = [...new Set(all.map((run) => run.level))].filter((level) => level != null).sort((a, b) => b - a);
+    const task = filter.task === null ? null : all.find((run) => taskKey(run) === filter.task);
+    const shown = JSON.stringify([levels, columns, filter, task ? taskLabel(task) : null]);
+    if (shown === filtersShown) return;
+    filtersShown = shown;
     const box = $("filters");
     box.textContent = "";
     const group = (name) => { const g = el("div", "fgroup"); g.append(el("span", "label", name)); box.append(g); return g; };
@@ -1981,7 +1989,6 @@ function verifyReplay(ep, frames) {
       b.addEventListener("click", () => setFilter(change));
       parent.append(b);
     };
-    const levels = [...new Set(all.map((run) => run.level))].filter((level) => level != null).sort((a, b) => b - a);
     const byLevel = group("Level");
     button(byLevel, "all", filter.level === null, { level: null });
     levels.forEach((level) => button(byLevel, String(level), filter.level === level, { level }));
@@ -1992,7 +1999,6 @@ function verifyReplay(ep, frames) {
     button(only, "destroyed data", filter.lost, { lost: !filter.lost }, "lostf");
     button(only, "live", filter.live, { live: !filter.live });
     if (filter.task !== null) {
-      const task = all.find((run) => taskKey(run) === filter.task);
       button(group("Task"), (task ? taskLabel(task) : filter.task) + "  x", true, { task: null });
     }
   }
