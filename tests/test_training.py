@@ -156,13 +156,46 @@ def test_systems_that_differ_only_in_hidden_state_look_the_same(seed):
     )
     assert twin != system
     window = window_for(system)
-    observations = []
+    shown = []
     for hidden in (system, twin):
         harness = Harness(Episode(hidden, window))
         for service in sorted(harness.status["services"]):
             harness.step(f"inspect {service}")
-        observations.append(harness.observation())
-    assert observations[0] == observations[1]
+        shown.append((harness.observation(), harness.legal_actions()))
+    assert shown[0] == shown[1]
+
+
+@pytest.mark.parametrize("seed", SEEDS)
+def test_the_legal_actions_are_what_status_lists_and_hold_the_reference_s_choice(seed):
+    console = SixTools(build_episode(seed, LEVEL))
+    harness = Harness(console)
+    for _, action in reference_pairs(build_episode(seed, LEVEL)):
+        listed = {"finish"}
+        for name, service in console.status()["services"].items():
+            listed |= {f"inspect {name}", f"restart {name}"}
+            listed |= {
+                f"{tool} {name} {c}" for tool in ("dry_run", "run") for c in service["commands"]
+            }
+        legal = harness.legal_actions()
+        assert set(legal) == listed
+        assert len(legal) == len(listed)
+        assert action in legal
+
+        # Withholding `finish` while a service is down takes that one line away, nothing
+        # else, and never the reference's choice: it finishes when everything is serving.
+        modes = {service["mode"] for service in console.status()["services"].values()}
+        withheld = set() if modes == {"serving"} else {"finish"}
+        assert set(harness.legal_actions(finish_while_down=False)) == listed - withheld
+        assert action in harness.legal_actions(finish_while_down=False)
+        harness.step(action)
+
+
+def test_every_legal_action_is_one_the_tools_know():
+    harness = Harness(build_episode(SEEDS[0], LEVEL))
+    for line in harness.legal_actions():
+        assert format_action(parse_action(line)) == line
+        assert harness.step(line).valid, line
+    assert harness.invalid == 0
 
 
 @pytest.mark.parametrize("seed", SEEDS)

@@ -28,7 +28,7 @@ HYPERPARAMETERS = {
     "num_layers": 16,  # the last 16 of the model's 24 blocks
     "mask_prompt": True,  # the loss counts the action line only, not the observation
     "batch_size": 8,
-    "iters": 600,  # 4800 of the 19397 pairs: what fits in about a quarter of an hour here
+    "iters": 2400,  # 19200 of the 19397 pairs, one pass: half an hour on this machine
     "learning_rate": 1e-4,
     "max_seq_length": 512,  # the longest turn is under 300 tokens
     "steps_per_report": 50,

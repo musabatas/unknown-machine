@@ -159,6 +159,28 @@ class Harness:
         lines.append(f"last: {self._last}")
         return "\n".join(lines)
 
+    def legal_actions(self, finish_while_down: bool = True) -> list[str]:
+        """Every action line the tools would not refuse as unknown, from `status` alone.
+
+        A service that exists, with a command `status` lists for it. That list holds the
+        commands that are never needed too, so a legal line can still destroy data.
+
+        `finish_while_down=False` withholds `finish` until every service is serving. The
+        environment never does that: stopping early is always allowed. It exists so that
+        a policy which would stop on its first turn can be made to play.
+        """
+        lines = []
+        for name, service in sorted(self.status["services"].items()):
+            lines += [format_action(Action(tool, name)) for tool in (INSPECT, RESTART)]
+            lines += [
+                format_action(Action(tool, name, command))
+                for tool in (DRY_RUN, RUN)
+                for command in service["commands"]
+            ]
+        if finish_while_down or len(self._serving()) == len(self._services):
+            lines.append(FINISH)
+        return lines
+
     def step(self, text: str) -> Step:
         """Play one action line. Text that is not an action costs a step and nothing else."""
         self.steps += 1
