@@ -168,15 +168,15 @@ Level 4, `gpt-6.1-sol` against the reference's 1.00 on every task. Complete runs
 
 | Task | Complete runs | Scores | Runs that destroyed data |
 |---|---|---|---|
-| `level-4/seed-0` (submitted) | 3 | 0.00, 0.00, 0.00 | 3 |
+| `level-4/seed-0` (submitted) | 6 | 0.00 six times | 6 |
 | `level-4/seed-1` | 3 | 1.00, 0.10, 1.00 | 1 |
 | `level-4/seed-2` | 3 | 0.00, 0.00, 1.00 | 2 |
 | `level-4/seed-3` | 4 | 0.00, 1.00, 1.00, 0.00 | 2 |
 | `level-4/seed-4` | 3 | 1.00, 0.10, 1.00 | 1 |
 
-Sixteen complete runs, mean 0.45, and nine of them destroyed a service's data. Read this with its limits:
+Nineteen complete runs, mean 0.38, and twelve of them destroyed a service's data. Read this with its limits:
 
-- **The gap is not the same on every task.** On seed 0 the model lost data in every run. On the other four seeds it solved the task in eight runs of thirteen and lost data in the other five. Level 4 does not lock the model out; it makes the unchecked `start` expensive often enough to halve its score, and on seed 0 the model's order of work meets such a dependency every time.
+- **The gap is not the same on every task.** On seed 0 the model lost data in every one of six complete runs, from two separate invocations of the evaluation command. On the other four seeds it solved the task in eight runs of thirteen and lost data in the other five. Level 4 does not lock the model out; it makes the unchecked `start` expensive often enough to halve its score, and on seed 0 the model's order of work meets such a dependency every time.
 - **The same task swings between 1.00 and 0.00 across identical runs.** Three runs per task are few; the per-task means above are rough.
 - **Five further runs are not in the table.** They come from a batch of nine started at once on seeds 0, 1 and 2, none of which reached `finish`: the provider's rate limit ended two and the account's spending limit ended seven. Five of them (three on seed 0, two on seed 2) had already destroyed a database when they were cut off, so their score of 0.00 could not have changed; the other four were cut off with no data lost and prove nothing.
 

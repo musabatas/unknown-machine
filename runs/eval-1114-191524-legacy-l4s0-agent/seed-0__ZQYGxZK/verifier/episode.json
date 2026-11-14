@@ -1,0 +1,3790 @@
+{
+  "calls": 268,
+  "data_lost": [
+    "moss"
+  ],
+  "finished": true,
+  "log": [
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "inspect",
+      "window_used": 2
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "start",
+      "outcome": "data_loss",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 6
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "verify-raid",
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 10
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "verify-raid",
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 14
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "verify-raid",
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 18
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "verify-raid",
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 19
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "replay-journal",
+      "outcome": "data_loss",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 23
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "scrub",
+      "outcome": "data_loss",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 27
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "resize",
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 31
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "resize",
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 35
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "resize",
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 39
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "resize",
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 40
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "scrub",
+      "outcome": "data_loss",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 44
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "replay-journal",
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 48
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "replay-journal",
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 52
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "replay-journal",
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 56
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "replay-journal",
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 57
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "scrub",
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 58
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "basalt",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 59
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "inspect",
+      "window_used": 61
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "start",
+      "outcome": "data_loss",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 65
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "verify-raid",
+      "outcome": "data_loss",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 69
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": null,
+      "command": "attach",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 73
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "attach",
+      "outcome": "data_loss",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 77
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "replay-journal",
+      "outcome": "refused",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 81
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "scrub",
+      "outcome": "data_loss",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 85
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "attach",
+      "outcome": "data_loss",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 89
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "verify-raid",
+      "outcome": "data_loss",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 93
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "replay-journal",
+      "outcome": "data_loss",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 97
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "scrub",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 101
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "scrub",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 105
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "scrub",
+      "outcome": "refused",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 109
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "scrub",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 113
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "scrub",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 117
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "scrub",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 118
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "attach",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 122
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "attach",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 126
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "attach",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 130
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "attach",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 134
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "attach",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 135
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "verify-raid",
+      "outcome": "data_loss",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 139
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "replay-journal",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 143
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "replay-journal",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 147
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "replay-journal",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 151
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "replay-journal",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 155
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "replay-journal",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 156
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "verify-raid",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 157
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "kestrel",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 158
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "quartz",
+      "tiers_banked": [],
+      "tool": "inspect",
+      "window_used": 160
+    },
+    {
+      "accuracy": 1.0,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "start",
+      "outcome": "data_loss",
+      "service": "quartz",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 164
+    },
+    {
+      "accuracy": 1.0,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "attach",
+      "outcome": "data_loss",
+      "service": "quartz",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 168
+    },
+    {
+      "accuracy": 1.0,
+      "accurate": true,
+      "code": null,
+      "command": "verify-raid",
+      "outcome": "ok",
+      "service": "quartz",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 172
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "verify-raid",
+      "outcome": "ok",
+      "service": "quartz",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 173
+    },
+    {
+      "accuracy": 1.0,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "attach",
+      "outcome": "data_loss",
+      "service": "quartz",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 177
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "scrub",
+      "outcome": "ok",
+      "service": "quartz",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 178
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "attach",
+      "outcome": "ok",
+      "service": "quartz",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 179
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "quartz",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 180
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 182
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "start",
+      "outcome": "crash",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 186
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "unlock",
+      "outcome": "crash",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 187
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "restart",
+      "window_used": 191
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "migrate",
+      "outcome": "crash",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 192
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "restart",
+      "window_used": 196
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "reindex",
+      "outcome": "crash",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 197
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "restart",
+      "window_used": 201
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "vacuum",
+      "outcome": "ok",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 202
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "unlock",
+      "outcome": "crash",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 203
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "restart",
+      "window_used": 207
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "migrate",
+      "outcome": "crash",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 208
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "restart",
+      "window_used": 212
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "reindex",
+      "outcome": "ok",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 213
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "migrate",
+      "outcome": "crash",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 214
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "restart",
+      "window_used": 218
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "unlock",
+      "outcome": "ok",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 219
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "migrate",
+      "outcome": "ok",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 220
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "larch",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 221
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "moss",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 223
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "start",
+      "outcome": "refused",
+      "service": "moss",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 227
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "recover",
+      "outcome": "refused",
+      "service": "moss",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 228
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "reindex",
+      "outcome": "refused",
+      "service": "moss",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 229
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "migrate",
+      "outcome": "ok",
+      "service": "moss",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 230
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "recover",
+      "outcome": "ok",
+      "service": "moss",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 231
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "reindex",
+      "outcome": "ok",
+      "service": "moss",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 232
+    },
+    {
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "start",
+      "outcome": "data_loss",
+      "service": "moss",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 233
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 235
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "start",
+      "outcome": "refused",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 239
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "start",
+      "outcome": "refused",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 243
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "unlock",
+      "outcome": "refused",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 244
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "recover",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 245
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "unlock",
+      "outcome": "refused",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 246
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "reindex",
+      "outcome": "refused",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 247
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "promote",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 248
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "unlock",
+      "outcome": "refused",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 249
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "reindex",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 250
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "unlock",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 251
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 252
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sync",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 253
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sync",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 254
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sync",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 255
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sync",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 256
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sync",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 257
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sync",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 258
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sync",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 259
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sync",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 260
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 262
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 264
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 266
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 268
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 270
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "flint",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 272
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 274
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "wren",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 276
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "start",
+      "outcome": "refused",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 280
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "drain",
+      "outcome": "refused",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 284
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "rotate-keys",
+      "outcome": "refused",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 288
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "rebalance",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 292
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "rebalance",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 296
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "rebalance",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 300
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "rebalance",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 301
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "drain",
+      "outcome": "refused",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 305
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "rotate-keys",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 309
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "rotate-keys",
+      "outcome": "refused",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 313
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "rotate-keys",
+      "outcome": "data_loss",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 317
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "rotate-keys",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 321
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "rotate-keys",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 325
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "rotate-keys",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 329
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "rotate-keys",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 330
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "drain",
+      "outcome": "refused",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 334
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 338
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "rehydrate",
+      "outcome": "refused",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 342
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 346
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 350
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 351
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "drain",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 355
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "drain",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 359
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "drain",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 363
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "drain",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 364
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "start",
+      "outcome": "data_loss",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 368
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "start",
+      "outcome": "crash",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 372
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "rehydrate",
+      "outcome": "crash",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 376
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rebalance",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 380
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rebalance",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 384
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rebalance",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 388
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rebalance",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 392
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "rebalance",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 393
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "rehydrate",
+      "outcome": "data_loss",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 397
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "drain",
+      "outcome": "crash",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 401
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 405
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "rehydrate",
+      "outcome": "crash",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 409
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 413
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 417
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "rehydrate",
+      "outcome": "data_loss",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 421
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 425
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 429
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 430
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "drain",
+      "outcome": "data_loss",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 434
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "drain",
+      "outcome": "data_loss",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 438
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "start",
+      "outcome": "data_loss",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 442
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "drain",
+      "outcome": "data_loss",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 446
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "rotate-keys",
+      "outcome": "data_loss",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 450
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "reconnect",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 454
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "reconnect",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 458
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "reconnect",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 462
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "reconnect",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 463
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "rotate-keys",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 467
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "rotate-keys",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 471
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "rotate-keys",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 475
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "rotate-keys",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 476
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "drain",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 480
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "drain",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 484
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "drain",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 488
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "drain",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 489
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 493
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 497
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 501
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "tallow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 502
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "start",
+      "outcome": "refused",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 506
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "drain",
+      "outcome": "refused",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 510
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "compact",
+      "outcome": "refused",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 514
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "rebalance",
+      "outcome": "refused",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 518
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 522
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 526
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 530
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 534
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "rehydrate",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 535
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "compact",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 539
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "compact",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 543
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "compact",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 547
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "compact",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 551
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "compact",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 552
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "drain",
+      "outcome": "refused",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 556
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rebalance",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 560
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rebalance",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 564
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rebalance",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 568
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "rebalance",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 572
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "rebalance",
+      "outcome": "ok",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 573
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "drain",
+      "outcome": "refused",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 577
+    },
+    {
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "drain",
+      "outcome": "refused",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 578
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "start",
+      "outcome": "crash",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 582
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "load-config",
+      "outcome": "crash",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 586
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "seed-flags",
+      "outcome": "crash",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 590
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "register",
+      "outcome": "crash",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 594
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "migrate-sessions",
+      "outcome": "data_loss",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 598
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "migrate-sessions",
+      "outcome": "data_loss",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 602
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "start",
+      "outcome": "refused",
+      "service": "flint",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 606
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "compile-assets",
+      "outcome": "refused",
+      "service": "flint",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 610
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "warm-cache",
+      "outcome": "refused",
+      "service": "flint",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 614
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": false,
+      "code": null,
+      "command": "load-config",
+      "outcome": "ok",
+      "service": "flint",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 618
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "load-config",
+      "outcome": "crash",
+      "service": "flint",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 622
+    },
+    {
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "load-config",
+      "outcome": "crash",
+      "service": "flint",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 623
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "flint",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "restart",
+      "window_used": 627
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "start",
+      "outcome": "refused",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 631
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "start",
+      "outcome": "data_loss",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 635
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "load-config",
+      "outcome": "data_loss",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 639
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "warm-cache",
+      "outcome": "data_loss",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 643
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "seed-flags",
+      "outcome": "refused",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 647
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "seed-flags",
+      "outcome": "data_loss",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 651
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "seed-flags",
+      "outcome": "refused",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 655
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": null,
+      "command": "seed-flags",
+      "outcome": "ok",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 659
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "seed-flags",
+      "outcome": "refused",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 663
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": null,
+      "command": "seed-flags",
+      "outcome": "ok",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 667
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "cutover",
+      "outcome": "refused",
+      "service": "wren",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 671
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": null,
+      "command": "cutover",
+      "outcome": "ok",
+      "service": "wren",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 675
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "cutover",
+      "outcome": "refused",
+      "service": "wren",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 679
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "sync-routes",
+      "outcome": "refused",
+      "service": "wren",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 680
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "warm-tls",
+      "outcome": "refused",
+      "service": "wren",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 681
+    },
+    {
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "pin-upstreams",
+      "outcome": "refused",
+      "service": "wren",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 682
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 686
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 690
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 694
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "heron",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 695
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "drain",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 699
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "drain",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 703
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "drain",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 707
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "drain",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 711
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "drain",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 712
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 716
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "start",
+      "outcome": "data_loss",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 720
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "start",
+      "outcome": "crash",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 724
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 728
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "start",
+      "outcome": "data_loss",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 732
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 736
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 740
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 744
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 748
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "start",
+      "outcome": "ok",
+      "service": "marrow",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 749
+    },
+    {
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "drain",
+      "outcome": "refused",
+      "service": "thistle",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 750
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "migrate-sessions",
+      "outcome": "ok",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 754
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "migrate-sessions",
+      "outcome": "ok",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 758
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "migrate-sessions",
+      "outcome": "ok",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 762
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "migrate-sessions",
+      "outcome": "ok",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 766
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "migrate-sessions",
+      "outcome": "ok",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 767
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "load-config",
+      "outcome": "crash",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 771
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "seed-flags",
+      "outcome": "crash",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 775
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "register",
+      "outcome": "crash",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 779
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "load-config",
+      "outcome": "crash",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 783
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "seed-flags",
+      "outcome": "data_loss",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 787
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "register",
+      "outcome": "crash",
+      "service": "bramble",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 791
+    },
+    {
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "load-config",
+      "outcome": "crash",
+      "service": "flint",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 792
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "flint",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "restart",
+      "window_used": 796
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "seed-flags",
+      "outcome": "refused",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 800
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": null,
+      "command": "load-config",
+      "outcome": "ok",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 804
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "load-config",
+      "outcome": "data_loss",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 808
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "warm-cache",
+      "outcome": "data_loss",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 812
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "seed-flags",
+      "outcome": "data_loss",
+      "service": "onyx",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 816
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sync",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 817
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sync",
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 818
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "pumice",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 820
+    }
+  ],
+  "nonce": "845798407ec9c8f6150288a62804ae35",
+  "score": 0.0,
+  "system": {
+    "final_commands": [
+      "start",
+      "cutover"
+    ],
+    "initial_lag": 2,
+    "lag_register": "replication_lag",
+    "lag_service": "pumice",
+    "layers": [
+      "storage",
+      "database",
+      "middleware",
+      "application",
+      "gateway"
+    ],
+    "level": 4,
+    "seed": 0,
+    "services": [
+      {
+        "accuracy": 0.9,
+        "codename": "basalt",
+        "dependency_violation": "refused",
+        "order_violation": "data_loss",
+        "role": "storage",
+        "steps": [
+          {
+            "command": "verify-raid",
+            "requires": []
+          },
+          {
+            "command": "resize",
+            "requires": []
+          },
+          {
+            "command": "replay-journal",
+            "requires": []
+          },
+          {
+            "command": "scrub",
+            "requires": []
+          },
+          {
+            "command": "start",
+            "requires": []
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "bramble",
+        "dependency_violation": "data_loss",
+        "order_violation": "crash",
+        "role": "application",
+        "steps": [
+          {
+            "command": "migrate-sessions",
+            "requires": [
+              "heron"
+            ]
+          },
+          {
+            "command": "seed-flags",
+            "requires": [
+              "moss"
+            ]
+          },
+          {
+            "command": "load-config",
+            "requires": []
+          },
+          {
+            "command": "register",
+            "requires": [
+              "heron",
+              "moss"
+            ]
+          },
+          {
+            "command": "start",
+            "requires": [
+              "heron",
+              "moss"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.9,
+        "codename": "flint",
+        "dependency_violation": "crash",
+        "order_violation": "refused",
+        "role": "application",
+        "steps": [
+          {
+            "command": "load-config",
+            "requires": [
+              "pumice",
+              "thistle"
+            ]
+          },
+          {
+            "command": "compile-assets",
+            "requires": []
+          },
+          {
+            "command": "warm-cache",
+            "requires": []
+          },
+          {
+            "command": "start",
+            "requires": [
+              "pumice",
+              "thistle"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.9,
+        "codename": "heron",
+        "dependency_violation": "data_loss",
+        "order_violation": "refused",
+        "role": "middleware",
+        "steps": [
+          {
+            "command": "rebalance",
+            "requires": []
+          },
+          {
+            "command": "rotate-keys",
+            "requires": []
+          },
+          {
+            "command": "rehydrate",
+            "requires": [
+              "pumice"
+            ]
+          },
+          {
+            "command": "drain",
+            "requires": []
+          },
+          {
+            "command": "start",
+            "requires": [
+              "pumice",
+              "tallow"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "kestrel",
+        "dependency_violation": "refused",
+        "order_violation": "data_loss",
+        "role": "storage",
+        "steps": [
+          {
+            "command": "scrub",
+            "requires": []
+          },
+          {
+            "command": "attach",
+            "requires": []
+          },
+          {
+            "command": "replay-journal",
+            "requires": [
+              "basalt"
+            ]
+          },
+          {
+            "command": "verify-raid",
+            "requires": []
+          },
+          {
+            "command": "start",
+            "requires": [
+              "basalt"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.9,
+        "codename": "larch",
+        "dependency_violation": "crash",
+        "order_violation": "crash",
+        "role": "database",
+        "steps": [
+          {
+            "command": "vacuum",
+            "requires": []
+          },
+          {
+            "command": "reindex",
+            "requires": []
+          },
+          {
+            "command": "unlock",
+            "requires": []
+          },
+          {
+            "command": "migrate",
+            "requires": []
+          },
+          {
+            "command": "start",
+            "requires": [
+              "basalt"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "marrow",
+        "dependency_violation": "data_loss",
+        "order_violation": "crash",
+        "role": "middleware",
+        "steps": [
+          {
+            "command": "rebalance",
+            "requires": [
+              "larch"
+            ]
+          },
+          {
+            "command": "rehydrate",
+            "requires": [
+              "kestrel"
+            ]
+          },
+          {
+            "command": "drain",
+            "requires": [
+              "tallow"
+            ]
+          },
+          {
+            "command": "start",
+            "requires": [
+              "kestrel",
+              "larch",
+              "tallow"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "moss",
+        "dependency_violation": "data_loss",
+        "order_violation": "refused",
+        "role": "database",
+        "steps": [
+          {
+            "command": "migrate",
+            "requires": [
+              "kestrel"
+            ]
+          },
+          {
+            "command": "recover",
+            "requires": []
+          },
+          {
+            "command": "reindex",
+            "requires": []
+          },
+          {
+            "command": "start",
+            "requires": [
+              "basalt",
+              "kestrel",
+              "pumice"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.7,
+        "codename": "onyx",
+        "dependency_violation": "refused",
+        "order_violation": "data_loss",
+        "role": "application",
+        "steps": [
+          {
+            "command": "seed-flags",
+            "requires": [
+              "moss"
+            ]
+          },
+          {
+            "command": "load-config",
+            "requires": [
+              "bramble",
+              "moss"
+            ]
+          },
+          {
+            "command": "warm-cache",
+            "requires": [
+              "moss"
+            ]
+          },
+          {
+            "command": "start",
+            "requires": [
+              "bramble",
+              "marrow",
+              "moss"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "pumice",
+        "dependency_violation": "refused",
+        "order_violation": "refused",
+        "role": "database",
+        "steps": [
+          {
+            "command": "recover",
+            "requires": []
+          },
+          {
+            "command": "promote",
+            "requires": [
+              "basalt",
+              "quartz"
+            ]
+          },
+          {
+            "command": "reindex",
+            "requires": [
+              "basalt",
+              "quartz"
+            ]
+          },
+          {
+            "command": "unlock",
+            "requires": [
+              "quartz"
+            ]
+          },
+          {
+            "command": "start",
+            "requires": [
+              "basalt",
+              "quartz"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 1.0,
+        "codename": "quartz",
+        "dependency_violation": "data_loss",
+        "order_violation": "data_loss",
+        "role": "storage",
+        "steps": [
+          {
+            "command": "verify-raid",
+            "requires": []
+          },
+          {
+            "command": "scrub",
+            "requires": []
+          },
+          {
+            "command": "attach",
+            "requires": []
+          },
+          {
+            "command": "start",
+            "requires": [
+              "basalt"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.9,
+        "codename": "tallow",
+        "dependency_violation": "crash",
+        "order_violation": "data_loss",
+        "role": "middleware",
+        "steps": [
+          {
+            "command": "reconnect",
+            "requires": [
+              "quartz"
+            ]
+          },
+          {
+            "command": "rotate-keys",
+            "requires": [
+              "quartz"
+            ]
+          },
+          {
+            "command": "drain",
+            "requires": [
+              "pumice"
+            ]
+          },
+          {
+            "command": "start",
+            "requires": [
+              "pumice",
+              "quartz"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "thistle",
+        "dependency_violation": "refused",
+        "order_violation": "refused",
+        "role": "middleware",
+        "steps": [
+          {
+            "command": "rehydrate",
+            "requires": [
+              "larch"
+            ]
+          },
+          {
+            "command": "compact",
+            "requires": [
+              "tallow"
+            ]
+          },
+          {
+            "command": "rebalance",
+            "requires": [
+              "tallow"
+            ]
+          },
+          {
+            "command": "drain",
+            "requires": [
+              "moss"
+            ]
+          },
+          {
+            "command": "start",
+            "requires": [
+              "larch",
+              "moss",
+              "tallow"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.7,
+        "codename": "wren",
+        "dependency_violation": "refused",
+        "order_violation": "refused",
+        "role": "gateway",
+        "steps": [
+          {
+            "command": "pin-upstreams",
+            "requires": [
+              "bramble"
+            ]
+          },
+          {
+            "command": "warm-tls",
+            "requires": [
+              "bramble",
+              "flint"
+            ]
+          },
+          {
+            "command": "sync-routes",
+            "requires": [
+              "onyx"
+            ]
+          },
+          {
+            "command": "cutover",
+            "requires": [
+              "bramble",
+              "flint",
+              "onyx"
+            ]
+          }
+        ]
+      }
+    ],
+    "sync_command": "sync",
+    "theme": "legacy"
+  },
+  "tiers_banked": [
+    1
+  ],
+  "window_total": 1170,
+  "window_used": 820
+}

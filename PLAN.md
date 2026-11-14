@@ -152,7 +152,7 @@ Verified by reading the installed Harbor 0.26.0 source on 2026-11-14 (`tasks/smo
 Not verified:
 
 - How the judges invoke the stop-early baseline. Ours is `-a oracle --ae POLICY=stop_early` (the task's solution told to stop after tier 1; 0.10 through Harbor on every level 4 task), and it is a column of `scripts/eval.sh`.
-- How a frontier model scores on the task the judges pick. `openai/gpt-6.1-sol` has three complete runs on every level 4 task (section 11): 0.00 three times on seed 0, a mean of 0.70 on the other four. The gap is firm only on the submitted task.
+- How a frontier model scores on the task the judges pick. `openai/gpt-6.1-sol` has three complete runs on every level 4 task (section 11): 0.00 in six complete runs on seed 0, a mean of 0.55 on the other four. The gap is firm only on the submitted task.
 - The result key is a constant in the task files. That is safe only while the repository is private (section 7).
 
 Consequence to design around: the agent container can reach the sidecar over HTTP, so the agent may script its own exploration loop. Budget, state and seed therefore live only in the sidecar.
@@ -266,6 +266,7 @@ Judging context (Junction participant guide): the challenge prize is decided by 
 | 2026-11-14 | level-4/seed-2, three runs | OpenCode, `openai/gpt-6.1-sol` | 0.00, 0.00, not counted | Two destroyed the database `heron` after tier 1, then were cut off by the spending limit. The third was ended by the rate limit after 71 calls with nothing lost | USD 0.77 |
 | 2026-11-14 | level-4/seed-1, three runs | OpenCode, `openai/gpt-6.1-sol` | not counted | Cut off (one by the rate limit, two by the spending limit) at tier 1 or 2 with no data lost. Incomplete, so no evidence either way | USD 0.75 |
 | 2026-11-14 | level-4/seed-3 | OpenCode, `openai/gpt-6.1-sol` | 0.00 | The system it solved at level 3, with the added dependencies. Tier 1 banked after seven unchecked commands that happened to be safe; the eighth, `start` on a database, met a missing dependency and destroyed its data. 884 of 1195 minutes; the reference scores 1.0 in 836 | USD 0.72 |
+| 2026-11-14 | level-4/seed-0, three more complete runs (`scripts/eval.sh`) | OpenCode, `openai/gpt-6.1-sol` | 0.00, 0.00, 0.00 | All ended by `finish`, no errors. Two destroyed the storage service `quartz` before any tier, one the database `moss` after tier 1. Six complete runs on the submitted task, six zeros | USD 1.70 |
 | 2026-11-14 | level-4/seed-1, three complete runs (`scripts/eval.sh`) | OpenCode, `openai/gpt-6.1-sol` | 1.00, 0.10, 1.00 | All ended by `finish`, no errors. The 0.10 run banked tiers 1 and 2 and then destroyed `sorrel` | USD 2.73 |
 | 2026-11-14 | level-4/seed-2, three complete runs (`scripts/eval.sh`) | OpenCode, `openai/gpt-6.1-sol` | 0.00, 0.00, 1.00 | All ended by `finish`, no errors. Both zeros destroyed the database `heron` after tier 1, as the two cut-off runs had | USD 1.98 |
 | 2026-11-14 | level-4/seed-3, three complete runs (`scripts/eval.sh`) | OpenCode, `openai/gpt-6.1-sol` | 1.00, 1.00, 0.00 | All ended by `finish`, no errors. The zero destroyed `pumice` before any tier | USD 2.19 |
