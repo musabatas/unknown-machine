@@ -19,15 +19,16 @@ The system's services are known only by codenames. Each comes up by applying its
 
 A command used too early is refused, or crashes the service, or destroys its data. Which of the three is fixed per service and per kind of mistake, and the agent is told so. The full task statement is in [`tasks/level-1/seed-0/instruction.md`](tasks/level-1/seed-0/instruction.md); it is the same at every level.
 
-There are three levels. The tools, their costs and the score do not change between them.
+There are four levels. The tools, their costs and the score do not change between them.
 
 | Level | System | Dry runs |
 |---|---|---|
 | 1 | 5 to 8 services, 2 or 3 preparation commands each | Always right |
 | 2 | Same | Right 70% to 100% of the time, depending on the service |
 | 3 | 12 to 14 services, 3 or 4 preparation commands each | As level 2 |
+| 4 | As level 3, and at least four services must wait for another service of their own layer, and lose their data if started without it | As level 2 |
 
-At levels 2 and 3 `inspect` tells the agent how reliable each service's dry runs are. Every dry run is wrong independently of the others, so repeating one buys certainty at four minutes a repeat. A dry run can only be wrong about whether a command can be applied now; how the service reacts to a mistake is always reported truthfully, and `run` is always real.
+Above level 1 `inspect` tells the agent how reliable each service's dry runs are. Every dry run is wrong independently of the others, so repeating one buys certainty at four minutes a repeat. A dry run can only be wrong about whether a command can be applied now; how the service reacts to a mistake is always reported truthfully, and `run` is always real.
 
 ## Why it is hard
 
@@ -35,16 +36,16 @@ A dry run costs four runs. The window is too short to dry-run everything, and ru
 
 The information to decide well is there. One observed mistake on a service tells you how that service reacts to that kind of mistake from then on. A service that only refuses can be driven by trial and error at one minute a try. A service that destroys data must be dry-run whenever the order is uncertain, as often as its reliability demands. The reference does exactly this and nothing else, with the same six tools. The window of every task is the reference's own cost divided by 0.7, so it always finishes with 30% to spare.
 
-The two obvious strategies both fail, for opposite reasons. Mean score in the simulator, over the first 300 seeds at levels 1 and 2 and the first 60 at level 3:
+The two obvious strategies both fail, for opposite reasons. Mean score in the simulator, over the first 300 seeds at levels 1 and 2 and the first 60 at levels 3 and 4:
 
-| Policy | Level 1 | Level 2 | Level 3 | Why |
-|---|---|---|---|---|
-| Reference | 1.00 | 0.99 | 1.00 | Buys certainty only where a mistake costs more than the dry runs |
-| One dry run before every command | 0.54 | 0.25 | 0.03 | Runs out of window; above level 1 it also acts on wrong reports |
-| Never dry-run | 0.15 | 0.15 | 0.00 | Destroys data on almost every seed |
-| Stop after tier 1 | 0.10 | 0.10 | 0.10 | |
-| Random commands | 0.00 | 0.00 | 0.00 | |
-| Do nothing | 0.00 | 0.00 | 0.00 | |
+| Policy | Level 1 | Level 2 | Level 3 | Level 4 | Why |
+|---|---|---|---|---|---|
+| Reference | 1.00 | 0.99 | 1.00 | 1.00 | Buys certainty only where a mistake costs more than the dry runs |
+| One dry run before every command | 0.54 | 0.25 | 0.03 | 0.01 | Runs out of window; above level 1 it also acts on wrong reports |
+| Never dry-run | 0.15 | 0.15 | 0.00 | 0.00 | Destroys data on almost every seed |
+| Stop after tier 1 | 0.10 | 0.10 | 0.10 | 0.10 | |
+| Random commands | 0.00 | 0.00 | 0.00 | 0.00 | |
+| Do nothing | 0.00 | 0.00 | 0.00 | 0.00 | |
 
 Two things these numbers do not say by themselves:
 
@@ -74,7 +75,7 @@ Requirements: Docker, [Harbor](https://github.com/laude-institute/harbor) (`uv t
 ./scripts/eval.sh
 ```
 
-This runs the reference and the do-nothing agent through Harbor on the fifteen evaluation tasks (five per level) and the scripted baselines in-process, then prints the table. It needs no API key.
+This runs the reference and the do-nothing agent through Harbor on the twenty evaluation tasks (five per level) and the scripted baselines in-process, then prints the table. It needs no API key.
 
 To add three agent runs per task:
 
@@ -82,7 +83,7 @@ To add three agent runs per task:
 ./scripts/eval.sh --model openai/gpt-6.1-sol --env-file .env
 ```
 
-Both run all three levels; `--level 3` limits them to one, and `--seeds 3` to one task.
+Both run all four levels; `--level 3` limits them to one, and `--seeds 3` to one task.
 
 A single run:
 
@@ -128,8 +129,13 @@ Agent runs so far, one run each:
 | `level-2/seed-0` | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 282 of 360 | Solved it by repeating dry runs; used more window than the reference (252) |
 | `level-3/seed-3` | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 339 of 713 | Solved it in far less window than the reference (499). It took single dry runs where the worst case was a crash, and ran every `start` unchecked |
 | `level-3/seed-0` | OpenCode, `openai/gpt-6.1-sol` | 0.00 | 1073 of 1443 | Ran `start` on a database unchecked while another service of the same layer was still down; that was a dependency, and the data was gone. The reference scores 1.0 here in 1010 minutes |
+| `level-3/seed-1` | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 560 of 800 | Solved it in the reference's own window use |
+| `level-3/seed-2` | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 817 of 1050 | Solved it; the reference used 735 |
+| `level-3/seed-4` | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 1018 of 1123 | Solved it with 231 dry runs and little window to spare; the reference used 786 |
 
-Levels 1 and 2 do not separate a frontier model from the reference. Level 3 does on one of the two seeds run so far, and the reason is the same in both runs: the model checks the order of a service's commands carefully, and runs `start` unchecked as soon as the layer below is up, although the task says a command may need any other service. On seed 3 no such dependency was in its way; on seed 0 one was, and it destroys data. These are single runs.
+Levels 1 and 2 do not separate a frontier model from the reference. At level 3, over the five evaluation seeds with one run each, the model averages 0.80 against the reference's 1.00, and the whole difference is seed 0.
+
+The reason is one habit. The model checks the order of a service's commands carefully, and it runs `start` unchecked as soon as the layer below is up, although the task says a command may need any other service. Whether that costs anything depends on the system: the order in which it brings a layer up meets a dependency that destroys data on seed 0 and on no other level 3 seed. That was read off the systems before the runs on seeds 0, 1, 2 and 4, and all four went as predicted. Level 4 puts such dependencies into every system.
 
 ## Repository
 
@@ -139,7 +145,7 @@ Levels 1 and 2 do not separate a frontier model from the reference. Level 3 does
 | `src/unknown_machine/reference/solver.py` | The reference and the scripted policies; uses only the six tools |
 | `src/unknown_machine/server/app.py` | MCP server and verifier endpoint around one episode |
 | `scripts/task_template/`, `scripts/make_tasks.py` | The Harbor task and the generator that stamps one per seed |
-| `tasks/level-1` to `level-3` | The evaluation tasks, five seeds per level |
+| `tasks/level-1` to `level-4` | The evaluation tasks, five seeds per level |
 | `tests/` | Rules of the simulator, baseline scores, reward exploits |
 | `analysis/analyze.py` | Episode log to decisions |
 | `viewer/index.html`, `scripts/watch.py`, `scripts/make_replay.py` | Live view of a run in progress, and replay of a finished one |

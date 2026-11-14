@@ -49,13 +49,16 @@ As built (`src/unknown_machine/machine/`):
 
 ### Levels
 
-The description above is level 1. Two harder levels were added after a frontier model solved level 1 (section 11). `generate(seed, level)` owns the difference; the tools, costs and score are the same at every level.
+The description above is level 1. Harder levels were added after a frontier model solved level 1 (section 11). `generate(seed, level)` owns the difference; the tools, costs and score are the same at every level.
 
 | Level | System | Dry runs |
 |---|---|---|
 | 1 | 5 to 8 services, 2 or 3 preparation commands each, at least 2 services that lose data on a wrong order | Exact |
 | 2 | As level 1 | Right with a probability fixed per service: 1.0, 0.9, 0.8 or 0.7 (weights 0.2, 0.3, 0.3, 0.2) |
 | 3 | 12 to 14 services, 3 or 4 preparation commands each (from 6 per role), at least 5 that lose data on a wrong order | As level 2 |
+| 4 | The level 3 system of the same seed, where at least 4 services need the first service of their own layer before their last command and destroy their data without it | As level 2 |
+
+Level 4 was added after the level 3 runs (section 11): the frontier model lost data exactly where such a dependency was in its way, and only one evaluation seed in five had one.
 
 Where a dry run can be wrong:
 
@@ -111,14 +114,14 @@ It runs unchanged on every seed and level. At level 1 it never loses data. Above
 
 Measured in-process (`tests/test_baselines.py` enforces these on 100 seeds per level):
 
-| Policy | Level 1, 300 seeds | Level 2, 300 seeds | Level 3, 60 seeds |
-|---|---|---|---|
-| Reference | 1.00, no data loss | 0.993, data lost on 2 seeds | 1.00, no data loss |
-| One dry run before every command | 0.54 | 0.25 | 0.03 |
-| Never dry-run | 0.15 | 0.15 | 0.00 |
-| Stop after tier 1 | 0.10 | 0.10 | 0.10 |
-| Random commands | 0.00 | 0.00 | 0.00 |
-| Do nothing | 0.00 | 0.00 | 0.00 |
+| Policy | Level 1, 300 seeds | Level 2, 300 seeds | Level 3, 60 seeds | Level 4, 60 seeds |
+|---|---|---|---|---|
+| Reference | 1.00, no data loss | 0.993, data lost on 2 seeds | 1.00, no data loss | 1.00, no data loss |
+| One dry run before every command | 0.54 | 0.25 | 0.03 | 0.01 |
+| Never dry-run | 0.15 | 0.15 | 0.00 | 0.00 |
+| Stop after tier 1 | 0.10 | 0.10 | 0.10 | 0.10 |
+| Random commands | 0.00 | 0.00 | 0.00 | 0.00 |
+| Do nothing | 0.00 | 0.00 | 0.00 | 0.00 |
 
 The reference uses 70% of the window at every level, because the window is defined from its cost. A level 3 episode is 160 to 312 tool calls for the reference, in a window of 580 to 1443 minutes.
 
@@ -225,10 +228,11 @@ As of Saturday 14 Nov. Hacking opened Friday 13 Nov 19:30; submissions opened Sa
 | Harbor installed; sidecar, MCP, signed result and reward file proven on `tasks/smoke` with oracle, nop and OpenCode | Done |
 | Simulator core, seeded generator, score | Done |
 | Reference solver and scripted baselines | Done |
-| MCP server, task template, generator, fifteen evaluation tasks over three levels | Done |
-| Tests for simulator rules, baseline scores and exploits | Done (54 tests) |
+| MCP server, task template, generator, twenty evaluation tasks over four levels | Done |
+| Tests for simulator rules, baseline scores and exploits | Done (61 tests) |
+| Live view of a run in progress and replay of a finished one | Done |
 | One-command evaluation and episode analysis | Done |
-| **Gate: frontier agent, 3 runs per task, against section 1** | **Failed on one run per level (section 11); dials being turned** |
+| **Gate: frontier agent, 3 runs per task, against section 1** | **Not met: level 3 agent mean 0.80 over five seeds, one run each (target 0.60); level 4 being measured (section 11)** |
 | Read the frontier trajectories; write the failure taxonomy from `analysis/analyze.py` output | Open, after the gate |
 | Turn dials if the gate fails (section 6) | Open, after the gate |
 | Post-training experiment: fine-tune a small open model on reference trajectories, evaluate on held-out seeds | Open: `scripts/export_trajectories.py` produces the data; training not started |
@@ -254,6 +258,9 @@ Judging context (Junction participant guide): the challenge prize is decided by 
 | 2026-11-14 | level-1/seed-0 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | Solved in 85 of 146 minutes; the reference used 102. Level 1 shows no gap against a frontier model | USD 0.08 |
 | 2026-11-14 | level-2/seed-0 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | Solved in 282 of 360 minutes; the reference used 252. It repeated dry runs on services with low accuracy, more often than needed | USD 0.19 |
 | 2026-11-14 | level-3/seed-3 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | Solved in 339 of 713 minutes with 146 calls; the reference used 499. 60 dry runs against the reference's 101: one dry run where the worst case was a crash, repeats only where it was data loss, and every `start` run unchecked. Only 3 of its dry runs were wrong (about 10 expected) | USD 0.31 |
+| 2026-11-14 | level-3/seed-1 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 560 of 800 minutes, the same as the reference. Two crashes from unchecked commands, both restarted | USD 0.46 |
+| 2026-11-14 | level-3/seed-2 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 817 of 1050 minutes; the reference used 735. One `start` run unchecked on a service that destroys data on a missing dependency; none was missing | USD 0.67 |
+| 2026-11-14 | level-3/seed-4 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 1018 of 1123 minutes; the reference used 786. No unchecked risk, at the price of 231 dry runs | USD 0.87 |
 | 2026-11-14 | level-3/seed-0 | OpenCode, `openai/gpt-6.1-sol` | 0.00 | Tier 1 banked, then it lost a database: it applied two preparation commands and `start` on `moss` with no dry run, and `start` met a dependency inside the layer that was not serving yet. With tier 2 out of reach it kept dry-running to 1073 of 1443 minutes (321 calls). The reference scores 1.0 on this seed in 1010 minutes | USD 0.93 |
 | 2026-11-14 | level-1/seed-0 | OpenCode, `openai/gpt-5.4-mini` | 0.00 | Inspected all seven services, then ran pending commands directly, never dry-running. Three services came up because their wrong-order mistakes were only refused. It treated the fourth the same way: `migrate` on the second database, out of order, destroyed its data (0.10 for tier 1, minus 0.15). It called `finish` at once, with 119 of 146 minutes unused | USD 0.08 |
 
@@ -270,7 +277,12 @@ What was tried next:
 - Making the reference more economical does not work. A sweep of its tolerances saves at most 5% of its cost before it starts losing data, so a tighter window would squeeze the reference before the agent.
 - The second level 3 run (seed 0) scored 0.00. The difference from seed 3 was predicted before the run from the systems alone: an agent that brings services up in alphabetical order inside a layer meets three dependencies that destroy data on seed 0 and none on seed 3. The agent checks order carefully and dependencies inside a layer carelessly.
 
-So the gap exists where a system has such dependencies, and not elsewhere. Next: one run on each remaining level 3 seed to see how the score follows that property, then repeat runs on one task.
+So the gap exists where a system has such dependencies, and not elsewhere. The runs on the three remaining level 3 seeds confirmed it: none of them puts a fatal dependency in the way of an alphabetical order, and all three scored 1.00, as predicted before they ran. Level 3 over its five evaluation seeds, one run each: agent 0.80, reference 1.00.
+
+Two things follow:
+
+- Level 4 makes that kind of dependency a property of every system instead of one seed in five (section 3). The reference scores 1.0 on all of the first 60 seeds.
+- The window binds more than the first run suggested. On seeds 2 and 4 the agent used 78% and 91% of it, where the reference uses 70%. Raising `REFERENCE_WINDOW_SHARE` from 0.7 to about 0.85 would have ended the seed 4 run before the cutover. Not turned yet: it is the next dial if level 4 alone is not enough.
 
 ## 12. Risks
 
