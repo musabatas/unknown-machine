@@ -1,0 +1,41 @@
+schema_version = "1.4"
+artifacts = []
+
+[task]
+name = "unknown-machine/smoke"
+version = "1.0.0"
+description = "Harness smoke test: one MCP sidecar, one tool, server-side score"
+keywords = []
+[[task.authors]]
+name = "Unknown Machine team"
+
+[metadata]
+
+[verifier]
+timeout_sec = 120.0
+# Shared: tests run in `main` while the sidecar that holds the score is still up.
+# In separate mode the agent environment is torn down before the verifier starts.
+environment_mode = "shared"
+collect = []
+
+[verifier.env]
+# Passed only to the verifier command, never to the agent.
+RESULT_KEY = "smoke-task-result-key"
+MACHINE_CONTROL_URL = "http://machine:8001"
+
+[agent]
+timeout_sec = 600.0
+
+[environment]
+network_mode = "public"
+build_timeout_sec = 600.0
+os = "linux"
+
+[[environment.mcp_servers]]
+name = "machine"
+transport = "streamable-http"
+url = "http://machine:8000/mcp"
+
+[environment.env]
+
+[solution.env]
