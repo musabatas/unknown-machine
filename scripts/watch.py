@@ -4,9 +4,8 @@
     poetry run python scripts/watch.py --demo reference greedy cautious --level 4
     poetry run python scripts/watch.py --demo greedy --theme aircraft --delay 0.2
 
-It serves `viewer/index.html` on 127.0.0.1 with one tile per run. Runs that end
-stay on the page, and the most recent finished runs under jobs/ are listed too, so
-there is always something to open.
+It serves `viewer/index.html` on 127.0.0.1 with one tile per run: every run in
+progress, and every finished run under jobs/, added as soon as it ends.
 
 For a Harbor run the state is read from the machine sidecar, which is the only
 place it exists. The sidecar hands its result only to a caller that proves it holds
@@ -23,6 +22,7 @@ import argparse
 import contextlib
 import hmac
 import json
+import re
 import secrets
 import subprocess
 import sys
@@ -38,7 +38,6 @@ JOBS = ROOT / "jobs"
 MARKER = "<!--EPISODE-->"
 SIDECAR_SUFFIX = "__env-machine-1"
 REFRESH_SECONDS = 1.0
-FINISHED_SHOWN = 12  # finished runs from jobs/ listed at start
 
 # Runs inside the sidecar: asks its own control port for the result, with the proof
 # computed from the key in its environment, and prints the result body.
@@ -68,26 +67,75 @@ def docker(*arguments: str) -> str:
     return done.stdout
 
 
-def trial_facts(trial: str) -> dict:
-    """Agent, model and start time of a Harbor trial, from its directory under jobs/.
+TASK_PATH = re.compile(
+    r"tasks/(?:(?P<theme>[a-z]+)/)?(?:level-(?P<level>\d+)/)?seed-(?P<seed>\d+)$"
+)
+ROLES = {"oracle": "reference", "nop": "do-nothing"}
 
-    A sidecar is named after its trial in lower case; the directory keeps the case.
-    """
+
+def trial_directory(trial: str) -> Path | None:
+    """The directory of a Harbor trial under jobs/. A sidecar is named after its trial
+    in lower case; the directory keeps the case."""
     for config in JOBS.glob("*/*/config.json"):
-        if config.parent.name.lower() != trial:
-            continue
-        try:
-            agent = json.loads(config.read_text()).get("agent", {})
-        except (OSError, json.JSONDecodeError):
-            return {}
-        return {
-            "agent": agent.get("name"),
-            "model": agent.get("model_name"),
-            "started": time.strftime(
-                "%Y-%m-%dT%H:%M:%S", time.localtime(config.stat().st_mtime)
-            ),
+        if config.parent.name.lower() == trial:
+            return config.parent
+    return None
+
+
+def trial_facts(directory: Path | None) -> dict:
+    """Who played a trial, on which task, when, and how the trial ended."""
+    if directory is None:
+        return {}
+    try:
+        config = json.loads((directory / "config.json").read_text())
+    except (OSError, json.JSONDecodeError):
+        return {}
+    agent = config.get("agent", {})
+    name = agent.get("name")
+    role = ROLES.get(name, "agent")
+    if name == "oracle" and (agent.get("env") or {}).get("POLICY") == "stop_early":
+        role = "stop-early"
+    facts = {
+        "agent": name,
+        "model": agent.get("model_name"),
+        "role": role,
+        "job": directory.parent.name,
+        "started": time.strftime(
+            "%Y-%m-%dT%H:%M:%S", time.localtime((directory / "config.json").stat().st_mtime)
+        ),
+    }
+    task = TASK_PATH.search(str((config.get("task") or {}).get("path") or ""))
+    if task:
+        facts["task"] = {
+            "theme": task["theme"] or "legacy",
+            "level": int(task["level"] or 1),  # the first tasks had no level directory
+            "seed": int(task["seed"]),
         }
-    return {}
+    try:
+        result = json.loads((directory / "result.json").read_text())
+        facts["exception"] = (result.get("exception_info") or {}).get("exception_type")
+    except (OSError, json.JSONDecodeError):
+        pass  # still running
+    return facts
+
+
+def with_system(episode: dict, facts: dict) -> dict | None:
+    """Episodes recorded before the result carried the hidden rules get them from the
+    generator: a seed, level and theme always describe the same system."""
+    if not isinstance(episode.get("log"), list):
+        return None  # not an episode of this environment (the smoke task)
+    if "system" in episode:
+        return episode
+    task = facts.get("task")
+    if not task:
+        return None
+    from unknown_machine.calibration import build_episode
+
+    try:
+        system = build_episode(task["seed"], task["level"], task["theme"]).result()["system"]
+    except ValueError:
+        return None
+    return episode | {"system": system}
 
 
 class Runs:
@@ -101,22 +149,27 @@ class Runs:
         self._order: list[str] = []  # first seen first, so tiles keep their place
         self.error: str | None = None
         self._demos: dict[str, object] = {}
+        self._read: set[Path] = set()  # episode files under jobs/ already listed
 
     # ---- sources -----------------------------------------------------------
 
     def add_finished_jobs(self) -> None:
+        """Every finished run under jobs/ that is not listed yet, oldest first."""
         episodes = sorted(
             JOBS.glob("*/*/verifier/episode.json"), key=lambda path: path.stat().st_mtime
         )
-        for path in episodes[-FINISHED_SHOWN:]:
+        for path in episodes:
+            if path in self._read:
+                continue
+            self._read.add(path)
+            directory = path.parent.parent
+            facts = trial_facts(directory)
             try:
-                episode = json.loads(path.read_text())
+                episode = with_system(json.loads(path.read_text()), facts)
             except (OSError, json.JSONDecodeError):
                 continue
-            if "system" not in episode:  # recorded before the result carried the rules
-                continue
-            trial = path.parent.parent.name.lower()
-            self._put(trial, episode, live=False, facts=trial_facts(trial))
+            if episode is not None:
+                self._put(directory.name.lower(), episode, live=False, facts=facts)
 
     def add_demo(self, policy: str, seed: int, level: int, theme: str, delay: float) -> None:
         from unknown_machine.baselines.policies import BASELINES
@@ -138,6 +191,7 @@ class Runs:
             self._put(name, result, live=not result["finished"])
         if not watch_docker:
             return
+        self.add_finished_jobs()  # also picks up runs too short to be seen live
         try:
             names = docker("ps", "--format", "{{.Names}}").split()
             self.error = None
@@ -154,7 +208,7 @@ class Runs:
                 episode = json.loads(docker("exec", container, "python", "-c", INSIDE_SIDECAR))
             except (Unavailable, json.JSONDecodeError):
                 continue  # starting up or just torn down; the next pass settles it
-            facts = None if trial in self._facts else trial_facts(trial)
+            facts = None if trial in self._facts else trial_facts(trial_directory(trial))
             self._put(trial, episode, live=True, facts=facts)
         with self._lock:
             # A sidecar that is gone has ended: what was last seen is final.
@@ -211,7 +265,10 @@ class Runs:
             "seed": system["seed"],
             "agent": facts.get("agent"),
             "model": facts.get("model"),
+            "role": facts.get("role", "agent"),
+            "job": facts.get("job"),
             "started": facts.get("started"),
+            "ended": self._ended(name, episode, facts),
             "score": episode["score"],
             "tiers_banked": episode["tiers_banked"],
             "data_lost": episode["data_lost"],
@@ -223,6 +280,20 @@ class Runs:
             "last": last
             and {key: last[key] for key in ("tool", "service", "command", "outcome", "code")},
         }
+
+    def _ended(self, name: str, episode: dict, facts: dict) -> str | None:
+        """How a run ended: by its own `finish`, by using up the window, or cut off from
+        outside (rate limit, spending limit, timeout), which makes its score incomplete
+        unless data was already destroyed."""
+        if name in self._live:
+            return None
+        if episode["window_used"] >= episode["window_total"]:
+            return "window used up"
+        if episode["finished"]:
+            return "finished"
+        if facts.get("exception"):
+            return f"cut off ({facts['exception']})"
+        return "stopped without finish"
 
     def episode(self, name: str) -> dict | None:
         with self._lock:
@@ -313,6 +384,8 @@ def main() -> int:
     arguments = parser.parse_args()
 
     runs = Runs()
+    if not arguments.demo:
+        runs.add_finished_jobs()
     if arguments.demo:
         try:
             for policy in arguments.demo:
@@ -321,8 +394,6 @@ def main() -> int:
                 )
         except ValueError as error:  # unknown theme or level
             raise SystemExit(str(error)) from error
-    else:
-        runs.add_finished_jobs()
 
     def keep_fresh() -> None:
         while True:
