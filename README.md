@@ -133,6 +133,7 @@ Agent runs so far, one run each:
 | `level-3/seed-1` | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 560 of 800 | Solved it in the reference's own window use |
 | `level-3/seed-2` | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 817 of 1050 | Solved it; the reference used 735 |
 | `level-3/seed-4` | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 1018 of 1123 | Solved it with 231 dry runs and little window to spare; the reference used 786 |
+| `level-4/seed-3` | OpenCode, `openai/gpt-6.1-sol` | 0.00 | 884 of 1195 | The system it solved at level 3. Seven unchecked commands went through; the eighth, `start` on a database, destroyed its data. The reference scores 1.0 in 836 minutes |
 
 Levels 1 and 2 do not separate a frontier model from the reference. At level 3, over the five evaluation seeds with one run each, the model averages 0.80 against the reference's 1.00, and the whole difference is seed 0.
 
