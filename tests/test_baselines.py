@@ -10,7 +10,7 @@ from unknown_machine.baselines.policies import BASELINES
 from unknown_machine.calibration import REFERENCE_WINDOW_SHARE, build_episode
 
 SEEDS = range(100)
-LEVELS = (1, 2, 3)
+LEVELS = (1, 2, 3, 4)
 
 spec = importlib.util.spec_from_file_location(
     "make_tasks", Path(__file__).resolve().parent.parent / "scripts" / "make_tasks.py"
@@ -32,7 +32,7 @@ def test_reference_finishes_every_level_1_seed_without_losing_data():
         assert not result["data_lost"], seed
 
 
-@pytest.mark.parametrize("level", (2, 3))
+@pytest.mark.parametrize("level", (2, 3, 4))
 def test_reference_almost_always_finishes_where_dry_runs_can_be_wrong(level):
     """A small accepted risk remains there, so not every seed is perfect."""
     results = [play("reference", seed, level) for seed in SEEDS]

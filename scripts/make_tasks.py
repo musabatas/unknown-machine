@@ -1,6 +1,6 @@
 """Generate Harbor task directories from scripts/task_template.
 
-    poetry run python scripts/make_tasks.py              # the evaluation set, both levels
+    poetry run python scripts/make_tasks.py              # the evaluation set, every level
     poetry run python scripts/make_tasks.py 2 14 38      # level 2, seeds 14 and 38
 
 Each task gets a copy of the simulator package inside the sidecar's build
@@ -21,9 +21,15 @@ TASKS = ROOT / "tasks"
 
 # The evaluation set: per level, the first five seeds on which the reference scores
 # 1.0 and neither naive policy (one dry run before every command; no dry runs)
-# scores above 0.5. About two seeds in three qualify at either level.
+# scores above 0.5. About two seeds in three qualify at levels 1 and 2; at levels 3
+# and 4 the first five seeds all do.
 # tests/test_baselines.py enforces the property.
-EVALUATION_SEEDS = {1: (0, 1, 2, 3, 4), 2: (0, 1, 2, 3, 5), 3: (0, 1, 2, 3, 4)}
+EVALUATION_SEEDS = {
+    1: (0, 1, 2, 3, 4),
+    2: (0, 1, 2, 3, 5),
+    3: (0, 1, 2, 3, 4),
+    4: (0, 1, 2, 3, 4),
+}
 
 TEXT_FILES = ("task.toml", "environment/docker-compose.yaml")
 

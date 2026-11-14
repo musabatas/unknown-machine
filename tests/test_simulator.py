@@ -6,7 +6,7 @@ from dataclasses import replace
 from unknown_machine.calibration import UNLIMITED, build_episode
 from unknown_machine.machine.episode import E_DEP, E_ORDER, Episode
 from unknown_machine.machine.generate import generate
-from unknown_machine.machine.model import CRASH, OK
+from unknown_machine.machine.model import CRASH, DATA_LOSS, OK, ROLE_LAYER
 from unknown_machine.reference.solver import solve
 
 SEEDS = range(40)
@@ -59,6 +59,27 @@ def test_a_seed_describes_the_same_system_at_both_levels():
         assert all(service.accuracy == 1.0 for service in exact.services)
         for first, second in zip(exact.services, noisy.services, strict=True):
             assert replace(second, accuracy=1.0) == first
+
+
+def test_level_4_has_services_that_lose_data_without_a_peer_and_is_otherwise_level_3():
+    for seed in SEEDS:
+        plain, dense = generate(seed, 3), generate(seed, 4)
+        layer = {service.codename: ROLE_LAYER[service.role] for service in dense.services}
+        hazards = [
+            service
+            for service in dense.services
+            if service.dependency_violation == DATA_LOSS
+            and any(layer[name] == layer[service.codename] for name in service.steps[-1].requires)
+        ]
+        assert len(hazards) >= 4, seed
+        for before, after in zip(plain.services, dense.services, strict=True):
+            assert before.codename == after.codename and before.role == after.role
+            assert [step.command for step in before.steps] == [s.command for s in after.steps]
+            assert before.order_violation == after.order_violation
+            # Only the last command gains a dependency, and only on a service of its layer.
+            assert before.steps[:-1] == after.steps[:-1]
+            added = set(after.steps[-1].requires) - set(before.steps[-1].requires)
+            assert all(layer[name] == layer[after.codename] for name in added)
 
 
 def test_level_2_dry_runs_are_wrong_as_often_as_inspect_says():

@@ -122,17 +122,20 @@ LARGE = Size(
 EXACT = {1.0: 1.0}
 NOISY = {1.0: 0.2, 0.9: 0.3, 0.8: 0.3, 0.7: 0.2}
 
-# level -> (size, {dry-run accuracy: weight} drawn per service)
-LEVELS = {1: (SMALL, EXACT), 2: (SMALL, NOISY), 3: (LARGE, NOISY)}
+# level -> (size, {dry-run accuracy: weight} drawn per service, minimum number of
+# services that destroy their data when started before a service of their own layer)
+LEVELS = {1: (SMALL, EXACT, 0), 2: (SMALL, NOISY, 0), 3: (LARGE, NOISY, 0), 4: (LARGE, NOISY, 4)}
 
 
 def generate(seed: int, level: int = 1) -> System:
     """Level 1: 5 to 8 services, exact dry runs. Level 2: the same systems, but each
     service's dry runs are only right with a stated probability. Level 3: 12 to 14
-    services with longer procedures, and the same inexact dry runs."""
+    services with longer procedures, and the same inexact dry runs. Level 4: the level 3
+    systems, with more services that need another service of their own layer first and
+    destroy their data when started without it."""
     if level not in LEVELS:
         raise ValueError(f"unknown level {level}")
-    size, accuracy_weights = LEVELS[level]
+    size, accuracy_weights, peer_hazards = LEVELS[level]
     rng = random.Random(seed)
 
     roles: list[str] = []
@@ -150,6 +153,10 @@ def generate(seed: int, level: int = 1) -> System:
         services.append(_service(rng, role, codename, dependencies, size))
 
     services = _ensure_fragile(rng, services, size.min_fragile)
+    if peer_hazards:
+        # Its own stream, so the levels below keep the systems they had.
+        hazard_rng = random.Random(f"peer-hazards-{seed}-{level}")
+        services = _ensure_peer_hazards(hazard_rng, services, by_role, peer_hazards)
     lag_service = by_role["database"][0]
     services = [
         _with_sync(service) if service.codename == lag_service else service for service in services
@@ -246,6 +253,39 @@ def _ensure_fragile(rng: random.Random, services: list[Service], minimum: int) -
         return services
     chosen = {s.codename for s in rng.sample(sturdy, missing)}
     return [replace(s, order_violation=DATA_LOSS) if s.codename in chosen else s for s in services]
+
+
+def _ensure_peer_hazards(
+    rng: random.Random, services: list[Service], by_role: dict[str, list[str]], minimum: int
+) -> list[Service]:
+    """At least `minimum` services need the first service of their own layer to be
+    serving before their last command, and destroy their data when it is not.
+
+    A missing dependency is as discoverable as a wrong order: a dry run reports it.
+    What this adds is that bringing a layer up in an arbitrary order is no longer safe.
+    """
+    first_of_layer = {name: peers[0] for peers in by_role.values() for name in peers}
+
+    def hazard(service: Service) -> bool:
+        return (
+            first_of_layer[service.codename] in service.steps[-1].requires
+            and service.dependency_violation == DATA_LOSS
+        )
+
+    followers = [s for s in services if first_of_layer[s.codename] != s.codename]
+    safe = [s for s in followers if not hazard(s)]
+    missing = minimum - (len(followers) - len(safe))
+    if missing <= 0:
+        return services
+    chosen = {s.codename for s in rng.sample(safe, min(missing, len(safe)))}
+
+    def with_hazard(service: Service) -> Service:
+        last = service.steps[-1]
+        requires = tuple(sorted({*last.requires, first_of_layer[service.codename]}))
+        steps = (*service.steps[:-1], replace(last, requires=requires))
+        return replace(service, steps=steps, dependency_violation=DATA_LOSS)
+
+    return [with_hazard(s) if s.codename in chosen else s for s in services]
 
 
 def _with_sync(service: Service) -> Service:
