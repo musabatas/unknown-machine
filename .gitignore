@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+dist/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Harbor run output
+jobs/
+trials/
+
+# Agent tooling
+.claude/worktrees/
+.playwright-cli/
+
+# OS
+.DS_Store
