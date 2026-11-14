@@ -1,0 +1,4440 @@
+{
+  "calls": 305,
+  "data_lost": [],
+  "finished": true,
+  "log": [
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "inspect",
+      "window_used": 2
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "inspect",
+      "window_used": 4
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "quill",
+      "tiers_banked": [],
+      "tool": "inspect",
+      "window_used": 6
+    },
+    {
+      "accuracy": 1.0,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "submit",
+      "outcome": "data_loss",
+      "service": "quill",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 10
+    },
+    {
+      "accuracy": 1.0,
+      "accurate": true,
+      "code": null,
+      "command": "verify-identity",
+      "outcome": "ok",
+      "service": "quill",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 14
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "verify-identity",
+      "outcome": "ok",
+      "service": "quill",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 15
+    },
+    {
+      "accuracy": 1.0,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "certify-birth",
+      "outcome": "data_loss",
+      "service": "quill",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 19
+    },
+    {
+      "accuracy": 1.0,
+      "accurate": true,
+      "code": null,
+      "command": "translate",
+      "outcome": "ok",
+      "service": "quill",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 23
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "translate",
+      "outcome": "ok",
+      "service": "quill",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 24
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "certify-birth",
+      "outcome": "ok",
+      "service": "quill",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 25
+    },
+    {
+      "accuracy": 1.0,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "submit",
+      "outcome": "data_loss",
+      "service": "quill",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 29
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "submit",
+      "outcome": "data_loss",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 33
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "submit",
+      "outcome": "data_loss",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 37
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "verify-identity",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 41
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "verify-identity",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 45
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "verify-identity",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 49
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "verify-identity",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 53
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "verify-identity",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 54
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "translate",
+      "outcome": "data_loss",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 58
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "take-photo",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 62
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "take-photo",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 66
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "take-photo",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 70
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "take-photo",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 74
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "take-photo",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 75
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "translate",
+      "outcome": "data_loss",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 79
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "register-address",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 83
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "register-address",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 87
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "register-address",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 91
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "register-address",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 95
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "register-address",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 96
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "translate",
+      "outcome": "data_loss",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 100
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "translate",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 104
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "translate",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 108
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "translate",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 112
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "translate",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 116
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "translate",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 117
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 121
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 125
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 129
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 133
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "birch",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 134
+    },
+    {
+      "accuracy": 1.0,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "quill",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 138
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "quill",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 139
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "verify-identity",
+      "outcome": "data_loss",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 143
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "certify-birth",
+      "outcome": "data_loss",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 147
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "register-address",
+      "outcome": "data_loss",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 151
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "translate",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 155
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "translate",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 159
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "translate",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 163
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "translate",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 167
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "translate",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 171
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "translate",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 172
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "verify-identity",
+      "outcome": "data_loss",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 176
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "certify-birth",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 180
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "certify-birth",
+      "outcome": "data_loss",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 184
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "certify-birth",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 188
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "certify-birth",
+      "outcome": "refused",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 192
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "certify-birth",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 196
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "certify-birth",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 200
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "certify-birth",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 204
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "certify-birth",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 208
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "certify-birth",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 209
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "verify-identity",
+      "outcome": "data_loss",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 213
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "register-address",
+      "outcome": "data_loss",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 217
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "register-address",
+      "outcome": "refused",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 221
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "verify-identity",
+      "outcome": "data_loss",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 225
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "register-address",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 229
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "register-address",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 233
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "register-address",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 237
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "register-address",
+      "outcome": "data_loss",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 241
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "register-address",
+      "outcome": "refused",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 245
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "register-address",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 249
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "register-address",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 253
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "register-address",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 257
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "register-address",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 258
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "verify-identity",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 259
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "iris",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 260
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 262
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "maple",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 264
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 266
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "submit",
+      "outcome": "crash",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 270
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "submit",
+      "outcome": "refused",
+      "service": "maple",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 274
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 278
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "submit",
+      "outcome": "refused",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 282
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "open-account",
+      "outcome": "refused",
+      "service": "maple",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 286
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "declare-income",
+      "outcome": "refused",
+      "service": "maple",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 290
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "assess",
+      "outcome": "ok",
+      "service": "maple",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 294
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "assess",
+      "outcome": "ok",
+      "service": "maple",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 295
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "open-account",
+      "outcome": "refused",
+      "service": "maple",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 296
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "declare-income",
+      "outcome": "ok",
+      "service": "maple",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 297
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "open-account",
+      "outcome": "ok",
+      "service": "maple",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 298
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "submit",
+      "outcome": "data_loss",
+      "service": "maple",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 302
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "open-account",
+      "outcome": "crash",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 306
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "assess",
+      "outcome": "crash",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 310
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "prove-funds",
+      "outcome": "ok",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 314
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "prove-funds",
+      "outcome": "ok",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 318
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "prove-funds",
+      "outcome": "ok",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 322
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "prove-funds",
+      "outcome": "ok",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 323
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "pay-stamp",
+      "outcome": "crash",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 327
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "open-account",
+      "outcome": "ok",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 331
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "open-account",
+      "outcome": "crash",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 335
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "open-account",
+      "outcome": "ok",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 336
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "assess",
+      "outcome": "crash",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 337
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "restart",
+      "window_used": 341
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "pay-stamp",
+      "outcome": "ok",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 342
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "assess",
+      "outcome": "ok",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 343
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "jade",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 344
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "submit",
+      "outcome": "data_loss",
+      "service": "maple",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 348
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "open-account",
+      "outcome": "refused",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 352
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "declare-income",
+      "outcome": "refused",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 356
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "clear-debts",
+      "outcome": "refused",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 360
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "pay-stamp",
+      "outcome": "refused",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 364
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "submit",
+      "outcome": "refused",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 368
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "open-account",
+      "outcome": "refused",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 369
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "declare-income",
+      "outcome": "ok",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 370
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "open-account",
+      "outcome": "refused",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 371
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "clear-debts",
+      "outcome": "ok",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 372
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "open-account",
+      "outcome": "ok",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 373
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "pay-stamp",
+      "outcome": "ok",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 374
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "pearl",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 375
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "maple",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 376
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "inspect",
+      "window_used": 378
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "inspect",
+      "window_used": 380
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "inspect",
+      "window_used": 382
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "inspect",
+      "window_used": 384
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "inspect",
+      "window_used": 386
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "inspect",
+      "window_used": 388
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "willow",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "inspect",
+      "window_used": 390
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "submit",
+      "outcome": "refused",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 394
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "submit",
+      "outcome": "crash",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 398
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "submit",
+      "outcome": "data_loss",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 402
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "submit",
+      "outcome": "refused",
+      "service": "willow",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 406
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "submit",
+      "outcome": "crash",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 410
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "submit",
+      "outcome": "refused",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 414
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "submit",
+      "outcome": "data_loss",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 418
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "medical-exam",
+      "outcome": "refused",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 422
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "waive-history",
+      "outcome": "refused",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 426
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "name-doctor",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 430
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "name-doctor",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 434
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "name-doctor",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 438
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "name-doctor",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 442
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "name-doctor",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 443
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "vaccinate",
+      "outcome": "refused",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 447
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "medical-exam",
+      "outcome": "refused",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 451
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "waive-history",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 455
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "waive-history",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 459
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "waive-history",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 463
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "waive-history",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 464
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "submit",
+      "outcome": "refused",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 468
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "medical-exam",
+      "outcome": "refused",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 472
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "vaccinate",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 476
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "vaccinate",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 480
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "vaccinate",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 484
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "vaccinate",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 485
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "medical-exam",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 489
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "medical-exam",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 493
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "medical-exam",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 497
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "medical-exam",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 498
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "submit",
+      "outcome": "data_loss",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 502
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "medical-exam",
+      "outcome": "crash",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 506
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "name-doctor",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 510
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "name-doctor",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 514
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "name-doctor",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 518
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "name-doctor",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 522
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "name-doctor",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 523
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "vaccinate",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 527
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "vaccinate",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 531
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "vaccinate",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 535
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "vaccinate",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 539
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "vaccinate",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 540
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "medical-exam",
+      "outcome": "data_loss",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 544
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "waive-history",
+      "outcome": "data_loss",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 548
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "pay-premium",
+      "outcome": "ok",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 552
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "pay-premium",
+      "outcome": "ok",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 556
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "pay-premium",
+      "outcome": "ok",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 560
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "pay-premium",
+      "outcome": "ok",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 564
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "pay-premium",
+      "outcome": "ok",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 565
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "medical-exam",
+      "outcome": "data_loss",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 569
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "waive-history",
+      "outcome": "ok",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 573
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "waive-history",
+      "outcome": "ok",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 577
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "waive-history",
+      "outcome": "ok",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 581
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "waive-history",
+      "outcome": "data_loss",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 585
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "waive-history",
+      "outcome": "ok",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 589
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "waive-history",
+      "outcome": "crash",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 593
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "waive-history",
+      "outcome": "ok",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 597
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "waive-history",
+      "outcome": "ok",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 598
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "medical-exam",
+      "outcome": "ok",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 599
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "umber",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 600
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "enroll",
+      "outcome": "refused",
+      "service": "willow",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 604
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "medical-exam",
+      "outcome": "refused",
+      "service": "willow",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 608
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "name-doctor",
+      "outcome": "refused",
+      "service": "willow",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 612
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "vaccinate",
+      "outcome": "refused",
+      "service": "willow",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 616
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "vaccinate",
+      "outcome": "ok",
+      "service": "willow",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 617
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "enroll",
+      "outcome": "ok",
+      "service": "willow",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 618
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "name-doctor",
+      "outcome": "ok",
+      "service": "willow",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 619
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "medical-exam",
+      "outcome": "ok",
+      "service": "willow",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 620
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "willow",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 621
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 625
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 629
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 633
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 637
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "glen",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 638
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "medical-exam",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 642
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "medical-exam",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 646
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "medical-exam",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 650
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "medical-exam",
+      "outcome": "data_loss",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 654
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "medical-exam",
+      "outcome": "crash",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 658
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "medical-exam",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 662
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "medical-exam",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 666
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "medical-exam",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 667
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 671
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 675
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 679
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 683
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 687
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "lotus",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 688
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "register-employer",
+      "outcome": "crash",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 692
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "recognize-diploma",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 696
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "recognize-diploma",
+      "outcome": "data_loss",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 700
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "recognize-diploma",
+      "outcome": "crash",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 704
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "recognize-diploma",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 708
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "recognize-diploma",
+      "outcome": "data_loss",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 712
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "recognize-diploma",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 716
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "recognize-diploma",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 720
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "recognize-diploma",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 724
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "recognize-diploma",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 728
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "recognize-diploma",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 729
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "register-employer",
+      "outcome": "crash",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 733
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "pass-interview",
+      "outcome": "crash",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 737
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 741
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 745
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 749
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "sign-contract",
+      "outcome": "data_loss",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 753
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 757
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 761
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 762
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "register-employer",
+      "outcome": "crash",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 766
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 770
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 774
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 778
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 782
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 783
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "register-employer",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 787
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "register-employer",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 791
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "register-employer",
+      "outcome": "data_loss",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 795
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "register-employer",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 799
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "register-employer",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 803
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "register-employer",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 807
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "register-employer",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 808
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 812
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 816
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 820
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 824
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "cedar",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 825
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 829
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 833
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "pass-interview",
+      "outcome": "refused",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 837
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 841
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 842
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "join-fund",
+      "outcome": "ok",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 846
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "join-fund",
+      "outcome": "ok",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 850
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "join-fund",
+      "outcome": "ok",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 854
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "join-fund",
+      "outcome": "ok",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 855
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "sponsor",
+      "outcome": "ok",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 859
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "sponsor",
+      "outcome": "ok",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 863
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "sponsor",
+      "outcome": "crash",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 867
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sponsor",
+      "outcome": "ok",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 868
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "ember",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 869
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "pass-interview",
+      "outcome": "data_loss",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 873
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 877
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 881
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "sign-contract",
+      "outcome": "refused",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 885
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "sign-contract",
+      "outcome": "data_loss",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 889
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 893
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 897
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "sign-contract",
+      "outcome": "data_loss",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 901
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 905
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 909
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 913
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 917
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sign-contract",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 918
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "sponsor",
+      "outcome": "data_loss",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 922
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "pass-interview",
+      "outcome": "refused",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 926
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 930
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 934
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 938
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "pass-interview",
+      "outcome": "refused",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 942
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 946
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 950
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 954
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "pass-interview",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 955
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sponsor",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 956
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "submit",
+      "outcome": "ok",
+      "service": "nova",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "run",
+      "window_used": 957
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "pearl",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "inspect",
+      "window_used": 959
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "settle",
+      "outcome": "ok",
+      "service": "pearl",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "run",
+      "window_used": 960
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "settle",
+      "outcome": "ok",
+      "service": "pearl",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "run",
+      "window_used": 961
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "settle",
+      "outcome": "ok",
+      "service": "pearl",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "run",
+      "window_used": 962
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "zenith",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "inspect",
+      "window_used": 964
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "collect",
+      "outcome": "refused",
+      "service": "zenith",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "dry_run",
+      "window_used": 968
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "book-slot",
+      "outcome": "ok",
+      "service": "zenith",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "run",
+      "window_used": 969
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "pay-fee",
+      "outcome": "refused",
+      "service": "zenith",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "run",
+      "window_used": 970
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sign-pledge",
+      "outcome": "ok",
+      "service": "zenith",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "run",
+      "window_used": 971
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "pay-fee",
+      "outcome": "ok",
+      "service": "zenith",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "run",
+      "window_used": 972
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "pearl",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "inspect",
+      "window_used": 974
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "collect",
+      "outcome": "ok",
+      "service": "zenith",
+      "tiers_banked": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "tool": "run",
+      "window_used": 975
+    }
+  ],
+  "nonce": "22ae4ff47986535a8de17523723f02be",
+  "score": 1.0,
+  "system": {
+    "final_commands": [
+      "submit",
+      "collect"
+    ],
+    "initial_lag": 2,
+    "lag_register": "arrears",
+    "lag_service": "pearl",
+    "layers": [
+      "registry",
+      "treasury",
+      "insurance",
+      "labour",
+      "immigration"
+    ],
+    "level": 4,
+    "seed": 0,
+    "services": [
+      {
+        "accuracy": 0.9,
+        "codename": "birch",
+        "dependency_violation": "refused",
+        "order_violation": "data_loss",
+        "role": "registry",
+        "steps": [
+          {
+            "command": "verify-identity",
+            "requires": []
+          },
+          {
+            "command": "take-photo",
+            "requires": []
+          },
+          {
+            "command": "register-address",
+            "requires": []
+          },
+          {
+            "command": "translate",
+            "requires": []
+          },
+          {
+            "command": "submit",
+            "requires": []
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "cedar",
+        "dependency_violation": "data_loss",
+        "order_violation": "crash",
+        "role": "labour",
+        "steps": [
+          {
+            "command": "recognize-diploma",
+            "requires": [
+              "glen"
+            ]
+          },
+          {
+            "command": "sign-contract",
+            "requires": [
+              "maple"
+            ]
+          },
+          {
+            "command": "pass-interview",
+            "requires": []
+          },
+          {
+            "command": "register-employer",
+            "requires": [
+              "glen",
+              "maple"
+            ]
+          },
+          {
+            "command": "submit",
+            "requires": [
+              "glen",
+              "maple"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.9,
+        "codename": "ember",
+        "dependency_violation": "crash",
+        "order_violation": "refused",
+        "role": "labour",
+        "steps": [
+          {
+            "command": "pass-interview",
+            "requires": [
+              "pearl",
+              "willow"
+            ]
+          },
+          {
+            "command": "join-fund",
+            "requires": []
+          },
+          {
+            "command": "sponsor",
+            "requires": []
+          },
+          {
+            "command": "submit",
+            "requires": [
+              "pearl",
+              "willow"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.9,
+        "codename": "glen",
+        "dependency_violation": "data_loss",
+        "order_violation": "refused",
+        "role": "insurance",
+        "steps": [
+          {
+            "command": "name-doctor",
+            "requires": []
+          },
+          {
+            "command": "waive-history",
+            "requires": []
+          },
+          {
+            "command": "vaccinate",
+            "requires": [
+              "pearl"
+            ]
+          },
+          {
+            "command": "medical-exam",
+            "requires": []
+          },
+          {
+            "command": "submit",
+            "requires": [
+              "pearl",
+              "umber"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "iris",
+        "dependency_violation": "refused",
+        "order_violation": "data_loss",
+        "role": "registry",
+        "steps": [
+          {
+            "command": "translate",
+            "requires": []
+          },
+          {
+            "command": "certify-birth",
+            "requires": []
+          },
+          {
+            "command": "register-address",
+            "requires": [
+              "birch"
+            ]
+          },
+          {
+            "command": "verify-identity",
+            "requires": []
+          },
+          {
+            "command": "submit",
+            "requires": [
+              "birch"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.9,
+        "codename": "jade",
+        "dependency_violation": "crash",
+        "order_violation": "crash",
+        "role": "treasury",
+        "steps": [
+          {
+            "command": "prove-funds",
+            "requires": []
+          },
+          {
+            "command": "open-account",
+            "requires": []
+          },
+          {
+            "command": "pay-stamp",
+            "requires": []
+          },
+          {
+            "command": "assess",
+            "requires": []
+          },
+          {
+            "command": "submit",
+            "requires": [
+              "birch"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "lotus",
+        "dependency_violation": "data_loss",
+        "order_violation": "crash",
+        "role": "insurance",
+        "steps": [
+          {
+            "command": "name-doctor",
+            "requires": [
+              "jade"
+            ]
+          },
+          {
+            "command": "vaccinate",
+            "requires": [
+              "iris"
+            ]
+          },
+          {
+            "command": "medical-exam",
+            "requires": [
+              "umber"
+            ]
+          },
+          {
+            "command": "submit",
+            "requires": [
+              "iris",
+              "jade",
+              "umber"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "maple",
+        "dependency_violation": "data_loss",
+        "order_violation": "refused",
+        "role": "treasury",
+        "steps": [
+          {
+            "command": "assess",
+            "requires": [
+              "iris"
+            ]
+          },
+          {
+            "command": "declare-income",
+            "requires": []
+          },
+          {
+            "command": "open-account",
+            "requires": []
+          },
+          {
+            "command": "submit",
+            "requires": [
+              "birch",
+              "iris",
+              "pearl"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.7,
+        "codename": "nova",
+        "dependency_violation": "refused",
+        "order_violation": "data_loss",
+        "role": "labour",
+        "steps": [
+          {
+            "command": "sign-contract",
+            "requires": [
+              "maple"
+            ]
+          },
+          {
+            "command": "pass-interview",
+            "requires": [
+              "cedar",
+              "maple"
+            ]
+          },
+          {
+            "command": "sponsor",
+            "requires": [
+              "maple"
+            ]
+          },
+          {
+            "command": "submit",
+            "requires": [
+              "cedar",
+              "lotus",
+              "maple"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "pearl",
+        "dependency_violation": "refused",
+        "order_violation": "refused",
+        "role": "treasury",
+        "steps": [
+          {
+            "command": "declare-income",
+            "requires": []
+          },
+          {
+            "command": "clear-debts",
+            "requires": [
+              "birch",
+              "quill"
+            ]
+          },
+          {
+            "command": "open-account",
+            "requires": [
+              "birch",
+              "quill"
+            ]
+          },
+          {
+            "command": "pay-stamp",
+            "requires": [
+              "quill"
+            ]
+          },
+          {
+            "command": "submit",
+            "requires": [
+              "birch",
+              "quill"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 1.0,
+        "codename": "quill",
+        "dependency_violation": "data_loss",
+        "order_violation": "data_loss",
+        "role": "registry",
+        "steps": [
+          {
+            "command": "verify-identity",
+            "requires": []
+          },
+          {
+            "command": "translate",
+            "requires": []
+          },
+          {
+            "command": "certify-birth",
+            "requires": []
+          },
+          {
+            "command": "submit",
+            "requires": [
+              "birch"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.9,
+        "codename": "umber",
+        "dependency_violation": "crash",
+        "order_violation": "data_loss",
+        "role": "insurance",
+        "steps": [
+          {
+            "command": "pay-premium",
+            "requires": [
+              "quill"
+            ]
+          },
+          {
+            "command": "waive-history",
+            "requires": [
+              "quill"
+            ]
+          },
+          {
+            "command": "medical-exam",
+            "requires": [
+              "pearl"
+            ]
+          },
+          {
+            "command": "submit",
+            "requires": [
+              "pearl",
+              "quill"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "willow",
+        "dependency_violation": "refused",
+        "order_violation": "refused",
+        "role": "insurance",
+        "steps": [
+          {
+            "command": "vaccinate",
+            "requires": [
+              "jade"
+            ]
+          },
+          {
+            "command": "enroll",
+            "requires": [
+              "umber"
+            ]
+          },
+          {
+            "command": "name-doctor",
+            "requires": [
+              "umber"
+            ]
+          },
+          {
+            "command": "medical-exam",
+            "requires": [
+              "maple"
+            ]
+          },
+          {
+            "command": "submit",
+            "requires": [
+              "jade",
+              "maple",
+              "umber"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.7,
+        "codename": "zenith",
+        "dependency_violation": "refused",
+        "order_violation": "refused",
+        "role": "immigration",
+        "steps": [
+          {
+            "command": "book-slot",
+            "requires": [
+              "cedar"
+            ]
+          },
+          {
+            "command": "sign-pledge",
+            "requires": [
+              "cedar",
+              "ember"
+            ]
+          },
+          {
+            "command": "pay-fee",
+            "requires": [
+              "nova"
+            ]
+          },
+          {
+            "command": "collect",
+            "requires": [
+              "cedar",
+              "ember",
+              "nova"
+            ]
+          }
+        ]
+      }
+    ],
+    "sync_command": "settle",
+    "theme": "residency"
+  },
+  "tiers_banked": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "window_total": 1170,
+  "window_used": 975
+}

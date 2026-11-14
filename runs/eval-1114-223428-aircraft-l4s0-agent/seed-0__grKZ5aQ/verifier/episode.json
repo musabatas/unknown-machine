@@ -1,0 +1,4092 @@
+{
+  "calls": 276,
+  "data_lost": [],
+  "finished": true,
+  "log": [
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "inspect",
+      "window_used": 2
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "spin-apu",
+      "outcome": "data_loss",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 6
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "test-ground",
+      "outcome": "data_loss",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 10
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "warm-inverters",
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 14
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "warm-inverters",
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 18
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "warm-inverters",
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 22
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "warm-inverters",
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 23
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "spin-apu",
+      "outcome": "data_loss",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 27
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "test-ground",
+      "outcome": "data_loss",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 31
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "sync-generators",
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 35
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "sync-generators",
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 39
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "sync-generators",
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 43
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "sync-generators",
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 44
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "spin-apu",
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 48
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "spin-apu",
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 52
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "spin-apu",
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 56
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "spin-apu",
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 57
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "test-ground",
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 58
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "belto",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 59
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "inspect",
+      "window_used": 61
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "spin-apu",
+      "outcome": "data_loss",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 65
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "close-breakers",
+      "outcome": "data_loss",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 69
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "test-ground",
+      "outcome": "data_loss",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 73
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "warm-inverters",
+      "outcome": "data_loss",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 77
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "spin-apu",
+      "outcome": "refused",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 81
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": null,
+      "command": "close-breakers",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 85
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "close-breakers",
+      "outcome": "data_loss",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 89
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "warm-inverters",
+      "outcome": "data_loss",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 93
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "test-ground",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 97
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "test-ground",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 101
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "test-ground",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 105
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "test-ground",
+      "outcome": "refused",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 109
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "test-ground",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 113
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "test-ground",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 114
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "spin-apu",
+      "outcome": "data_loss",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 118
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "close-breakers",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 122
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "close-breakers",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 126
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "close-breakers",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 130
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "close-breakers",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 131
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "spin-apu",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 135
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "spin-apu",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 139
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "spin-apu",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 143
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "spin-apu",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 144
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "warm-inverters",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 145
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "ivesk",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 146
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "quorn",
+      "tiers_banked": [],
+      "tool": "inspect",
+      "window_used": 148
+    },
+    {
+      "accuracy": 1.0,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "close-breakers",
+      "outcome": "data_loss",
+      "service": "quorn",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 152
+    },
+    {
+      "accuracy": 1.0,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "test-ground",
+      "outcome": "data_loss",
+      "service": "quorn",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 156
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "warm-inverters",
+      "outcome": "ok",
+      "service": "quorn",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 157
+    },
+    {
+      "accuracy": 1.0,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "close-breakers",
+      "outcome": "data_loss",
+      "service": "quorn",
+      "tiers_banked": [],
+      "tool": "dry_run",
+      "window_used": 161
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "test-ground",
+      "outcome": "ok",
+      "service": "quorn",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 162
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "close-breakers",
+      "outcome": "ok",
+      "service": "quorn",
+      "tiers_banked": [],
+      "tool": "run",
+      "window_used": 163
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "quorn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 164
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "jarno",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 166
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "pressurize",
+      "outcome": "crash",
+      "service": "jarno",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 170
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "arm-backup",
+      "outcome": "crash",
+      "service": "jarno",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 174
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "purge-air",
+      "outcome": "ok",
+      "service": "jarno",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 178
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "purge-air",
+      "outcome": "ok",
+      "service": "jarno",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 179
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "pressurize",
+      "outcome": "ok",
+      "service": "jarno",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 180
+    },
+    {
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "arm-backup",
+      "outcome": "crash",
+      "service": "jarno",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 181
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "jarno",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "restart",
+      "window_used": 185
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "prime-pumps",
+      "outcome": "ok",
+      "service": "jarno",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 186
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "arm-backup",
+      "outcome": "ok",
+      "service": "jarno",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 187
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "jarno",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 188
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 190
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "pressurize",
+      "outcome": "data_loss",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 194
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "arm-backup",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 198
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "arm-backup",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 202
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "arm-backup",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 206
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "arm-backup",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 207
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "pressurize",
+      "outcome": "refused",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 211
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "cycle-valves",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 215
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "cycle-valves",
+      "outcome": "refused",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 219
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "cycle-valves",
+      "outcome": "data_loss",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 223
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "cycle-valves",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 227
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "cycle-valves",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 231
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "cycle-valves",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 235
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "cycle-valves",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 236
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "pressurize",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 240
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "pressurize",
+      "outcome": "refused",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 244
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "pressurize",
+      "outcome": "data_loss",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 248
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "pressurize",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 252
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "pressurize",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 256
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "pressurize",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 260
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "pressurize",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 261
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "engage",
+      "outcome": "data_loss",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 265
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "engage",
+      "outcome": "data_loss",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 269
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "inspect",
+      "window_used": 271
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": null,
+      "command": "pressurize",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 275
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "pressurize",
+      "outcome": "refused",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 279
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "prime-pumps",
+      "outcome": "refused",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 283
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "check-reservoir",
+      "outcome": "refused",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 287
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "cycle-valves",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 291
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "cycle-valves",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 295
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "cycle-valves",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 299
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "cycle-valves",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 300
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "prime-pumps",
+      "outcome": "refused",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 304
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "check-reservoir",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 308
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "check-reservoir",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 312
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "check-reservoir",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 316
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "check-reservoir",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 317
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "prime-pumps",
+      "outcome": "refused",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 321
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "pressurize",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 325
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "pressurize",
+      "outcome": "refused",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 329
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "pressurize",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 330
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "prime-pumps",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 331
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 332
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "balance",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 333
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "balance",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 334
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "balance",
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "run",
+      "window_used": 335
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 339
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 343
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "engage",
+      "outcome": "refused",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 347
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1
+      ],
+      "tool": "dry_run",
+      "window_used": 351
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "marn",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 352
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "inspect",
+      "window_used": 354
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "calibrate-air-data",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 358
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "calibrate-air-data",
+      "outcome": "data_loss",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 362
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "calibrate-air-data",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 366
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "calibrate-air-data",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 370
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "calibrate-air-data",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 371
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "test-displays",
+      "outcome": "refused",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 375
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "boot-computers",
+      "outcome": "refused",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 379
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "tune-radios",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 383
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "tune-radios",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 387
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "tune-radios",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 391
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "tune-radios",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 392
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "test-displays",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 396
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "test-displays",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 400
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "test-displays",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 404
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "test-displays",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 405
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "boot-computers",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 409
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "boot-computers",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 413
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "boot-computers",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 414
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "engage",
+      "outcome": "data_loss",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 418
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "inspect",
+      "window_used": 420
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "calibrate-air-data",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 424
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "calibrate-air-data",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 428
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "calibrate-air-data",
+      "outcome": "crash",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 432
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "calibrate-air-data",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 436
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "calibrate-air-data",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 437
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "test-displays",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 441
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "test-displays",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 445
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "test-displays",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 449
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "test-displays",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 450
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "boot-computers",
+      "outcome": "data_loss",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 454
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_DEP",
+      "command": "boot-computers",
+      "outcome": "data_loss",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 458
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "inspect",
+      "window_used": 460
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "boot-computers",
+      "outcome": "data_loss",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 464
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "load-database",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 468
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "load-database",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 472
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "load-database",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 476
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "load-database",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 477
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "boot-computers",
+      "outcome": "data_loss",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 481
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "tune-radios",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 485
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "tune-radios",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 489
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "tune-radios",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 493
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "tune-radios",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 494
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "boot-computers",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 498
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "boot-computers",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 502
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "boot-computers",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 506
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "boot-computers",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 507
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 511
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 515
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 519
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "ulvik",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 520
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "inspect",
+      "window_used": 522
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "calibrate-air-data",
+      "outcome": "refused",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 526
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "test-displays",
+      "outcome": "ok",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 530
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "test-displays",
+      "outcome": "ok",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 534
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "test-displays",
+      "outcome": "ok",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 538
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "test-displays",
+      "outcome": "ok",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 539
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "calibrate-air-data",
+      "outcome": "refused",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 543
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "align-inertial",
+      "outcome": "ok",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 547
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "align-inertial",
+      "outcome": "ok",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 551
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "align-inertial",
+      "outcome": "ok",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 555
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "align-inertial",
+      "outcome": "ok",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 556
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "calibrate-air-data",
+      "outcome": "ok",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 560
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "calibrate-air-data",
+      "outcome": "refused",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 564
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "calibrate-air-data",
+      "outcome": "ok",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 568
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "calibrate-air-data",
+      "outcome": "refused",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 572
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "calibrate-air-data",
+      "outcome": "ok",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 573
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "boot-computers",
+      "outcome": "ok",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 574
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "wendo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 575
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 579
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 583
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 587
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "galdo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 588
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "boot-computers",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 592
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "boot-computers",
+      "outcome": "data_loss",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 596
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "boot-computers",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 600
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "boot-computers",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 604
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "boot-computers",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 608
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "boot-computers",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 609
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 613
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 617
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 621
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "lumo",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 622
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "inspect",
+      "window_used": 624
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "open-fuel",
+      "outcome": "crash",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 628
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "light-igniters",
+      "outcome": "data_loss",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 632
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 636
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "check-oil",
+      "outcome": "crash",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 640
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "motor-starter",
+      "outcome": "crash",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 644
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "check-oil",
+      "outcome": "crash",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 648
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "light-igniters",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 652
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "light-igniters",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 656
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "light-igniters",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 660
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "light-igniters",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 664
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "light-igniters",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 665
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "open-fuel",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 669
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "open-fuel",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 673
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "open-fuel",
+      "outcome": "data_loss",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 677
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "open-fuel",
+      "outcome": "crash",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 681
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "open-fuel",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 685
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "open-fuel",
+      "outcome": "data_loss",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 689
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "open-fuel",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 693
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "open-fuel",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 694
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 698
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 702
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 706
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 707
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "motor-starter",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 711
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "motor-starter",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 715
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "motor-starter",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 719
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "motor-starter",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 720
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 724
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 728
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "engage",
+      "outcome": "data_loss",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 732
+    },
+    {
+      "accuracy": 0.8,
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 736
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "cendra",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 737
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "elvan",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "inspect",
+      "window_used": 739
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "bleed-compressor",
+      "outcome": "refused",
+      "service": "elvan",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 743
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "stabilize-idle",
+      "outcome": "refused",
+      "service": "elvan",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 747
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "elvan",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 751
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "elvan",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 755
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "elvan",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 759
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "elvan",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 760
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "bleed-compressor",
+      "outcome": "ok",
+      "service": "elvan",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 764
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "bleed-compressor",
+      "outcome": "ok",
+      "service": "elvan",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 768
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": true,
+      "code": null,
+      "command": "bleed-compressor",
+      "outcome": "ok",
+      "service": "elvan",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 772
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "bleed-compressor",
+      "outcome": "ok",
+      "service": "elvan",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 773
+    },
+    {
+      "accuracy": 0.9,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "stabilize-idle",
+      "outcome": "crash",
+      "service": "elvan",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 777
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "stabilize-idle",
+      "outcome": "ok",
+      "service": "elvan",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 778
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "elvan",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 779
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "inspect",
+      "window_used": 781
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "open-fuel",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 785
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "open-fuel",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 789
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "open-fuel",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 793
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "open-fuel",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 797
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "open-fuel",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 798
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": null,
+      "command": "stabilize-idle",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 802
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": null,
+      "command": "stabilize-idle",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 806
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "stabilize-idle",
+      "outcome": "data_loss",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 810
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": "E_ORDER",
+      "command": "stabilize-idle",
+      "outcome": "data_loss",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 814
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 818
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 822
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 826
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 830
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 834
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "check-oil",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 835
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "stabilize-idle",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 839
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "stabilize-idle",
+      "outcome": "refused",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "dry_run",
+      "window_used": 843
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "stabilize-idle",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2
+      ],
+      "tool": "run",
+      "window_used": 844
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "engage",
+      "outcome": "ok",
+      "service": "nesto",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "run",
+      "window_used": 845
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "zarn",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "inspect",
+      "window_used": 847
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "free-controls",
+      "outcome": "ok",
+      "service": "zarn",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "dry_run",
+      "window_used": 851
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "free-controls",
+      "outcome": "ok",
+      "service": "zarn",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "dry_run",
+      "window_used": 855
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": true,
+      "code": null,
+      "command": "free-controls",
+      "outcome": "ok",
+      "service": "zarn",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "dry_run",
+      "window_used": 859
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": "E_DEP",
+      "command": "free-controls",
+      "outcome": "refused",
+      "service": "zarn",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "dry_run",
+      "window_used": 863
+    },
+    {
+      "accuracy": 0.7,
+      "accurate": false,
+      "code": "E_ORDER",
+      "command": "free-controls",
+      "outcome": "refused",
+      "service": "zarn",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "dry_run",
+      "window_used": 867
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "free-controls",
+      "outcome": "ok",
+      "service": "zarn",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "run",
+      "window_used": 868
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "test-surfaces",
+      "outcome": "ok",
+      "service": "zarn",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "run",
+      "window_used": 869
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "set-trim",
+      "outcome": "ok",
+      "service": "zarn",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "run",
+      "window_used": 870
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": null,
+      "outcome": "ok",
+      "service": "pesh",
+      "tiers_banked": [
+        1,
+        2,
+        3
+      ],
+      "tool": "inspect",
+      "window_used": 872
+    },
+    {
+      "accurate": true,
+      "code": null,
+      "command": "takeoff",
+      "outcome": "ok",
+      "service": "zarn",
+      "tiers_banked": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "tool": "run",
+      "window_used": 873
+    }
+  ],
+  "nonce": "fe62d6f95890895a77d887e8c28f4b0e",
+  "score": 1.0,
+  "system": {
+    "final_commands": [
+      "engage",
+      "takeoff"
+    ],
+    "initial_lag": 2,
+    "lag_register": "pressure_imbalance",
+    "lag_service": "pesh",
+    "layers": [
+      "power",
+      "hydraulics",
+      "avionics",
+      "engines",
+      "flight-control"
+    ],
+    "level": 4,
+    "seed": 0,
+    "services": [
+      {
+        "accuracy": 0.9,
+        "codename": "belto",
+        "dependency_violation": "refused",
+        "order_violation": "data_loss",
+        "role": "power",
+        "steps": [
+          {
+            "command": "warm-inverters",
+            "requires": []
+          },
+          {
+            "command": "sync-generators",
+            "requires": []
+          },
+          {
+            "command": "spin-apu",
+            "requires": []
+          },
+          {
+            "command": "test-ground",
+            "requires": []
+          },
+          {
+            "command": "engage",
+            "requires": []
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "cendra",
+        "dependency_violation": "data_loss",
+        "order_violation": "crash",
+        "role": "engines",
+        "steps": [
+          {
+            "command": "light-igniters",
+            "requires": [
+              "galdo"
+            ]
+          },
+          {
+            "command": "open-fuel",
+            "requires": [
+              "marn"
+            ]
+          },
+          {
+            "command": "check-oil",
+            "requires": []
+          },
+          {
+            "command": "motor-starter",
+            "requires": [
+              "galdo",
+              "marn"
+            ]
+          },
+          {
+            "command": "engage",
+            "requires": [
+              "galdo",
+              "marn"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.9,
+        "codename": "elvan",
+        "dependency_violation": "crash",
+        "order_violation": "refused",
+        "role": "engines",
+        "steps": [
+          {
+            "command": "check-oil",
+            "requires": [
+              "pesh",
+              "wendo"
+            ]
+          },
+          {
+            "command": "bleed-compressor",
+            "requires": []
+          },
+          {
+            "command": "stabilize-idle",
+            "requires": []
+          },
+          {
+            "command": "engage",
+            "requires": [
+              "pesh",
+              "wendo"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.9,
+        "codename": "galdo",
+        "dependency_violation": "data_loss",
+        "order_violation": "refused",
+        "role": "avionics",
+        "steps": [
+          {
+            "command": "calibrate-air-data",
+            "requires": []
+          },
+          {
+            "command": "tune-radios",
+            "requires": []
+          },
+          {
+            "command": "test-displays",
+            "requires": [
+              "pesh"
+            ]
+          },
+          {
+            "command": "boot-computers",
+            "requires": []
+          },
+          {
+            "command": "engage",
+            "requires": [
+              "pesh",
+              "ulvik"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "ivesk",
+        "dependency_violation": "refused",
+        "order_violation": "data_loss",
+        "role": "power",
+        "steps": [
+          {
+            "command": "test-ground",
+            "requires": []
+          },
+          {
+            "command": "close-breakers",
+            "requires": []
+          },
+          {
+            "command": "spin-apu",
+            "requires": [
+              "belto"
+            ]
+          },
+          {
+            "command": "warm-inverters",
+            "requires": []
+          },
+          {
+            "command": "engage",
+            "requires": [
+              "belto"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.9,
+        "codename": "jarno",
+        "dependency_violation": "crash",
+        "order_violation": "crash",
+        "role": "hydraulics",
+        "steps": [
+          {
+            "command": "purge-air",
+            "requires": []
+          },
+          {
+            "command": "pressurize",
+            "requires": []
+          },
+          {
+            "command": "prime-pumps",
+            "requires": []
+          },
+          {
+            "command": "arm-backup",
+            "requires": []
+          },
+          {
+            "command": "engage",
+            "requires": [
+              "belto"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "lumo",
+        "dependency_violation": "data_loss",
+        "order_violation": "crash",
+        "role": "avionics",
+        "steps": [
+          {
+            "command": "calibrate-air-data",
+            "requires": [
+              "jarno"
+            ]
+          },
+          {
+            "command": "test-displays",
+            "requires": [
+              "ivesk"
+            ]
+          },
+          {
+            "command": "boot-computers",
+            "requires": [
+              "ulvik"
+            ]
+          },
+          {
+            "command": "engage",
+            "requires": [
+              "ivesk",
+              "jarno",
+              "ulvik"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "marn",
+        "dependency_violation": "data_loss",
+        "order_violation": "refused",
+        "role": "hydraulics",
+        "steps": [
+          {
+            "command": "arm-backup",
+            "requires": [
+              "ivesk"
+            ]
+          },
+          {
+            "command": "cycle-valves",
+            "requires": []
+          },
+          {
+            "command": "pressurize",
+            "requires": []
+          },
+          {
+            "command": "engage",
+            "requires": [
+              "belto",
+              "ivesk",
+              "pesh"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.7,
+        "codename": "nesto",
+        "dependency_violation": "refused",
+        "order_violation": "data_loss",
+        "role": "engines",
+        "steps": [
+          {
+            "command": "open-fuel",
+            "requires": [
+              "marn"
+            ]
+          },
+          {
+            "command": "check-oil",
+            "requires": [
+              "cendra",
+              "marn"
+            ]
+          },
+          {
+            "command": "stabilize-idle",
+            "requires": [
+              "marn"
+            ]
+          },
+          {
+            "command": "engage",
+            "requires": [
+              "cendra",
+              "lumo",
+              "marn"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "pesh",
+        "dependency_violation": "refused",
+        "order_violation": "refused",
+        "role": "hydraulics",
+        "steps": [
+          {
+            "command": "cycle-valves",
+            "requires": []
+          },
+          {
+            "command": "check-reservoir",
+            "requires": [
+              "belto",
+              "quorn"
+            ]
+          },
+          {
+            "command": "pressurize",
+            "requires": [
+              "belto",
+              "quorn"
+            ]
+          },
+          {
+            "command": "prime-pumps",
+            "requires": [
+              "quorn"
+            ]
+          },
+          {
+            "command": "engage",
+            "requires": [
+              "belto",
+              "quorn"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 1.0,
+        "codename": "quorn",
+        "dependency_violation": "data_loss",
+        "order_violation": "data_loss",
+        "role": "power",
+        "steps": [
+          {
+            "command": "warm-inverters",
+            "requires": []
+          },
+          {
+            "command": "test-ground",
+            "requires": []
+          },
+          {
+            "command": "close-breakers",
+            "requires": []
+          },
+          {
+            "command": "engage",
+            "requires": [
+              "belto"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.9,
+        "codename": "ulvik",
+        "dependency_violation": "crash",
+        "order_violation": "data_loss",
+        "role": "avionics",
+        "steps": [
+          {
+            "command": "load-database",
+            "requires": [
+              "quorn"
+            ]
+          },
+          {
+            "command": "tune-radios",
+            "requires": [
+              "quorn"
+            ]
+          },
+          {
+            "command": "boot-computers",
+            "requires": [
+              "pesh"
+            ]
+          },
+          {
+            "command": "engage",
+            "requires": [
+              "pesh",
+              "quorn"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.8,
+        "codename": "wendo",
+        "dependency_violation": "refused",
+        "order_violation": "refused",
+        "role": "avionics",
+        "steps": [
+          {
+            "command": "test-displays",
+            "requires": [
+              "jarno"
+            ]
+          },
+          {
+            "command": "align-inertial",
+            "requires": [
+              "ulvik"
+            ]
+          },
+          {
+            "command": "calibrate-air-data",
+            "requires": [
+              "ulvik"
+            ]
+          },
+          {
+            "command": "boot-computers",
+            "requires": [
+              "marn"
+            ]
+          },
+          {
+            "command": "engage",
+            "requires": [
+              "jarno",
+              "marn",
+              "ulvik"
+            ]
+          }
+        ]
+      },
+      {
+        "accuracy": 0.7,
+        "codename": "zarn",
+        "dependency_violation": "refused",
+        "order_violation": "refused",
+        "role": "flight-control",
+        "steps": [
+          {
+            "command": "free-controls",
+            "requires": [
+              "cendra"
+            ]
+          },
+          {
+            "command": "test-surfaces",
+            "requires": [
+              "cendra",
+              "elvan"
+            ]
+          },
+          {
+            "command": "set-trim",
+            "requires": [
+              "nesto"
+            ]
+          },
+          {
+            "command": "takeoff",
+            "requires": [
+              "cendra",
+              "elvan",
+              "nesto"
+            ]
+          }
+        ]
+      }
+    ],
+    "sync_command": "balance",
+    "theme": "aircraft"
+  },
+  "tiers_banked": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "window_total": 1170,
+  "window_used": 873
+}

@@ -193,14 +193,15 @@ Other models on the submitted task, one complete run each through OpenCode:
 
 One of the six models solved the submitted task in its single run. That is the evidence that the task is solvable by an agent through OpenCode and not only by the scripted reference; it also means the gap is a property of the model as much as of the task.
 
-The same system in the other two scenarios (same structure, window and reference run, other words), `gpt-6.1-sol`, one complete run each:
+The same system in the other two scenarios (same structure, window and reference run, other words), `gpt-6.1-sol`, three complete runs each, every one ended by `finish` with no error:
 
-| Task | Score | What happened |
+| Task | Scores | What happened |
 |---|---|---|
-| `aircraft/level-4/seed-0` | 0.00 | Banked tier 1, then destroyed a service's data and called `finish` after 76 calls and 210 of 1170 minutes |
-| `residency/level-4/seed-0` | 1.00 | Solved it in 860 of 1170 minutes |
+| `level-4/seed-0` (legacy, submitted) | 0.00 six times | Above |
+| `aircraft/level-4/seed-0` | 0.00, 1.00, 0.00 | Both zeros banked tier 1 and then destroyed data (one service, then two) and stopped early, after 210 and 310 of 1170 minutes |
+| `residency/level-4/seed-0` | 1.00, 1.00, 1.00 | Solved in 860, 975 and 944 of 1170 minutes |
 
-So the six zeros on the legacy wording of this system do not carry over to every wording of it. One run per scenario is too few to say whether the wording matters or whether this is the same run-to-run swing as on the other seeds.
+So the six zeros on the legacy wording do not carry over to every wording of the same system: the model lost it six times of six in one wording, twice of three in another and never in the third. A theme changes only words (role names, command names, codenames), so the model's choice of which command to run unchecked depends on what the commands are called. Three runs per scenario are few, and this was not investigated further.
 
 The logs of the counted runs are in `runs/`.
 

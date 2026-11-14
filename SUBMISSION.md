@@ -29,7 +29,7 @@ All of it in one command:
 
 Every agent run ended by its own `finish`, with no error, after destroying a service's data with a command it had not checked.
 
-What this does not show: on the other four level 4 tasks the same model solved 8 runs of 13, and one of six other models (`big-pickle`) solved this task in its single run. `README.md` gives every run.
+What this does not show: on the other four level 4 tasks the same model solved 8 runs of 13; on the same system told in the two other scenarios it scored 0.00, 1.00, 0.00 (aircraft) and 1.00 three times (residency); and one of six other models (`big-pickle`) solved this task in its single run. `README.md` gives every run.
 
 ## Harbor run logs
 
