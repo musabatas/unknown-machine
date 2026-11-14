@@ -126,7 +126,7 @@ poetry run python scripts/watch.py                              # the Harbor run
 poetry run python scripts/watch.py --demo reference --level 3   # a scripted policy, no API key
 ```
 
-The page shows every action as it happens on the layered system, with each service's hidden reactions beside it. The state is read from inside the sidecar, so no port is opened and the agent's container learns nothing.
+The page shows one tile per run, all live, and each run's actions as they happen on the layered system with the hidden rules beside them. The state is read from inside the sidecar, so no sidecar port is opened. The page itself is a server on the host, which an agent's container can reach (checked: it can), and it shows hidden rules; so every address sits under a secret drawn at start and printed only in the terminal, and anything else answers 404 (also checked from inside a container).
 
 To replay a finished episode step by step:
 

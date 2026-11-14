@@ -22,6 +22,7 @@
   --fs-2: 14px;
   --fs-3: 18px;
   --fs-4: 28px;
+  --fs-5: 44px;
   --s-1: 4px;
   --s-2: 8px;
   --s-3: 12px;
@@ -29,7 +30,7 @@
   --hair: 1px;
   --heavy: 2px;
   --pip: 12px;
-  --side: 372px;
+  --side: 400px;
   --pulse: 420ms;
 }
 @media (prefers-color-scheme: dark) {
@@ -122,8 +123,11 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
   gap: var(--s-3);
   padding: var(--s-3) var(--s-4);
   grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "meters" "call" "stage" "keys" "log" "transport";
+  grid-template-areas: "goal" "meters" "call" "stage" "keys" "log" "transport";
 }
+.goal { grid-area: goal; margin: 0; font-size: var(--fs-1); color: var(--ink-2); }
+.goal b { color: var(--ink); letter-spacing: 0.09em; text-transform: uppercase; font-size: var(--fs-0); margin-right: var(--s-1); }
+code { font-family: var(--font-mono); font-size: 0.95em; font-weight: 700; }
 .meters { grid-area: meters; }
 .stage { grid-area: stage; }
 .call { grid-area: call; }
@@ -155,7 +159,10 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
   color: var(--ink-2);
   line-height: 1.25;
 }
-.tier b { display: block; font-size: var(--fs-2); }
+.tier b { display: flex; justify-content: space-between; gap: var(--s-1); font-size: var(--fs-2); }
+.tier b span { font-weight: 400; font-size: var(--fs-0); }
+.tier { min-width: 0; overflow-wrap: anywhere; }
+#m-lagsub { white-space: normal; }
 .tier.banked { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 #m-lost.has { color: var(--accent); font-weight: 700; }
 
@@ -163,10 +170,14 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
 .stage { border: var(--hair) solid var(--line); min-height: 0; overflow: auto; display: flex; flex-direction: column; }
 .stage-inner { position: relative; flex: 1; display: flex; flex-direction: column; min-height: min-content; }
 #edges { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
-.edge { fill: none; stroke: var(--line); stroke-width: 1; stroke-dasharray: 3 4; }
-.edge.met { stroke: var(--ink-2); stroke-dasharray: none; }
-.edge.active { stroke: var(--ink); stroke-width: 2.25; }
-.edge.dead { stroke: var(--accent); stroke-dasharray: 2 5; }
+/* Dependency lines stay in the background until they matter: the ones the acting service
+   needs right now are drawn heavy (still missing) or plain (already up). */
+.edge { fill: none; stroke: var(--line); stroke-width: 1; stroke-dasharray: 2 5; opacity: 0.7; }
+.edge.met { stroke-dasharray: none; }
+.edge.have { stroke: var(--ink-2); stroke-width: 1.5; stroke-dasharray: none; opacity: 1; }
+.edge.need { stroke: var(--ink); stroke-width: 3; stroke-dasharray: 9 5; opacity: 1; animation: march 900ms linear infinite; }
+.edge.need.dead { stroke: var(--accent); }
+@keyframes march { to { stroke-dashoffset: -14; } }
 .layer {
   flex: 1 1 auto;
   display: flex;
@@ -178,10 +189,10 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
 .layer:last-of-type { border-bottom: 0; }
 .layer-name { display: flex; gap: var(--s-2); align-items: baseline; }
 .layer-name b { font-family: var(--font-mono); font-size: var(--fs-1); }
-.cards { display: flex; flex-wrap: wrap; gap: 18px var(--s-4); justify-content: center; align-items: center; flex: 1; }
+.cards { display: flex; flex-wrap: wrap; gap: 18px var(--s-3); justify-content: center; align-items: center; flex: 1; }
 .card {
   position: relative;
-  flex: 0 1 228px;
+  flex: 0 1 212px;
   min-width: 160px;
   background: var(--paper);
   border: var(--hair) dashed var(--ink-2);
@@ -191,12 +202,36 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
 }
 .card .name { font-family: var(--font-mono); font-size: var(--fs-2); font-weight: 700; display: flex; justify-content: space-between; gap: var(--s-2); align-items: baseline; }
 .card .state { font-family: var(--font-ui); font-size: var(--fs-0); letter-spacing: 0.07em; text-transform: uppercase; font-weight: 600; white-space: nowrap; }
-.card .info { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 var(--s-2); white-space: nowrap; }
-.card .info > span:first-child, .card .aside { opacity: 0.8; }
-.card .rules { font-family: var(--font-mono); display: flex; gap: var(--s-2); }
-.card .rules span { opacity: 0.8; }
-.card .aside { margin-left: auto; white-space: nowrap; }
-.card .rules .fatal { color: var(--accent); font-weight: 700; opacity: 1; }
+.card .aside { margin-left: auto; white-space: nowrap; opacity: 0.8; }
+/* how the service reacts to each kind of mistake, in words; the fatal ones stand out */
+.card .rule { display: flex; justify-content: space-between; gap: var(--s-2); white-space: nowrap; }
+.card .rule span { opacity: 0.8; }
+.card .rule b { font-weight: 400; opacity: 0.8; }
+.card .rule.fatal b { color: var(--accent); font-weight: 700; opacity: 1; }
+/* what is happening to this card right now, as a tag on its top edge */
+.card .doing {
+  position: absolute;
+  top: -13px;
+  left: var(--s-2);
+  z-index: 1;
+  padding: 0 var(--s-1);
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--hair) solid var(--ink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  line-height: 15px;
+  white-space: nowrap;
+}
+.card .doing:empty { display: none; }
+.card.t-dry_run .doing { border-style: dashed; }
+.card.t-run .doing, .card.t-restart .doing { background: var(--ink); color: var(--paper); }
+.card.alarm.t-run .doing { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.card.alarm.t-dry_run .doing { border-color: var(--accent); color: var(--accent); }
+.card.needed { outline: var(--heavy) dashed var(--ink); outline-offset: 3px; }
+.card.needed.lost { outline-color: var(--accent); }
 .pips { display: flex; align-items: center; gap: 3px; margin: 3px 0 5px; }
 .pip {
   position: relative;
@@ -218,7 +253,7 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
    crash loop = hatched with a heavy border, data lost = the accent. */
 .card.partial { border-style: solid; border-color: var(--ink); }
 .card.serving { border-style: solid; border-color: var(--ink); background: var(--ink); color: var(--paper); }
-.card.serving .rules .fatal { color: inherit; } /* the danger is past once it serves; keeps contrast on the fill */
+.card.serving .rule.fatal b { color: inherit; } /* the danger is past once it serves; keeps contrast on the fill */
 .card.crashed {
   border: var(--heavy) solid var(--ink);
   background: repeating-linear-gradient(135deg, var(--line) 0 2px, var(--paper) 2px 7px);
@@ -232,7 +267,10 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
 }
 .card.lost .name > span:first-child { text-decoration: line-through; text-decoration-thickness: 2px; }
 .card.lost .state { background: var(--accent); color: var(--on-accent); padding: 0 var(--s-1); }
+/* a forecast looks without touching (dashed ring), a look is a hairline, a real action is solid */
 .card.acting { outline: var(--heavy) solid var(--ink); outline-offset: 3px; }
+.card.acting.t-dry_run { outline-style: dashed; }
+.card.acting.t-inspect { outline-width: var(--hair); }
 .card.acting.alarm { outline-color: var(--accent); outline-width: 3px; }
 .card.acting.alarm .pip.target::after { background: var(--accent); }
 .card.pulse { animation: pulse var(--pulse) ease-out 1; }
@@ -258,15 +296,30 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
 .sw.serving { border: var(--hair) solid var(--ink); background: var(--ink); }
 .sw.crashed { border: var(--heavy) solid var(--ink); background: repeating-linear-gradient(135deg, var(--line) 0 2px, var(--paper) 2px 5px); }
 .sw.lost { border: var(--heavy) solid var(--accent); background: repeating-linear-gradient(135deg, var(--accent-soft) 0 2px, var(--paper) 2px 5px); }
+.sw.wait { height: 0; border: 0; border-top: 3px dashed var(--ink); }
 
 /* ---- current call ---- */
 .call { gap: var(--s-1); overflow: auto; }
 .call-head { display: flex; justify-content: space-between; gap: var(--s-2); }
-#c-line { font-family: var(--font-mono); font-size: var(--fs-3); font-weight: 700; margin: 0; overflow-wrap: anywhere; line-height: 1.2; }
-#c-line .tool { font-weight: 400; }
-#c-result, #c-note { margin: 0; font-size: var(--fs-1); }
-#c-result b { font-family: var(--font-mono); font-size: var(--fs-2); }
-#c-note { color: var(--ink-2); min-height: 1.35em; }
+/* forecast or real action, then what happened in a sentence; the raw call stays below, small */
+.kind {
+  align-self: flex-start;
+  margin: 0;
+  padding: 1px var(--s-2);
+  border: var(--hair) solid var(--ink);
+  font-size: var(--fs-0);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.kind:empty { display: none; }
+.kind.forecast { border-style: dashed; }
+.kind.real { background: var(--ink); color: var(--paper); }
+#c-say { margin: 0; font-size: 15px; line-height: 1.35; }
+#c-say .bad { color: var(--accent); font-weight: 700; }
+#c-wait { margin: 0; font-size: var(--fs-1); font-weight: 600; }
+#c-wait:empty, #c-line:empty { display: none; }
+#c-line { font-family: var(--font-mono); font-size: var(--fs-0); color: var(--ink-2); margin: 0; overflow-wrap: anywhere; }
 .banner {
   margin: 2px 0 0;
   padding: var(--s-1) var(--s-2);
@@ -300,9 +353,9 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
   padding: 3px var(--s-1);
   min-height: 26px;
   cursor: pointer;
-  font-family: var(--font-mono);
   font-size: var(--fs-1);
 }
+.key .n { font-family: var(--font-mono); }
 .key:hover { background: var(--paper-2); }
 .key[aria-current="true"] { background: var(--ink); color: var(--paper); }
 .key .n { color: var(--ink-2); text-align: right; }
@@ -312,23 +365,28 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
 .glyph.loss { background: var(--accent); }
 .glyph.crash { background: repeating-linear-gradient(135deg, var(--accent) 0 2px, transparent 2px 4px); }
 .glyph.wrong { border-radius: 50%; }
+.mk { display: block; width: 9px; height: 9px; border: var(--hair) solid currentColor; align-self: center; }
+.mk.real { background: currentColor; }
+.mk.forecast { border-style: dashed; }
+.mk.look { border-radius: 50%; }
+.logrow .code { font-family: var(--font-mono); font-size: var(--fs-0); color: var(--ink-2); }
+.logrow[aria-current="true"] .code { color: inherit; }
 .logrow {
   display: grid;
-  grid-template-columns: 34px 56px minmax(0, 1fr) auto;
+  grid-template-columns: 30px 9px minmax(0, 1fr) auto;
   gap: var(--s-2);
-  font-family: var(--font-mono);
   font-size: var(--fs-1);
   padding: 0 var(--s-1);
   line-height: 1.3;
   border-left: 3px solid transparent;
   white-space: nowrap;
 }
-.logrow .n { color: var(--ink-2); text-align: right; }
+.logrow .n { color: var(--ink-2); text-align: right; font-family: var(--font-mono); }
 .logrow .what { overflow: hidden; text-overflow: ellipsis; }
 .logrow.keyrow { border-left-color: var(--accent); }
-.logrow.keyrow .res { color: var(--accent); font-weight: 700; }
+.logrow.keyrow .what { color: var(--accent); font-weight: 700; }
 .logrow[aria-current="true"] { background: var(--ink); color: var(--paper); }
-.logrow[aria-current="true"] .n, .logrow[aria-current="true"] .res { color: inherit; }
+.logrow[aria-current="true"] .n, .logrow[aria-current="true"] .what { color: inherit; }
 
 /* ---- transport ---- */
 .transport {
@@ -373,8 +431,9 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
     padding: var(--s-2) var(--s-4) var(--s-3);
     gap: var(--s-2) var(--s-3);
     grid-template-columns: minmax(0, 1fr) var(--side);
-    grid-template-rows: auto 186px minmax(0, 1fr) minmax(0, 1.6fr) auto;
+    grid-template-rows: auto auto 236px minmax(0, 1fr) minmax(0, 1.5fr) auto;
     grid-template-areas:
+      "goal goal"
       "meters meters"
       "stage call"
       "stage keys"
@@ -383,7 +442,7 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
   }
   .scroll { max-height: none; }
   .transport { position: static; }
-  .layer { flex-direction: row; align-items: stretch; padding: var(--s-2) var(--s-3) 16px; }
+  .layer { flex-direction: row; align-items: stretch; padding: var(--s-3) var(--s-3) 16px; }
   .layer-name { flex: 0 0 92px; flex-direction: column; gap: 0; justify-content: center; }
 }
 @media (max-width: 619px) {
@@ -392,7 +451,8 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
   .meter:nth-child(3) { order: 1; border-bottom: 0; }
   .meter:nth-child(4) { border-right: 0; }
   .meter .sub { white-space: normal; }
-  .card { flex-basis: 160px; }
+  .card { flex: 1 1 100%; max-width: 340px; }
+  .cards { padding-top: var(--s-2); }
 }
 
 /* ---- live mode (window.LIVE): status and motion. Nothing here applies to a replay. ---- */
@@ -424,9 +484,6 @@ body.finished #m-lost.has { color: inherit; }
 body.live .banner.end { background: var(--ink); color: var(--paper); }
 body.live .banner.end b { font-size: var(--fs-3); }
 
-/* a dry run looks without touching (dashed ring), an inspect is a hairline, a run is solid */
-body.live .card.acting.t-dry_run { outline-style: dashed; }
-body.live .card.acting.t-inspect { outline-width: var(--hair); }
 .card.fx-run, .card.fx-restart { animation: pulse var(--pulse) ease-out 1; }
 .card.fx-inspect { animation: pulse 260ms ease-out 1; }
 .card.fx-dry_run { animation: probe 720ms ease-in-out 1; }
@@ -476,8 +533,80 @@ body.live .bar i { transition: width 320ms ease-out; }
 }
 @keyframes spent { from { opacity: 1; } to { opacity: 0; } }
 
+/* ---- overview: one tile per run, readable from across a room ---- */
+#overview { flex: 1; min-height: 0; overflow: auto; padding: var(--s-3) var(--s-4) var(--s-4); display: flex; flex-direction: column; gap: var(--s-3); }
+#o-none { margin: 0; padding: 48px var(--s-4); border: var(--heavy) dashed var(--line); text-align: center; }
+#o-none span { display: block; color: var(--ink-2); font-size: var(--fs-1); margin-top: var(--s-2); }
+#tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: var(--s-4); align-items: stretch; }
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  min-width: 0;
+  padding: var(--s-3);
+  background: var(--paper);
+  border: var(--heavy) solid var(--ink);
+  border-radius: 0;
+  text-align: left;
+  cursor: pointer;
+}
+.tile:hover { background: var(--paper-2); }
+.tile > span { display: block; min-width: 0; }
+.tile .t-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); }
+.tile .chip { min-height: 26px; }
+.tile .t-task { font-family: var(--font-mono); font-size: var(--fs-1); color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tile .t-model { font-family: var(--font-mono); font-size: var(--fs-3); font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
+.tile .t-model small { display: block; font-size: var(--fs-1); font-weight: 400; color: var(--ink-2); }
+.tile .t-body { display: grid; grid-template-columns: minmax(0, 1fr) 118px; gap: var(--s-3); align-items: end; }
+.tile .t-body > span { display: block; min-width: 0; }
+.tile .t-score { font-family: var(--font-mono); font-size: var(--fs-5); font-weight: 700; line-height: 1; display: block; }
+.tile .t-win { display: block; margin-top: var(--s-2); }
+.tile .t-win .bar { display: block; height: 12px; margin: 2px 0; }
+.tile .t-win .bar i { transition: width 600ms ease-out; }
+.tile .t-num { display: block; font-family: var(--font-mono); font-size: var(--fs-2); }
+.tile .t-num b { font-size: var(--fs-3); }
+/* the four tiers as a ladder, the lowest at the bottom */
+.ladder { display: flex; flex-direction: column-reverse; gap: 3px; }
+.rung {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px var(--s-2);
+  border: var(--hair) solid var(--line);
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-1);
+  line-height: 1.5;
+}
+.rung b { font-size: var(--fs-2); }
+.rung.banked { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.rung.fx-bank { animation: bank 900ms ease-out 1; }
+.tile .t-now { border-top: var(--hair) solid var(--line); padding-top: var(--s-2); font-size: 15px; line-height: 1.3; min-height: 4.4em; }
+.tile .t-now span { display: block; }
+.tile .t-loss { margin: auto calc(-1 * var(--s-3)) calc(-1 * var(--s-3)); padding: var(--s-1) var(--s-3); font-size: var(--fs-1); color: var(--ink-2); border-top: var(--hair) solid var(--line); }
+.tile.lost { border-color: var(--accent); border-width: 4px; padding: calc(var(--s-3) - 2px); }
+.tile.lost .t-loss {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-top: 0;
+  font-size: var(--fs-3);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.25;
+  padding: var(--s-2) var(--s-3);
+  overflow-wrap: anywhere;
+}
+.tile.lost .t-loss small { display: block; font-size: var(--fs-1); font-weight: 400; letter-spacing: 0; text-transform: none; font-family: var(--font-mono); }
+.tile.finished .t-score { background: var(--ink); color: var(--paper); padding: var(--s-1) var(--s-2); display: inline-block; }
+.tile.fx-loss { animation: shake 560ms linear 1; }
+.tile.fx-loss::after { content: ""; position: absolute; inset: -4px; background: var(--accent); pointer-events: none; animation: burn 2200ms ease-out 1 forwards; }
+
 @media (prefers-reduced-motion: reduce) {
-  .card.pulse, .card[class*="fx-"], .card[class*="fx-"] .pip, .stage[class*="fx-"], .tier.fx-bank, .bar b.fx, .chip.on i { animation: none; }
+  .edge.need, .tile.fx-loss, .rung.fx-bank { animation: none; }
+  .tile.fx-loss::after { display: none; }
+  .tile .t-win .bar i { transition: none; }
+  .card.pulse,.card[class*="fx-"], .card[class*="fx-"] .pip, .stage[class*="fx-"], .tier.fx-bank, .bar b.fx, .chip.on i { animation: none; }
   .card.fx-loss::after { display: none; }
   body.live .bar i { transition: none; }
 }
@@ -491,6 +620,7 @@ body.live .bar i { transition: width 320ms ease-out; }
     <span class="chip wait" id="live-chip" role="status"><i></i><span id="live-text">Waiting</span></span>
     <span id="live-note"></span>
     <button class="btn" id="golive" type="button" hidden>Back to live</button>
+    <button class="btn" id="allruns" type="button" hidden>&lt; All runs</button>
   </p>
   <button class="btn" id="open" type="button">Open episode</button>
   <input id="file" type="file" accept="application/json,.json" hidden aria-label="Episode JSON file">
@@ -506,10 +636,17 @@ body.live .bar i { transition: width 320ms ease-out; }
   </div>
 </section>
 
+<main id="overview" aria-label="All runs" hidden>
+  <p class="goal"><b>What you are watching</b>Each tile is one agent bringing a broken system back up, layer by layer, inside a fixed time window. Every tier it reaches adds to its score; every service whose data it destroys costs 0.15. Select a tile to watch that run step by step.</p>
+  <p id="o-none" hidden></p>
+  <div id="tiles"></div>
+</main>
+
 <main id="app" hidden>
+  <p class="goal" id="goal"></p>
   <section class="meters" aria-label="Meters">
     <div class="meter">
-      <p class="label">Window</p>
+      <p class="label">Window used</p>
       <div class="value"><span id="m-window">0</span> <small>/ <span id="m-total">0</span> min</small></div>
       <div class="bar" aria-hidden="true"><i id="m-bar"></i><b id="m-spent"></b></div>
     </div>
@@ -535,23 +672,24 @@ body.live .bar i { transition: width 320ms ease-out; }
     </div>
     <ul class="legend" aria-label="Legend">
       <li><span class="pip done"></span>step done</li>
-      <li><span class="pip next"></span>next</li>
-      <li><span class="pip"></span>pending</li>
+      <li><span class="pip next"></span>next step</li>
+      <li><span class="pip"></span>later step</li>
       <li><span class="sw"></span>stopped</li>
-      <li><span class="sw partial"></span>partial</li>
+      <li><span class="sw partial"></span>partly up</li>
       <li><span class="sw serving"></span>serving</li>
       <li><span class="sw crashed"></span>crash loop</li>
-      <li><span class="sw lost"></span>data lost</li>
-      <li>ord, dep: what a too-early or missing-dependency command does</li>
+      <li><span class="sw lost"></span>data destroyed</li>
+      <li><span class="sw wait"></span>needed first by the acting service</li>
     </ul>
   </section>
 
   <section class="panel call" aria-label="Current call" aria-live="polite">
     <div class="call-head"><p class="label" id="c-step"></p><p class="label" id="c-cost"></p></div>
-    <p id="c-line"></p>
-    <p id="c-result"></p>
-    <p id="c-note"></p>
+    <p class="kind" id="c-kind"></p>
+    <p id="c-say"></p>
+    <p id="c-wait"></p>
     <div id="c-banners"></div>
+    <p id="c-line"></p>
   </section>
 
   <section class="panel keys" aria-label="Key moments">
@@ -560,7 +698,7 @@ body.live .bar i { transition: width 320ms ease-out; }
   </section>
 
   <section class="panel log" aria-label="Event log">
-    <p class="label">Event log</p>
+    <p class="label">What happened so far</p>
     <ol class="scroll" id="l-list"></ol>
   </section>
 
@@ -613,15 +751,6 @@ const TIER_MAX_LAYER = { 1: 1, 2: 2, 3: 4, 4: 5 };
 const TIER_POINTS = { 1: 0.10, 2: 0.15, 3: 0.25, 4: 0.50 };
 const LOSS_PENALTY = 0.15;
 const COST = { run: 1, inspect: 2, dry_run: 4, restart: 4 };
-const CODE_TEXT = {
-  E_ORDER: "another command of this service has to be applied first",
-  E_DEP: "a service this command depends on is not serving",
-  E_DONE: "already applied, nothing to do",
-  E_LAG: "the lag register is not zero",
-  E_FOREIGN: "the command is not part of this service's recovery",
-  E_CRASHED: "the service is in a crash loop",
-  E_LOST: "the service has lost its data",
-};
 
 function validateEpisode(ep) {
   if (!ep || typeof ep !== "object" || !Array.isArray(ep.log)) {
@@ -801,22 +930,131 @@ function verifyReplay(ep, frames) {
   const STEP_MS = 700;
   const KEY_DWELL = 3;
   const LOG_ROWS = 12;
-  const STATE_TEXT = { stopped: "stopped", partial: "partial", serving: "serving", crashed: "crash loop", lost: "data lost" };
-  const SHORT = { refused: "refuse", crash: "crash", data_loss: "loss" };
-  const KEY_TEXT = { loss: "data destroyed", crash: "crash", wrong: "forecast wrong" };
+  const STATE_TEXT = { stopped: "stopped", serving: "serving", crashed: "crash loop", lost: "data destroyed" };
+  // The plain words for what the tools return. Codes stay available, but secondary.
+  const RULE = { refused: "refused", crash: "crashes it", data_loss: "destroys data" };
+  const WOULD = { ok: "it would work", refused: "it would be refused", crash: "it would crash the service", data_loss: "it would destroy its data" };
+  const DID = { ok: "worked", refused: "refused", crash: "crashed it", data_loss: "destroyed its data" };
+  const TAG = { dry_run: "forecast only", run: "real action", inspect: "looked at", restart: "restarted" };
+  const KIND = { dry_run: "forecast", run: "real", restart: "real", inspect: "look" };
+  const KIND_TEXT = { forecast: "Forecast only, nothing changed", real: "Real action", look: "Look, nothing changed" };
 
   let ep = null, frames = [], keys = [], keyByStep = {}, byName = {};
   let cards = {}, edges = [], keyButtons = [];
   let pos = 0, playing = false, timer = null;
 
-  // Live mode: the page polls a run in progress and follows its head.
-  const live = window.LIVE && window.LIVE.url ? window.LIVE : null;
+  // Live mode: the page lists every run, polls the open one and follows its head.
+  const live = window.LIVE && window.LIVE.runs ? window.LIVE : null;
   const POLL_MS = 700;
+  const RUNS_MS = 1500;
   const HOLD_MS = { loss: 1200, crash: 1000, wrong: 450 }; // least time a key moment stays up while catching up
   let following = false, chaseTimer = null, liveError = "", liveDone = false;
+  let runs = {}, order = [], tiles = {}, openId = null, runsError = "", listed = false, token = 0;
 
   function fmt(x) { return x.toFixed(2); }
   function callText(e) { return e.tool + " " + e.service + (e.command ? " " + e.command : ""); }
+  function cap(text) { return text.charAt(0).toUpperCase() + text.slice(1); }
+  function joined(names) { return names.length > 1 ? names.slice(0, -1).join(", ") + " and " + names[names.length - 1] : names.join(""); }
+
+  /* Put `text` into `node`; what stands between backticks is a command and is set as code. */
+  function say(node, text) {
+    node.textContent = "";
+    text.split("`").forEach((part, i) => { if (part) node.append(i % 2 ? el("code", null, part) : document.createTextNode(part)); });
+    return node;
+  }
+
+  function why(code) {
+    return {
+      E_ORDER: "another step has to come first",
+      E_DEP: "a service it needs is not up",
+      E_DONE: "it is already applied",
+      E_LAG: LAG_NAME + " is not zero",
+      E_FOREIGN: "this command is not part of its recovery",
+      E_CRASHED: "the service is in a crash loop",
+      E_LOST: "its data is already gone",
+    }[code] || "";
+  }
+
+  /* One log entry in a few plain words: the event log, the key moments and the overview tiles. */
+  function brief(e) {
+    if (e.tool === "inspect") return "Looked at " + e.service;
+    if (e.tool === "restart") return "Restarted " + e.service;
+    const on = "`" + e.command + "` on " + e.service + ": ";
+    return e.tool === "dry_run" ? "Forecast for " + on + (WOULD[e.outcome] || e.outcome) : "Ran " + on + (DID[e.outcome] || e.outcome);
+  }
+
+  /* The services the step in question needs: those already serving and those still missing. */
+  function depsOf(e, frame) {
+    const spec = byName[e.service], have = [], need = [];
+    if (!spec || frame.lost.has(e.service)) return { have, need };
+    const step = spec.steps.find((s) => s.command === e.command) || spec.steps[frame.progress[e.service]];
+    for (const dep of step ? step.requires : []) {
+      if (byName[dep]) (isServing(byName[dep], frame) ? have : need).push(dep);
+    }
+    return { have, need };
+  }
+
+  /* What the last forecast for this command said, if the agent asked since the service last changed. */
+  function forecastBefore(i) {
+    const e = ep.log[i - 1];
+    for (let k = i - 2; k >= 0; k--) {
+      const p = ep.log[k];
+      if (p.service !== e.service) continue;
+      if (p.tool === "run" || p.tool === "restart") return null;
+      if (p.tool === "dry_run" && p.command === e.command) return p.outcome;
+    }
+    return null;
+  }
+
+  /* Step i told to someone who has never seen the tools. */
+  function narrate(i) {
+    const e = ep.log[i - 1], frame = frames[i], prev = frames[i - 1], spec = byName[e.service] || { steps: [], role: "" };
+    const cmd = "`" + e.command + "`", svc = e.service;
+    const reason = (code, at) => {
+      const missing = code === "E_DEP" ? depsOf(e, at).need : [];
+      return missing.length ? "it needs " + joined(missing) + ", which " + (missing.length > 1 ? "are" : "is") + " not up" : why(code);
+    };
+    if (e.tool === "inspect") {
+      return "Looked at " + svc + ". The agent now knows its layer (" + spec.role
+        + "), which steps are still pending and how far its forecasts can be trusted.";
+    }
+    if (e.tool === "restart") return "Restarted " + svc + ": the crash loop is cleared. That cost " + COST.restart + " minutes.";
+    if (e.tool === "dry_run") {
+      const told = (o, code) => (WOULD[o] || o) + (o !== "ok" && reason(code, prev) ? ", because " + reason(code, prev) : "");
+      let text = "Checked whether " + cmd + " is safe on " + svc + ". The forecast says " + told(e.outcome, e.code) + ".";
+      if (e.accurate === false) {
+        text += " This forecast is wrong" + (frame.truth ? ": in reality " + told(frame.truth.outcome, frame.truth.code) : "")
+          + ". The agent cannot know that.";
+      } else if (typeof e.accuracy === "number" && e.accuracy < 1) {
+        text += " Forecasts on " + svc + " are right " + Math.round(e.accuracy * 100) + "% of the time.";
+      }
+      return text;
+    }
+    let text;
+    if (e.outcome === "ok") {
+      const done = frame.progress[svc], n = spec.steps.length;
+      text = done === prev.progress[svc]
+        ? "Ran " + cmd + " on " + svc + ": " + LAG_NAME + " is down to " + frame.lag + "."
+        : "Ran " + cmd + " on " + svc + ": it worked, step " + done + " of " + n + " is done."
+          + (done === n ? " " + cap(svc) + " is now serving." : "");
+    } else if (e.outcome === "refused") {
+      text = "Ran " + cmd + " on " + svc + ": refused, because " + reason(e.code, prev) + ". Nothing changed.";
+    } else {
+      const forecast = forecastBefore(i);
+      text = "Ran " + cmd + " on " + svc + (forecast === null ? " without checking"
+        : forecast === "ok" ? " after a forecast said it was safe" : " although the forecast warned against it")
+        + ". " + cap(reason(e.code, prev)) + ": ";
+      if (e.outcome === "crash") {
+        text += svc + " is now in a crash loop and takes nothing until it is restarted. " + cap(LAG_NAME) + " went up by 1.";
+      } else {
+        const tier = [1, 2, 3, 4].find((t) => TIER_MAX_LAYER[t] >= ROLE_LAYER[spec.role] && !frame.banked.includes(t));
+        text += "its data is gone for good."
+          + (tier ? " Tier " + tier + (tier < 4 ? " and above" : "") + " can no longer be reached." : "");
+      }
+    }
+    for (const t of frame.banked) if (!prev.banked.includes(t)) text += " Tier " + t + " is banked.";
+    return text;
+  }
 
   /* ---------- loading ---------- */
   function showWarn(title, items) {
@@ -847,6 +1085,12 @@ function verifyReplay(ep, frames) {
     $("meta").textContent = (label ? label + " / " : "") + head + " / " + sys.services.length
       + " services / " + ep.log.length + " steps";
     document.title = (live ? "Live: " : "Replay: ") + (label || head);
+    const goal = $("goal");
+    goal.textContent = "";
+    goal.append(el("b", null, "Goal"), document.createTextNode("Bring every service up, layer by layer from " + ROLES[0]
+      + " at the bottom to " + ROLES[ROLES.length - 1] + " at the top, before the window runs out and without destroying data. "
+      + "Each tier reached adds to the score; each service whose data is destroyed costs " + fmt(LOSS_PENALTY)
+      + ". A perfect run scores 1.00."));
   }
 
   function load(data, label) {
@@ -907,6 +1151,8 @@ function verifyReplay(ep, frames) {
 
   function buildCard(spec) {
     const card = el("div", "card");
+    card.title = spec.role;
+    const doing = el("span", "doing");
     const name = el("div", "name");
     const state = el("span", "state");
     name.append(el("span", null, spec.codename), state);
@@ -917,18 +1163,24 @@ function verifyReplay(ep, frames) {
       pipRow.append(pip);
       return pip;
     });
-    const lag = el("span", "aside");
-    pipRow.append(lag);
-    const info = el("div", "info");
-    const rules = el("span", "rules");
-    for (const [tag, outcome] of [["ord", spec.order_violation], ["dep", spec.dependency_violation]]) {
-      const r = el("span", outcome === "data_loss" ? "fatal" : null, tag + ":" + (SHORT[outcome] || outcome));
-      r.title = (tag === "ord" ? "A command applied too early: " : "A command applied before a dependency serves: ") + outcome;
-      rules.append(r);
+    pipRow.append(el("span", "aside", spec.accuracy < 1 ? "forecasts " + Math.round(spec.accuracy * 100) + "% right" : ""));
+    card.append(doing, name, pipRow);
+    let lag = null;
+    if (spec.codename === ep.system.lag_service) {
+      const row = el("div", "rule");
+      lag = el("b");
+      row.append(el("span", null, LAG_NAME), lag);
+      card.append(row);
     }
-    info.append(el("span", null, spec.role), rules);
-    card.append(name, pipRow, info);
-    cards[spec.codename] = { card, state, pips, lag, spec };
+    for (const [mistake, outcome, code] of [["wrong order", spec.order_violation, "E_ORDER"],
+      ["missing dependency", spec.dependency_violation, "E_DEP"]]) {
+      const rule = el("div", "rule" + (outcome === "data_loss" ? " fatal" : ""));
+      rule.append(el("span", null, mistake), el("b", null, RULE[outcome] || outcome));
+      rule.title = "A step applied " + (code === "E_ORDER" ? "before its turn" : "before a service it needs is serving")
+        + " (" + code + "): " + outcome;
+      card.append(rule);
+    }
+    cards[spec.codename] = { card, doing, state, pips, lag, spec };
     return card;
   }
 
@@ -938,12 +1190,20 @@ function verifyReplay(ep, frames) {
     for (const t of [1, 2, 3, 4]) {
       const cell = el("div", "tier");
       cell.id = "tier-" + t;
-      cell.append(el("b", null, "T" + t), document.createTextNode("+" + fmt(TIER_POINTS[t])));
+      const head = el("b", null, "T" + t);
+      head.append(el("span", null, "+" + fmt(TIER_POINTS[t])));
+      const layers = ROLES.filter((role) => ROLE_LAYER[role] <= TIER_MAX_LAYER[t] && ROLE_LAYER[role] > (TIER_MAX_LAYER[t - 1] || 0));
+      cell.append(head, document.createTextNode(layers.join(" + ")));
+      cell.title = "Tier " + t + ": every service up to " + layers[layers.length - 1] + " is serving";
       box.append(cell);
     }
     $("m-total").textContent = ep.window_total;
     $("m-laglabel").textContent = LAG_NAME;
-    $("m-lagsub").textContent = ep.system.lag_service ? SYNC + " on " + ep.system.lag_service : "";
+    const top = ep.system.services.find((s) => ROLE_LAYER[s.role] === ROLES.length);
+    const final = top && top.steps.length ? top.steps[top.steps.length - 1].command : "the last step";
+    const sub = $("m-lagsub");
+    sub.textContent = "has to be 0 before " + final + (ep.system.lag_service ? "; " + SYNC + " on " + ep.system.lag_service + " lowers it" : "");
+    sub.title = sub.textContent;
   }
 
   function buildKeys() {
@@ -957,9 +1217,10 @@ function verifyReplay(ep, frames) {
       const li = el("li");
       const b = el("button", "key");
       b.type = "button";
-      b.append(el("span", "n", String(k.step)), el("span", "glyph " + k.kind),
-        el("span", "what", KEY_TEXT[k.kind] + ": " + callText(e)));
-      b.setAttribute("aria-label", "Step " + k.step + ", " + KEY_TEXT[k.kind] + ": " + callText(e));
+      const told = k.kind === "wrong" ? "Wrong forecast for `" + e.command + "` on " + e.service
+        : (k.kind === "loss" ? "Destroyed " : "Crashed ") + e.service + " by running `" + e.command + "`";
+      b.append(el("span", "n", String(k.step)), el("span", "glyph " + k.kind), say(el("span", "what"), told));
+      b.setAttribute("aria-label", "Step " + k.step + ": " + told.replace(/`/g, ""));
       b.addEventListener("click", () => { stop(); go(k.step, true); });
       li.append(b);
       list.append(li);
@@ -1042,29 +1303,30 @@ function verifyReplay(ep, frames) {
     }
 
     // services
+    const deps = e ? depsOf(e, frame) : { have: [], need: [] };
     for (const name in cards) {
       const c = cards[name];
       const mode = modeOf(c.spec, frame);
       const done = frame.progress[name];
       const acting = !!e && e.service === name;
-      c.card.className = "card " + mode + (acting ? " acting t-" + e.tool : "") + (acting && key ? " alarm" : "");
-      c.state.textContent = STATE_TEXT[mode] + (mode === "partial" || mode === "crashed" || mode === "lost"
-        ? " " + done + "/" + c.spec.steps.length : "");
+      const needed = deps.need.includes(name);
+      c.card.className = "card " + mode + (acting ? " acting t-" + e.tool : "") + (acting && key ? " alarm" : "")
+        + (needed ? " needed" : "");
+      c.doing.textContent = acting ? TAG[e.tool] || e.tool : needed ? (mode === "lost" ? "needed, but destroyed" : "needed first") : "";
+      c.state.textContent = mode === "partial" ? done + " of " + c.spec.steps.length + " steps" : STATE_TEXT[mode];
       c.pips.forEach((pip, i) => {
         const target = acting && e.command === c.spec.steps[i].command;
         const next = i === done && mode !== "lost";
         pip.className = "pip" + (i < done ? " done" : next ? " next" : "") + (target ? " target" : "");
       });
-      c.lag.textContent = [
-        name === ep.system.lag_service ? "lag " + frame.lag : "",
-        c.spec.accuracy < 1 ? "dry run " + Math.round(c.spec.accuracy * 100) + "%" : "",
-      ].filter(Boolean).join(" / ");
+      if (c.lag) c.lag.textContent = frame.lag;
       if (acting && animate) restart(c.card, fx ? "fx-" + fx : "pulse");
     }
     for (const edge of edges) {
-      const dep = cards[edge.to].spec;
-      const cls = frame.lost.has(edge.to) ? " dead" : isServing(dep, frame) ? " met" : "";
-      edge.path.setAttribute("class", "edge" + cls + (e && e.service === edge.from ? " active" : ""));
+      const mine = !!e && e.service === edge.from;
+      const cls = mine && deps.need.includes(edge.to) ? " need" + (frame.lost.has(edge.to) ? " dead" : "")
+        : mine && deps.have.includes(edge.to) ? " have" : isServing(cards[edge.to].spec, frame) ? " met" : "";
+      edge.path.setAttribute("class", "edge" + cls);
     }
 
     renderCall(frame, e, key, total);
@@ -1097,7 +1359,7 @@ function verifyReplay(ep, frames) {
 
     const seek = $("seek");
     seek.value = String(pos);
-    seek.setAttribute("aria-valuetext", e ? "Step " + pos + " of " + total + ": " + callText(e) + ", " + e.outcome
+    seek.setAttribute("aria-valuetext", e ? "Step " + pos + " of " + total + ": " + brief(e).replace(/`/g, "")
       : "Start, before the first call");
     $("count").textContent = pos + " / " + total;
     const play = $("play");
@@ -1116,41 +1378,35 @@ function verifyReplay(ep, frames) {
   function renderCall(frame, e, key, total) {
     const banners = $("c-banners");
     banners.textContent = "";
-    const line = $("c-line"), result = $("c-result"), note = $("c-note");
-    line.textContent = result.textContent = note.textContent = "";
+    const kind = $("c-kind"), told = $("c-say"), wait = $("c-wait"), line = $("c-line");
+    kind.textContent = wait.textContent = line.textContent = "";
+    kind.className = "kind";
     if (!e) {
       $("c-step").textContent = "Start";
       $("c-cost").textContent = "";
-      line.textContent = "System down";
-      result.textContent = ep.system.services.length + " services stopped, " + LAG_NAME + " " + frame.lag
-        + ", window " + ep.window_total + " min.";
+      told.textContent = "The system is down: " + ep.system.services.length + " services in five layers, all stopped. "
+        + "The agent has a window of " + ep.window_total + " minutes and no documentation.";
       return;
     }
     $("c-step").textContent = "Step " + pos + " of " + total;
-    $("c-cost").textContent = "+" + (COST[e.tool] || 0) + " min";
-    line.append(el("span", "tool", e.tool + " "), document.createTextNode(e.service + (e.command ? " " + e.command : "")));
-    result.append(document.createTextNode(e.tool === "dry_run" ? "forecast " : "outcome "),
-      el("b", null, e.outcome + (e.code ? " " + e.code : "")));
-    const meaning = e.code && CODE_TEXT[e.code] ? e.code + ": " + CODE_TEXT[e.code] + ". " : "";
-    if (e.tool === "dry_run") {
-      const pct = typeof e.accuracy === "number" ? Math.round(e.accuracy * 100) + "%" : "100%";
-      note.textContent = meaning + (e.accurate === false ? "" : "Forecast right. ") + "Dry runs here are right " + pct + " of the time.";
-    } else {
-      note.textContent = meaning;
+    $("c-cost").textContent = "cost " + (COST[e.tool] || 0) + " min";
+    kind.className = "kind " + (KIND[e.tool] || "");
+    kind.textContent = KIND_TEXT[KIND[e.tool]] || e.tool;
+    say(told, narrate(pos));
+    const need = depsOf(e, frame).need;
+    if (need.length) {
+      wait.textContent = e.service + " is waiting for " + joined(need.map((n) => n + " ("
+        + (frame.lost.has(n) ? "destroyed, can never come up" : STATE_TEXT[modeOf(byName[n], frame)] || "partly up") + ")")) + ".";
     }
+    line.textContent = "call: " + callText(e) + " -> " + e.outcome + (e.code ? " " + e.code : "");
 
     const prev = frames[pos - 1];
     if (key && key.kind === "loss") {
-      banners.append(banner("loss", "Data destroyed: " + e.service,
-        "Gone for good. -" + fmt(LOSS_PENALTY) + ", and nothing that depends on it can serve."));
+      banners.append(banner("loss", "Data destroyed: " + e.service, "-" + fmt(LOSS_PENALTY) + " on the score."));
     } else if (key && key.kind === "crash") {
-      banners.append(banner("crash", "Crash loop: " + e.service,
-        "Lag +1 (" + LAG_NAME + "). A restart costs " + COST.restart + " min."));
+      banners.append(banner("crash", "Crash loop: " + e.service, "A restart costs " + COST.restart + " min."));
     } else if (key && key.kind === "wrong") {
-      const t = frame.truth;
-      banners.append(banner("wrong", "Forecast wrong",
-        "The agent was told " + e.outcome + (e.code ? " " + e.code : "") + ". Running it now would really give "
-        + (t ? t.outcome + (t.code ? " " + t.code : "") : "something else") + "."));
+      banners.append(banner("wrong", "Forecast wrong", "Only the viewer can see this."));
     }
     for (const t of frame.banked) {
       if (!prev.banked.includes(t)) banners.append(banner("tier", "Tier " + t + " banked", "+" + fmt(TIER_POINTS[t])));
@@ -1167,9 +1423,12 @@ function verifyReplay(ep, frames) {
     for (let i = Math.max(1, pos - LOG_ROWS + 1); i <= pos; i++) {
       const e = ep.log[i - 1];
       const row = el("li", "logrow" + (keyByStep[i] ? " keyrow" : ""));
-      row.append(el("span", "n", String(i)), el("span", null, e.tool),
-        el("span", "what", e.service + (e.command ? " " + e.command : "")),
-        el("span", "res", (keyByStep[i] && keyByStep[i].kind === "wrong" ? "wrong: " : "") + e.outcome + (e.code ? " " + e.code : "")));
+      const mark = el("i", "mk " + (KIND[e.tool] || ""));
+      mark.title = KIND_TEXT[KIND[e.tool]] || e.tool;
+      row.append(el("span", "n", String(i)), mark,
+        say(el("span", "what"), brief(e) + (keyByStep[i] && keyByStep[i].kind === "wrong" ? " (wrong)" : "")),
+        el("span", "code", e.code || ""));
+      row.title = callText(e) + " -> " + e.outcome + (e.code ? " " + e.code : "");
       if (i === pos) row.setAttribute("aria-current", "true");
       list.append(row);
     }
@@ -1246,15 +1505,31 @@ function verifyReplay(ep, frames) {
     }, delay);
   }
 
+  function runLabel(run) {
+    return run ? run.task + " / " + (run.model || run.agent || "agent") : "";
+  }
+
   function updateLive() {
     if (!live) return;
     const chip = $("live-chip"), note = $("live-note"), button = $("golive");
+    $("allruns").hidden = openId === null;
+    if (openId === null) {
+      const all = order.map((id) => runs[id]);
+      const going = all.filter((run) => run.state === "live").length;
+      chip.className = "chip " + (going ? "on" : "wait");
+      $("live-text").textContent = going ? "Live" : all.length ? "No live run" : "Waiting";
+      note.textContent = runsError ? "cannot list the runs: " + runsError
+        : all.length ? going + " live, " + (all.length - going) + " finished" : "";
+      button.hidden = true;
+      return;
+    }
     if (!ep) {
       chip.className = "chip wait";
       $("live-text").textContent = "Waiting";
       note.textContent = "";
-      $("empty-title").textContent = "Waiting for a run";
-      $("empty-hint").textContent = liveError || "Asking " + live.url + " for the episode.";
+      button.hidden = true;
+      $("empty-title").textContent = "Waiting for this run";
+      $("empty-hint").textContent = liveError || "Asking for the episode of " + runLabel(runs[openId]) + ".";
       return;
     }
     const behind = ep.log.length - pos;
@@ -1280,7 +1555,7 @@ function verifyReplay(ep, frames) {
     const error = validateEpisode(data);
     if (error) { liveError = error; updateLive(); return; }
     liveError = "";
-    const label = live.label || "";
+    const label = runLabel(runs[openId]);
     if (!ep || data.log.length < ep.log.length || JSON.stringify(data.system) !== JSON.stringify(ep.system)) {
       load(data, label);
       following = true;
@@ -1298,19 +1573,159 @@ function verifyReplay(ep, frames) {
     chase();
   }
 
-  function poll() {
-    fetch(live.url, { cache: "no-store" })
-      .then((r) => r.json().catch(() => null).then((body) => {
-        if (!r.ok) throw new Error((body && body.error) || "HTTP " + r.status);
-        if (!body) throw new Error("the answer is not JSON");
-        onSnapshot(body);
-      }))
-      .catch((err) => { liveError = (err && err.message) || String(err); updateLive(); })
-      .then(() => { if (!liveDone) setTimeout(poll, POLL_MS); });
+  function ask(url) {
+    return fetch(url, { cache: "no-store" }).then((r) => r.json().catch(() => null).then((body) => {
+      if (!r.ok) throw new Error((body && body.error) || "HTTP " + r.status);
+      if (!body) throw new Error("the answer is not JSON");
+      return body;
+    }));
+  }
+
+  /* Poll the episode of the open run. `mine` goes stale as soon as another run, or none, is open. */
+  function pollEpisode(mine) {
+    if (mine !== token) return;
+    ask(live.episode + "?run=" + encodeURIComponent(openId))
+      .then((body) => { if (mine === token) onSnapshot(body); })
+      .catch((err) => { if (mine === token) { liveError = (err && err.message) || String(err); updateLive(); } })
+      .then(() => { if (mine === token && !liveDone) setTimeout(() => pollEpisode(mine), POLL_MS); });
+  }
+
+  function openRun(id) {
+    stop();
+    token += 1;
+    openId = id;
+    ep = null;
+    liveError = "";
+    liveDone = false;
+    showWarn(null);
+    $("overview").hidden = true;
+    $("app").hidden = true;
+    $("empty").hidden = false;
+    updateLive();
+    pollEpisode(token);
+  }
+
+  function closeRun() {
+    stop();
+    token += 1;
+    openId = null;
+    ep = null;
+    showWarn(null);
+    document.body.classList.remove("finished");
+    $("app").hidden = true;
+    $("empty").hidden = true;
+    $("overview").hidden = false;
+    $("meta").textContent = "";
+    document.title = "Unknown Machine live";
+    updateLive();
+    const tile = tiles[order.find((id) => tiles[id].wasOpen)];
+    order.forEach((id) => { tiles[id].wasOpen = false; });
+    if (tile) tile.node.focus({ preventScroll: true });
+  }
+
+  /* ---------- overview: every run at once ---------- */
+  function buildTile(id) {
+    const node = el("button", "tile");
+    node.type = "button";
+    const part = (cls, parent) => { const s = el("span", cls); (parent || node).append(s); return s; };
+    const head = part("t-head");
+    const chip = part("chip", head), task = part("t-task", head);
+    chip.append(el("i"), el("span"));
+    const model = part("t-model");
+    const body = part("t-body");
+    const left = part("", body);
+    const scoreLabel = part("label", left), score = part("t-score", left);
+    const win = part("t-win", left);
+    part("label", win).textContent = "Window left";
+    const bar = part("bar", win), fill = el("i");
+    bar.append(fill);
+    const left2 = part("t-num", win), up = part("t-num", left);
+    const right = part("", body);
+    part("label", right).textContent = "Tiers reached";
+    const ladder = part("ladder", right);
+    const rungs = [1, 2, 3, 4].map((t) => {
+      const rung = part("rung", ladder);
+      rung.append(el("b", null, "T" + t), document.createTextNode("+" + fmt(TIER_POINTS[t])));
+      return rung;
+    });
+    const now = part("t-now");
+    const nowLabel = part("label", now), nowText = part("", now);
+    const loss = part("t-loss");
+    node.addEventListener("click", () => { tiles[id].wasOpen = true; openRun(id); });
+    $("tiles").append(node);
+    return { node, chip, task, model, scoreLabel, score, fill, left: left2, up, rungs, nowLabel, nowText, loss, wasOpen: false };
+  }
+
+  function updateTile(t, run, before) {
+    const done = run.state === "finished";
+    const lost = run.data_lost || [], banked = run.tiers_banked || [];
+    t.node.classList.toggle("finished", done);
+    t.node.classList.toggle("lost", lost.length > 0);
+    t.chip.className = "chip " + (done ? "done" : "on");
+    t.chip.lastChild.textContent = done ? "Finished" : "Live";
+    t.task.textContent = run.task + (run.theme ? " / " + run.theme : "");
+    t.model.textContent = run.model || run.agent || "agent";
+    if (run.model && run.agent) t.model.append(el("small", null, "agent: " + run.agent));
+    t.scoreLabel.textContent = done ? "Final score" : "Score so far";
+    t.score.textContent = fmt(run.score || 0);
+    const remaining = Math.max(0, run.window_total - run.window_used);
+    t.fill.style.width = (100 * remaining / Math.max(1, run.window_total)) + "%";
+    t.left.textContent = "";
+    t.left.append(el("b", null, String(remaining)), document.createTextNode(" of " + run.window_total + " min"));
+    t.up.textContent = "";
+    t.up.append(el("b", null, String(run.serving)), document.createTextNode(" of " + run.services + " services up"));
+    t.rungs.forEach((rung, i) => {
+      const has = banked.includes(i + 1);
+      rung.classList.toggle("banked", has);
+      if (has && before && !(before.tiers_banked || []).includes(i + 1)) restart(rung, "fx-bank");
+    });
+    t.nowLabel.textContent = done ? "Last action" : "Now";
+    say(t.nowText, run.last ? brief(run.last) : "No action yet");
+    t.loss.textContent = "";
+    if (lost.length) {
+      t.loss.append(document.createTextNode("Data destroyed: " + lost.length + (lost.length > 1 ? " services" : " service")),
+        el("small", null, lost.join(", ")));
+      if (before && lost.length > (before.data_lost || []).length) restart(t.node, "fx-loss");
+    } else {
+      t.loss.textContent = "No data destroyed";
+    }
+    t.node.setAttribute("aria-label", "Open " + runLabel(run) + ", " + (done ? "finished" : "live") + ", score " + fmt(run.score || 0)
+      + (lost.length ? ", data destroyed on " + lost.length : ""));
+  }
+
+  /* Tiles keep the place they first appeared in: a run that finishes does not move. */
+  function takeRuns(body) {
+    runsError = body.error || "";
+    listed = true;
+    for (const run of Array.isArray(body.runs) ? body.runs : []) {
+      if (!run || typeof run.id !== "string") continue;
+      if (!tiles[run.id]) { tiles[run.id] = buildTile(run.id); order.push(run.id); }
+      updateTile(tiles[run.id], run, runs[run.id]);
+      runs[run.id] = run;
+    }
+  }
+
+  function renderOverview() {
+    const none = $("o-none");
+    none.hidden = order.length > 0;
+    none.textContent = "";
+    if (!order.length) {
+      none.append(document.createTextNode(listed && !runsError ? "No run yet." : "Waiting for the list of runs."),
+        el("span", null, runsError || (listed ? "A run appears here as soon as it starts." : "Asking the watch server.")));
+    }
+    updateLive();
+  }
+
+  function pollRuns() {
+    ask(live.runs)
+      .then(takeRuns)
+      .catch((err) => { runsError = (err && err.message) || String(err); })
+      .then(() => { renderOverview(); setTimeout(pollRuns, RUNS_MS); });
   }
 
   /* ---------- wiring ---------- */
   $("golive").addEventListener("click", goLive);
+  $("allruns").addEventListener("click", closeRun);
   $("open").addEventListener("click", () => $("file").click());
   $("open2").addEventListener("click", () => $("file").click());
   $("file").addEventListener("change", (ev) => { loadFile(ev.target.files[0]); ev.target.value = ""; });
@@ -1327,6 +1742,7 @@ function verifyReplay(ep, frames) {
   $("speed").addEventListener("change", schedule);
 
   document.addEventListener("keydown", (ev) => {
+    if (live && openId !== null && ev.key === "Escape") { closeRun(); return; }
     if (!ep || ev.altKey || ev.ctrlKey || ev.metaKey) return;
     const tag = ev.target.tagName;
     const isSeek = ev.target.id === "seek";
@@ -1363,8 +1779,11 @@ function verifyReplay(ep, frames) {
     $("live").hidden = false;
     $("open").hidden = true;
     $("open2").hidden = true;
-    updateLive();
-    poll();
+    $("empty").hidden = true;
+    $("overview").hidden = false;
+    document.title = "Unknown Machine live";
+    renderOverview();
+    pollRuns();
   } else if (window.EPISODE) {
     load(window.EPISODE, window.EPISODE_LABEL || "");
   } else if (wanted) {
