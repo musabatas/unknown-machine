@@ -15,6 +15,12 @@ harbor run -p tasks/level-4/seed-0 -a nop                              # do noth
 harbor run -p tasks/level-4/seed-0 -a oracle --ae POLICY=stop_early    # stop early: 0.1
 ```
 
+Or all of it in one command, which runs the reference, do-nothing, stop-early and three agent runs through Harbor and prints the table:
+
+```
+./scripts/eval.sh --level 4 --seeds 0 --model openai/gpt-6.1-sol --env-file .env
+```
+
 On it the reference scores 1.00 and `gpt-6.1-sol` scored 0.00 in three runs out of three; the logs are in `runs/`. The repository holds more tasks than this one: four levels of difficulty with five seeds each, and the hardest two levels again in two other scenarios. Levels 1 and 2 are solved by a frontier model and are here to show where the difficulty comes from, not to be judged on. Everything below explains the task, the levels and the measurements.
 
 ## What the agent has to do
