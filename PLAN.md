@@ -136,15 +136,17 @@ One person owns this from hour 2. Each item gets a test in `tests/exploits/`.
 ```
 unknown-machine/
   PLAN.md
+  AGENTS.md                 repository contract
   README.md                 one-command reproduction
   pyproject.toml            poetry
-  machine/                  simulator core, pure Python, no I/O
-    model.py                services, guards, outcomes
-    generate.py             seed -> machine
-    score.py
-  server/                   MCP server wrapping one episode
-  reference/                solver used by solution/
-  baselines/                do-nothing, stop-early, random, greedy, dry-run-all
+  src/unknown_machine/
+    machine/                simulator core, pure Python, no I/O
+      model.py              services, guards, outcomes
+      generate.py           seed -> machine
+      score.py
+    server/                 MCP server wrapping one episode
+    reference/              solver used by solution/
+    baselines/              do-nothing, stop-early, random, greedy, dry-run-all
   tasks/unknown-machine-<seed>/   Harbor tasks, generated
   scripts/make_tasks.py     generator -> task directories
   scripts/eval.sh           runs reference, agent x3, baselines; prints table
