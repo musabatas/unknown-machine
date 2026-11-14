@@ -11,6 +11,7 @@ name = "Unknown Machine team"
 
 [metadata]
 seed = __SEED__
+level = __LEVEL__
 
 [verifier]
 timeout_sec = 120.0

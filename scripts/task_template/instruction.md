@@ -10,9 +10,10 @@ A service is brought up by applying its pending commands in the right order. The
 
 Facts you can rely on:
 
-- `inspect` lists every pending register and the command that clears it. Commands that no pending register asks for are never needed, and some of them destroy data.
+- `inspect` lists every pending register and the command that clears it. Apart from `sync` (see Replication lag below), commands that no pending register asks for are never needed, and some of them destroy data.
 - The last command of every service is `start` (`cutover` for the gateway). The other pending commands come before it, in an order you have to find.
-- `dry_run` always tells the truth about what a command would do in the current state.
+- `run` is always real. `dry_run` is a forecast, and on some services it can be wrong. `inspect` gives each service's `dry_run_accuracy`: the probability that a dry run on that service is right about whether a pending command can be applied now (`ok`, `E_ORDER` or `E_DEP`). `1.0` means its dry runs are exact. When a dry run is wrong it gives one of the other two answers, with equal chance, and each dry run is wrong or right independently of the others, so repeating one gives new evidence.
+- A wrong dry run is only ever wrong about that one question. The reaction it shows for a mistake (`refused`, `crash` or `data_loss`) is always the service's real reaction to that kind of mistake, and every other code is exact.
 - Each service reacts to a given kind of mistake the same way every time. If applying a command too early (`E_ORDER`) is refused on a service once, it is always refused on that service; if it crashes or destroys data once, it always does. The same holds, separately, for running a command before a service it depends on (`E_DEP`). Different services react differently.
 
 ## Tools and what they cost
@@ -22,8 +23,8 @@ The window is counted in minutes. `status` shows how many are left.
 | Tool | Effect | Cost |
 |---|---|---|
 | `status()` | Mode and command list of every service, banked tiers, window left | 0 |
-| `inspect(service)` | Role, pending registers with the command that clears each, replication lag where it applies | 2 |
-| `dry_run(service, command)` | What the command would do now: `ok`, `refused`, `crash` or `data_loss`, with a code. Changes nothing | 4 |
+| `inspect(service)` | Role, pending registers with the command that clears each, `dry_run_accuracy`, replication lag where it applies | 2 |
+| `dry_run(service, command)` | A forecast of what the command would do now: `ok`, `refused`, `crash` or `data_loss`, with a code. Changes nothing | 4 |
 | `run(service, command)` | Executes the command. Charged whatever the outcome | 1 |
 | `restart(service)` | Clears a crash loop | 4 |
 | `finish()` | Ends the window | 0 |

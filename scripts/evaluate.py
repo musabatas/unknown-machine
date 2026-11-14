@@ -42,47 +42,35 @@ def harbor_rewards(task: Path, agent: str, job: str, extra: list[str]) -> list[f
     return rewards
 
 
-def in_process(policy: str, seed: int) -> float:
-    episode = build_episode(seed)
+def in_process(policy: str, seed: int, level: int) -> float:
+    episode = build_episode(seed, level)
     BASELINES[policy](episode)
     return episode.result()["score"]
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument(
-        "--model", help="provider/model for the OpenCode agent, e.g. openai/gpt-6.1-sol"
-    )
-    parser.add_argument("--runs", type=int, default=3, help="agent runs per task (default 3)")
-    parser.add_argument("--env-file", help="file with the API key for --model")
-    parser.add_argument("--seeds", type=int, nargs="*", default=list(EVALUATION_SEEDS))
-    arguments = parser.parse_args()
-
-    stamp = time.strftime("%m%d-%H%M%S")
-    columns = ["reference", "do_nothing", *IN_PROCESS]
-    if arguments.model:
-        columns.append("agent")
+def evaluate_level(level: int, seeds: list[int], arguments, stamp: str, columns: list[str]) -> None:
     rows: dict[int, dict[str, list[float]]] = {}
-
-    for seed in arguments.seeds:
-        task = ROOT / "tasks" / f"seed-{seed}"
+    for seed in seeds:
+        task = ROOT / "tasks" / f"level-{level}" / f"seed-{seed}"
         if not task.exists():
-            raise SystemExit(f"{task} is missing; run scripts/make_tasks.py {seed}")
+            raise SystemExit(f"{task} is missing; run scripts/make_tasks.py {level} {seed}")
+        job = f"eval-{stamp}-l{level}s{seed}"
         row = {
-            "reference": harbor_rewards(task, "oracle", f"eval-{stamp}-seed{seed}-reference", []),
-            "do_nothing": harbor_rewards(task, "nop", f"eval-{stamp}-seed{seed}-nothing", []),
+            "reference": harbor_rewards(task, "oracle", f"{job}-reference", []),
+            "do_nothing": harbor_rewards(task, "nop", f"{job}-nothing", []),
         }
         for policy in IN_PROCESS:
-            row[policy] = [in_process(policy, seed)]
+            row[policy] = [in_process(policy, seed, level)]
         if arguments.model:
             extra = ["-m", arguments.model, "-k", str(arguments.runs), "-n", str(arguments.runs)]
             if arguments.env_file:
                 extra += ["--env-file", arguments.env_file]
-            row["agent"] = harbor_rewards(task, "opencode", f"eval-{stamp}-seed{seed}-agent", extra)
+            row["agent"] = harbor_rewards(task, "opencode", f"{job}-agent", extra)
         rows[seed] = row
-        print(f"seed {seed} done", file=sys.stderr)
+        print(f"level {level} seed {seed} done", file=sys.stderr)
 
-    print("\n| seed | " + " | ".join(columns) + " |")
+    print(f"\nLevel {level}\n")
+    print("| seed | " + " | ".join(columns) + " |")
     print("|---|" + "---|" * len(columns))
     for seed, row in rows.items():
         cells = [" ".join(f"{value:.2f}" for value in row[column]) for column in columns]
@@ -92,9 +80,32 @@ def main() -> None:
         for column in columns
     ]
     print("| mean | " + " | ".join(means) + " |")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument(
+        "--model", help="provider/model for the OpenCode agent, e.g. openai/gpt-6.1-sol"
+    )
+    parser.add_argument("--runs", type=int, default=3, help="agent runs per task (default 3)")
+    parser.add_argument("--env-file", help="file with the API key for --model")
+    parser.add_argument("--level", type=int, choices=sorted(EVALUATION_SEEDS), help="one level")
+    parser.add_argument("--seeds", type=int, nargs="*", help="seeds (default: evaluation set)")
+    arguments = parser.parse_args()
+
+    stamp = time.strftime("%m%d-%H%M%S")
+    columns = ["reference", "do_nothing", *IN_PROCESS]
+    if arguments.model:
+        columns.append("agent")
+    levels = [arguments.level] if arguments.level else sorted(EVALUATION_SEEDS)
+    for level in levels:
+        seeds = arguments.seeds or list(EVALUATION_SEEDS[level])
+        evaluate_level(level, seeds, arguments, stamp, columns)
+
     if arguments.model:
         print(f"\nagent: opencode with {arguments.model}, {arguments.runs} runs per task")
-    print("reference and do_nothing ran through Harbor; the other baselines in-process.")
+    print("\nreference and do_nothing ran through Harbor; the other baselines in-process.")
+    print("cautious = one dry run before every command; greedy = no dry runs.")
 
 
 if __name__ == "__main__":

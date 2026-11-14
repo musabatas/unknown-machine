@@ -1,7 +1,7 @@
 """Seed -> System. The only source of randomness is the Random built from the seed."""
 
 import random
-from dataclasses import replace
+from dataclasses import dataclass, replace
 
 from unknown_machine.machine.model import CRASH, DATA_LOSS, REFUSED, Service, Step, System
 
@@ -13,6 +13,8 @@ ROLE_COMMANDS: dict[str, tuple[tuple[tuple[str, str], ...], tuple[str, ...]]] = 
             ("replay-journal", "journal"),
             ("attach", "volume"),
             ("scrub", "checksums"),
+            ("verify-raid", "array"),
+            ("resize", "quota"),
         ),
         ("format", "reinit"),
     ),
@@ -22,6 +24,8 @@ ROLE_COMMANDS: dict[str, tuple[tuple[tuple[str, str], ...], tuple[str, ...]]] = 
             ("migrate", "schema"),
             ("reindex", "indexes"),
             ("unlock", "locks"),
+            ("vacuum", "bloat"),
+            ("promote", "replica-role"),
         ),
         ("reinit", "drop-wal"),
     ),
@@ -31,6 +35,8 @@ ROLE_COMMANDS: dict[str, tuple[tuple[tuple[str, str], ...], tuple[str, ...]]] = 
             ("rotate-keys", "keys"),
             ("drain", "backlog"),
             ("rebalance", "partitions"),
+            ("compact", "log-segments"),
+            ("reconnect", "peers"),
         ),
         ("purge", "reset-offsets"),
     ),
@@ -40,6 +46,8 @@ ROLE_COMMANDS: dict[str, tuple[tuple[tuple[str, str], ...], tuple[str, ...]]] = 
             ("load-config", "config"),
             ("register", "registration"),
             ("compile-assets", "assets"),
+            ("migrate-sessions", "sessions"),
+            ("seed-flags", "flags"),
         ),
         ("factory-reset", "rollback"),
     ),
@@ -49,6 +57,8 @@ ROLE_COMMANDS: dict[str, tuple[tuple[tuple[str, str], ...], tuple[str, ...]]] = 
             ("renew-cert", "certificate"),
             ("health-gate", "healthchecks"),
             ("pin-upstreams", "upstreams"),
+            ("reload-acl", "acl"),
+            ("warm-tls", "tls-sessions"),
         ),
         ("flush-routes", "force-failover"),
     ),
@@ -73,18 +83,62 @@ SAME_LAYER_DEPENDENCY = 0.6
 EXTRA_DEPENDENCY = 0.3
 PREP_STEP_NEEDS_DEPENDENCY = 0.35
 MAX_INITIAL_LAG = 3
-MIN_FRAGILE = 2
 
 
-def generate(seed: int) -> System:
+@dataclass(frozen=True)
+class Size:
+    """How large a system is."""
+
+    services: dict[str, tuple[int, ...]]  # role -> possible number of services
+    preparation: tuple[int, ...]  # possible number of preparation commands per service
+    pool: int  # preparation commands each role exposes
+    min_fragile: int  # services that destroy data when a command is applied out of order
+
+
+SMALL = Size(
+    services={
+        "storage": (1, 2),
+        "database": (1, 2),
+        "middleware": (1, 2),
+        "application": (1,),
+        "gateway": (1,),
+    },
+    preparation=(2, 3),
+    pool=4,
+    min_fragile=2,
+)
+LARGE = Size(
+    services={
+        "storage": (3,),
+        "database": (3,),
+        "middleware": (3, 4),
+        "application": (2, 3),
+        "gateway": (1,),
+    },
+    preparation=(3, 4),
+    pool=6,
+    min_fragile=5,
+)
+EXACT = {1.0: 1.0}
+NOISY = {1.0: 0.2, 0.9: 0.3, 0.8: 0.3, 0.7: 0.2}
+
+# level -> (size, {dry-run accuracy: weight} drawn per service)
+LEVELS = {1: (SMALL, EXACT), 2: (SMALL, NOISY), 3: (LARGE, NOISY)}
+
+
+def generate(seed: int, level: int = 1) -> System:
+    """Level 1: 5 to 8 services, exact dry runs. Level 2: the same systems, but each
+    service's dry runs are only right with a stated probability. Level 3: 12 to 14
+    services with longer procedures, and the same inexact dry runs."""
+    if level not in LEVELS:
+        raise ValueError(f"unknown level {level}")
+    size, accuracy_weights = LEVELS[level]
     rng = random.Random(seed)
 
-    roles = (
-        ["storage"] * rng.choice((1, 2))
-        + ["database"] * rng.choice((1, 2))
-        + ["middleware"] * rng.choice((1, 2))
-        + ["application", "gateway"]
-    )
+    roles: list[str] = []
+    for role, counts in size.services.items():
+        # A fixed count draws nothing, so levels of the same size share their systems.
+        roles += [role] * (rng.choice(counts) if len(counts) > 1 else counts[0])
     codenames = rng.sample(CODENAMES, len(roles))
     by_role: dict[str, list[str]] = {}
     for role, codename in zip(roles, codenames, strict=True):
@@ -93,17 +147,26 @@ def generate(seed: int) -> System:
     services = []
     for role, codename in zip(roles, codenames, strict=True):
         dependencies = _dependencies(rng, role, codename, by_role)
-        services.append(_service(rng, role, codename, dependencies))
+        services.append(_service(rng, role, codename, dependencies, size))
 
-    services = _ensure_fragile(rng, services)
+    services = _ensure_fragile(rng, services, size.min_fragile)
     lag_service = by_role["database"][0]
     services = [
         _with_sync(service) if service.codename == lag_service else service for service in services
     ]
+    initial_lag = rng.randint(0, MAX_INITIAL_LAG)
+
+    # A separate stream, so a seed describes the same system at every level.
+    level_rng = random.Random(f"accuracy-{seed}-{level}")
+    values, weights = zip(*accuracy_weights.items(), strict=True)
+    services = [
+        replace(service, accuracy=level_rng.choices(values, weights)[0]) for service in services
+    ]
     return System(
         seed=seed,
+        level=level,
         services=tuple(sorted(services, key=lambda service: service.codename)),
-        initial_lag=rng.randint(0, MAX_INITIAL_LAG),
+        initial_lag=initial_lag,
         lag_service=lag_service,
     )
 
@@ -140,10 +203,11 @@ def _dependencies(
 
 
 def _service(
-    rng: random.Random, role: str, codename: str, dependencies: tuple[str, ...]
+    rng: random.Random, role: str, codename: str, dependencies: tuple[str, ...], size: Size
 ) -> Service:
-    preparation, decoy_names = ROLE_COMMANDS[role]
-    chosen = rng.sample(preparation, rng.choice((2, 3)))
+    pool, decoy_names = ROLE_COMMANDS[role]
+    preparation = pool[: size.pool]
+    chosen = rng.sample(preparation, rng.choice(size.preparation))
     steps = [
         Step(
             command=command,
@@ -170,14 +234,14 @@ def _service(
     )
 
 
-def _ensure_fragile(rng: random.Random, services: list[Service]) -> list[Service]:
-    """Every system has at least MIN_FRAGILE services where a wrong order destroys data.
+def _ensure_fragile(rng: random.Random, services: list[Service], minimum: int) -> list[Service]:
+    """Every system has at least `minimum` services where a wrong order destroys data.
 
     Without this some seeds refuse every mistake, and running blindly is then optimal.
     """
     fragile = [s for s in services if DATA_LOSS in (s.order_violation, s.dependency_violation)]
     sturdy = [s for s in services if s not in fragile]
-    missing = MIN_FRAGILE - len(fragile)
+    missing = minimum - len(fragile)
     if missing <= 0:
         return services
     chosen = {s.codename for s in rng.sample(sturdy, missing)}

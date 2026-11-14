@@ -41,6 +41,9 @@ class Service:
     order_violation: str  # outcome when a step is applied before its turn
     dependency_violation: str  # outcome when a step runs before a service it requires
     has_sync: bool = False
+    # Probability that a dry run of one of this service's steps reports the truth about
+    # whether the step can be applied now. 1.0 means dry runs are exact.
+    accuracy: float = 1.0
 
     @property
     def layer(self) -> int:
@@ -59,6 +62,7 @@ class Service:
 @dataclass(frozen=True)
 class System:
     seed: int
+    level: int
     services: tuple[Service, ...]  # sorted by codename
     initial_lag: int
     lag_service: str  # the database that reports replication lag and accepts `sync`

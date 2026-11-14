@@ -22,7 +22,7 @@ addopts = "-q"
 line-length = 100
 src = ["src", "tests"]
 # Generated copies of src/ and scripts/task_template; lint the source, not the output.
-extend-exclude = ["tasks/seed-*"]
+extend-exclude = ["tasks/level-*"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "SIM"]

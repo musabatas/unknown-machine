@@ -58,27 +58,29 @@ class Recorder:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--seeds", type=int, nargs=2, metavar=("FIRST", "LAST"), required=True)
+    parser.add_argument("--level", type=int, default=2, choices=sorted(EVALUATION_SEEDS))
     parser.add_argument("--out", type=Path, required=True)
     arguments = parser.parse_args()
 
     first, last = arguments.seeds
-    if any(first <= seed < last for seed in EVALUATION_SEEDS):
+    if any(first <= seed < last for seed in EVALUATION_SEEDS[arguments.level]):
         raise SystemExit("the seed range overlaps the evaluation seeds")
 
     arguments.out.parent.mkdir(parents=True, exist_ok=True)
-    episodes = calls = 0
+    episodes = calls = skipped = 0
     with arguments.out.open("w") as output:
         for seed in range(first, last):
-            episode = build_episode(seed)
+            episode = build_episode(seed, arguments.level)
             recorder = Recorder(episode)
             solve(recorder)
-            result = episode.result()
-            if result["score"] != 1.0:
-                raise SystemExit(f"reference did not finish seed {seed}")
-            output.write(json.dumps({"seed": seed, "messages": recorder.messages}) + "\n")
+            if episode.result()["score"] != 1.0:
+                skipped += 1  # only complete recoveries are worth imitating
+                continue
+            record = {"seed": seed, "level": arguments.level, "messages": recorder.messages}
+            output.write(json.dumps(record) + "\n")
             episodes += 1
             calls += len(recorder.messages) // 2
-    print(f"{episodes} episodes, {calls} tool calls -> {arguments.out}")
+    print(f"{episodes} episodes, {calls} tool calls, {skipped} skipped -> {arguments.out}")
 
 
 if __name__ == "__main__":

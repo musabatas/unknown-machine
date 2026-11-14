@@ -25,7 +25,8 @@ def fetch_result() -> dict:
     nonce = secrets.token_hex(16)
 
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-    with opener.open(f"{base}/result?nonce={nonce}", timeout=10) as response:
+    proof = hmac.new(key, nonce.encode(), hashlib.sha256).hexdigest()
+    with opener.open(f"{base}/result?nonce={nonce}&proof={proof}", timeout=10) as response:
         envelope = json.load(response)
 
     body = envelope["body"].encode()

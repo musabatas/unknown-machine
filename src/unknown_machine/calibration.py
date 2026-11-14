@@ -27,6 +27,6 @@ def window_for(system: System) -> int:
     return math.ceil(reference_cost(system) / REFERENCE_WINDOW_SHARE)
 
 
-def build_episode(seed: int) -> Episode:
-    system = generate(seed)
+def build_episode(seed: int, level: int = 1) -> Episode:
+    system = generate(seed, level)
     return Episode(system, window_for(system))

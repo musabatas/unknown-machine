@@ -12,8 +12,12 @@ Categories, each tied to a decision the agent made:
   blind_crash        ran a command that crashed without dry-running it first; a fair
                      gamble when a crash was the worst case and unlikely (the reference
                      takes it), a mistake when the reaction was still unknown
+  trusted_wrong_dry_run  ran a command that crashed or destroyed data after dry-running
+                     it, on a service whose dry runs are not exact: too few readings
+                     for what was at stake
   foreign            touched a command no pending register asked for
-  redundant_dry_run  dry-ran the same command again with nothing changed since
+  redundant_dry_run  dry-ran the same command again with nothing changed since, on a
+                     service whose dry runs are exact
   safe_dry_run       dry-ran on a service already known to only refuse that kind of mistake
   repeat_inspect     inspected a service again without needing its replication lag
 """
@@ -35,6 +39,8 @@ def analyze(result: dict) -> dict:
     known: dict[tuple[str, str], str] = {}  # (service, kind) -> outcome seen for that mistake
     previewed: set[tuple[str, str]] = set()  # dry-run since the last state change
     last_preview: dict[tuple[str, str], str] = {}
+    previews: Counter = Counter()  # dry runs per (service, command) since the last change
+    accuracy: dict[str, float] = {}  # stated dry-run accuracy per service
     inspected: set[str] = set()
     lag_service = next((entry["service"] for entry in log if entry["command"] == "sync"), None)
 
@@ -66,7 +72,9 @@ def analyze(result: dict) -> dict:
             note("foreign", step, entry, f"{tool} of a command nothing asked for", COSTS[tool])
 
         if tool == "dry_run":
-            if last_preview.get(pair) == outcome and pair in previewed:
+            exact = entry.get("accuracy", 1.0) == 1.0
+            accuracy[service] = entry.get("accuracy", 1.0)
+            if exact and last_preview.get(pair) == outcome and pair in previewed:
                 note("redundant_dry_run", step, entry, "same answer as before", COSTS["dry_run"])
             elif all(known.get((service, kind)) == "refused" for kind in KINDS):
                 note(
@@ -77,15 +85,27 @@ def analyze(result: dict) -> dict:
                     COSTS["dry_run"],
                 )
             previewed.add(pair)
+            previews[pair] += 1
             last_preview[pair] = outcome
 
         if tool == "run":
-            if outcome in DESTRUCTIVE and pair not in previewed and code != "E_FOREIGN":
-                category = "blind_data_loss" if outcome == "data_loss" else "blind_crash"
-                cost = COSTS["restart"] if outcome == "crash" else 0
-                note(category, step, entry, f"{outcome} ({code}) without a dry run", cost)
+            cost = COSTS["restart"] if outcome == "crash" else 0
+            if outcome in DESTRUCTIVE and code != "E_FOREIGN":
+                if pair not in previewed:
+                    category = "blind_data_loss" if outcome == "data_loss" else "blind_crash"
+                    note(category, step, entry, f"{outcome} ({code}) without a dry run", cost)
+                else:
+                    note(
+                        "trusted_wrong_dry_run",
+                        step,
+                        entry,
+                        f"{outcome} ({code}) after {previews[pair]} dry run(s) on a service "
+                        f"whose dry runs are right {accuracy.get(service, 1.0):.0%} of the time",
+                        cost,
+                    )
             if outcome == "ok" or outcome in DESTRUCTIVE:
                 previewed.clear()
+                previews.clear()
                 last_preview.clear()
 
         if code in KINDS and outcome != "ok":
@@ -125,7 +145,12 @@ def main() -> None:
         print(f"\n== {path}")
         print(json.dumps(report, indent=2))
         for finding in findings:
-            if finding["category"] in ("blind_data_loss", "blind_crash", "foreign"):
+            if finding["category"] in (
+                "blind_data_loss",
+                "blind_crash",
+                "trusted_wrong_dry_run",
+                "foreign",
+            ):
                 print(
                     f"  step {finding['step']}: {finding['category']} "
                     f"{finding['service']} {finding['command']}: {finding['detail']}"

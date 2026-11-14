@@ -3,6 +3,7 @@
 No I/O. The MCP server and the tests both drive this class directly.
 """
 
+import random
 import threading
 
 from unknown_machine.machine.model import (
@@ -52,6 +53,9 @@ class Episode:
         self._finished = False
         self._calls = 0
         self._log: list[dict] = []  # every charged action, for the failure analysis
+        # Dry-run errors come from their own seeded stream: the same sequence of calls
+        # on the same seed always gets the same reports.
+        self._noise = random.Random(f"dry-run-noise-{system.seed}-{system.level}")
 
     # ---- tools -------------------------------------------------------------
 
@@ -80,6 +84,7 @@ class Episode:
                 "pending": sorted(pending, key=lambda item: item["register"]),
                 "healthy": sorted(healthy),
             }
+            report["dry_run_accuracy"] = spec.accuracy
             if spec.has_sync:
                 report[LAG_REGISTER] = self._lag
             self._record("inspect", service, None, OK, None)
@@ -91,8 +96,11 @@ class Episode:
             if refusal:
                 return refusal
             self._spend(COST_DRY_RUN)
-            outcome, code, register = self._evaluate(self._system.service(service), command)
-            self._record("dry_run", service, command, outcome, code)
+            spec = self._system.service(service)
+            truth = self._evaluate(spec, command)
+            outcome, code, register = self._distort(spec, command, truth)
+            self._record("dry_run", service, command, outcome, code, accurate=truth[1] == code)
+            self._log[-1]["accuracy"] = spec.accuracy
             return self._close({"would": outcome, "code": code, "changes": register})
 
     def run(self, service: str, command: str) -> dict:
@@ -180,7 +188,38 @@ class Episode:
             return self._close({"outcome": REFUSED, "code": E_WINDOW})
         return None
 
-    def _record(self, tool: str, service: str, command: str | None, outcome: str, code) -> None:
+    def _distort(
+        self, spec: Service, command: str, truth: tuple[str, str | None, str | None]
+    ) -> tuple[str, str | None, str | None]:
+        """What a dry run reports. On a service with accuracy below 1 it is sometimes wrong.
+
+        Only one question can be misreported: whether a step of the recovery can be
+        applied now (yes, not its turn, or a dependency is missing). The reaction shown
+        for a mistake is always the service's real reaction, and everything else
+        (unknown, foreign or finished commands, lag, crash loops) is reported exactly.
+        """
+        outcome, code, _ = truth
+        step = next((step for step in spec.steps if step.command == command), None)
+        if step is None or code not in (None, E_ORDER, E_DEP):
+            return truth
+        if self._noise.random() < spec.accuracy:
+            return truth
+        answers = {
+            None: (OK, None, step.register),
+            E_ORDER: (spec.order_violation, E_ORDER, None),
+            E_DEP: (spec.dependency_violation, E_DEP, None),
+        }
+        return answers[self._noise.choice([key for key in answers if key != code])]
+
+    def _record(
+        self,
+        tool: str,
+        service: str,
+        command: str | None,
+        outcome: str,
+        code,
+        accurate: bool = True,
+    ) -> None:
         self._log.append(
             {
                 "tool": tool,
@@ -188,6 +227,7 @@ class Episode:
                 "command": command,
                 "outcome": outcome,
                 "code": code,
+                "accurate": accurate,
                 "window_used": self._used,
                 "tiers_banked": sorted(self._banked),
             }

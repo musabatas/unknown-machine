@@ -1,7 +1,7 @@
 """Generate Harbor task directories from scripts/task_template.
 
-    poetry run python scripts/make_tasks.py            # the evaluation set
-    poetry run python scripts/make_tasks.py 14 38      # specific seeds
+    poetry run python scripts/make_tasks.py              # the evaluation set, both levels
+    poetry run python scripts/make_tasks.py 2 14 38      # level 2, seeds 14 and 38
 
 Each task gets a copy of the simulator package inside the sidecar's build
 context, the solver inside solution/, and a result-signing key (kept when the
@@ -19,12 +19,17 @@ TEMPLATE = ROOT / "scripts" / "task_template"
 PACKAGE = ROOT / "src" / "unknown_machine"
 TASKS = ROOT / "tasks"
 
-# Seeds of the evaluation set. Chosen as the first seeds on which neither naive
-# policy (dry-run everything, dry-run nothing) scores above 0.5; see
-# tests/test_baselines.py, which enforces that property.
-EVALUATION_SEEDS = (0, 1, 2, 3, 4)
+# The evaluation set: per level, the first five seeds on which the reference scores
+# 1.0 and neither naive policy (one dry run before every command; no dry runs)
+# scores above 0.5. About two seeds in three qualify at either level.
+# tests/test_baselines.py enforces the property.
+EVALUATION_SEEDS = {1: (0, 1, 2, 3, 4), 2: (0, 1, 2, 3, 5), 3: (0, 1, 2, 3, 4)}
 
 TEXT_FILES = ("task.toml", "environment/docker-compose.yaml")
+
+
+def task_dir(level: int, seed: int) -> Path:
+    return TASKS / f"level-{level}" / f"seed-{seed}"
 
 
 def existing_key(target: Path) -> str | None:
@@ -36,12 +41,12 @@ def existing_key(target: Path) -> str | None:
     return match.group(1) if match else None
 
 
-def make_task(seed: int) -> Path:
-    name = f"seed-{seed}"
-    target = TASKS / name
+def make_task(level: int, seed: int) -> Path:
+    target = task_dir(level, seed)
     key = existing_key(target) or secrets.token_hex(24)
     if target.exists():
         shutil.rmtree(target)
+    target.parent.mkdir(parents=True, exist_ok=True)
     shutil.copytree(TEMPLATE, target)
 
     shutil.copytree(
@@ -51,7 +56,12 @@ def make_task(seed: int) -> Path:
     )
     shutil.copy(PACKAGE / "reference" / "solver.py", target / "solution" / "solver.py")
 
-    values = {"__NAME__": name, "__SEED__": str(seed), "__RESULT_KEY__": key}
+    values = {
+        "__NAME__": f"level-{level}-seed-{seed}",
+        "__SEED__": str(seed),
+        "__LEVEL__": str(level),
+        "__RESULT_KEY__": key,
+    }
     for relative in TEXT_FILES:
         path = target / relative
         text = path.read_text()
@@ -62,9 +72,13 @@ def make_task(seed: int) -> Path:
 
 
 def main() -> None:
-    seeds = [int(argument) for argument in sys.argv[1:]] or list(EVALUATION_SEEDS)
-    for seed in seeds:
-        print(make_task(seed).relative_to(ROOT))
+    if len(sys.argv) > 1:
+        level, *seeds = (int(argument) for argument in sys.argv[1:])
+        pairs = [(level, seed) for seed in seeds]
+    else:
+        pairs = [(level, seed) for level, seeds in EVALUATION_SEEDS.items() for seed in seeds]
+    for level, seed in pairs:
+        print(make_task(level, seed).relative_to(ROOT))
 
 
 if __name__ == "__main__":

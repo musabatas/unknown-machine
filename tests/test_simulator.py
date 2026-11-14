@@ -1,6 +1,7 @@
 """The rules of the simulator: determinism, truthful dry runs, consistent reactions."""
 
 import random
+from dataclasses import replace
 
 from unknown_machine.calibration import UNLIMITED, build_episode
 from unknown_machine.machine.episode import E_DEP, E_ORDER, Episode
@@ -43,13 +44,61 @@ def test_same_seed_gives_the_same_episode():
         assert first.result() == second.result()
 
 
-def test_dry_run_always_predicts_the_real_outcome():
+def test_dry_run_always_predicts_the_real_outcome_at_level_1():
     for seed in SEEDS:
         episode = Episode(generate(seed), UNLIMITED)
         for observation in play_randomly(episode, seed):
             preview, result = observation["preview"], observation["result"]
             assert preview["would"] == result["outcome"]
             assert preview["code"] == result["code"]
+
+
+def test_a_seed_describes_the_same_system_at_both_levels():
+    for seed in SEEDS:
+        exact, noisy = generate(seed, 1), generate(seed, 2)
+        assert all(service.accuracy == 1.0 for service in exact.services)
+        for first, second in zip(exact.services, noisy.services, strict=True):
+            assert replace(second, accuracy=1.0) == first
+
+
+def test_level_2_dry_runs_are_wrong_as_often_as_inspect_says():
+    right: dict[float, list[bool]] = {}
+    for seed in range(150):
+        system = generate(seed, 2)
+        episode = Episode(system, UNLIMITED)
+        accuracy = {service.codename: service.accuracy for service in system.services}
+        for observation in play_randomly(episode, seed):
+            preview, result = observation["preview"], observation["result"]
+            if result["code"] in (None, E_ORDER, E_DEP):  # the only question that can be wrong
+                correct = preview["code"] == result["code"]
+                right.setdefault(accuracy[observation["service"]], []).append(correct)
+    assert set(right) == {1.0, 0.9, 0.8, 0.7}
+    for stated, outcomes in right.items():
+        assert abs(sum(outcomes) / len(outcomes) - stated) < 0.03, stated
+
+
+def test_a_wrong_dry_run_still_shows_the_real_reaction():
+    for seed in SEEDS:
+        system = generate(seed, 2)
+        episode = Episode(system, UNLIMITED)
+        reactions = {
+            service.codename: {
+                E_ORDER: service.order_violation,
+                E_DEP: service.dependency_violation,
+            }
+            for service in system.services
+        }
+        for observation in play_randomly(episode, seed):
+            preview = observation["preview"]
+            if preview["code"] in (E_ORDER, E_DEP) and observation["service"] != system.lag_service:
+                assert preview["would"] == reactions[observation["service"]][preview["code"]]
+
+
+def test_the_same_calls_get_the_same_wrong_reports():
+    for seed in SEEDS:
+        first = play_randomly(Episode(generate(seed, 2), UNLIMITED), seed)
+        second = play_randomly(Episode(generate(seed, 2), UNLIMITED), seed)
+        assert first == second
 
 
 def test_dry_run_changes_nothing_but_the_window():

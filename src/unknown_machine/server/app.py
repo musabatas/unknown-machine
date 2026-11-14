@@ -20,7 +20,7 @@ MCP_PORT = 8000
 CONTROL_PORT = 8001
 MAX_NONCE_LENGTH = 128
 
-EPISODE = build_episode(int(os.environ["SEED"]))
+EPISODE = build_episode(int(os.environ["SEED"]), int(os.environ.get("LEVEL", "1")))
 RESULT_KEY = os.environ["RESULT_KEY"].encode()
 
 mcp = MCPServer("machine")
@@ -34,15 +34,16 @@ def status() -> dict:
 
 @mcp.tool()
 def inspect(service: str) -> dict:
-    """Read a service's logs: its role, and which registers are pending and the command
-    that clears each. Costs 2 minutes."""
+    """Read a service's logs: its role, which registers are pending and the command that
+    clears each, and how accurate its dry runs are. Costs 2 minutes."""
     return EPISODE.inspect(service)
 
 
 @mcp.tool()
 def dry_run(service: str, command: str) -> dict:
     """Report what a command would do right now (ok, refused, crash, data_loss) without
-    changing anything. Always truthful. Costs 4 minutes."""
+    changing anything. Right with the probability `inspect` gives as dry_run_accuracy,
+    independently on every call. Costs 4 minutes."""
     return EPISODE.dry_run(service, command)
 
 
@@ -77,9 +78,16 @@ class Control(BaseHTTPRequestHandler):
             self._send(200, b'{"ok": true}')
             return
         if url.path == "/result":
-            nonce = parse_qs(url.query).get("nonce", [""])[0]
+            query = parse_qs(url.query)
+            nonce = query.get("nonce", [""])[0]
+            proof = query.get("proof", [""])[0]
             if not nonce or len(nonce) > MAX_NONCE_LENGTH:
                 self._send(400, b'{"error": "nonce required"}')
+                return
+            # The result holds the whole episode log, including which dry runs were
+            # wrong. Only a caller that already has the key may read it.
+            if not hmac.compare_digest(proof, sign(nonce.encode())):
+                self._send(403, b'{"error": "forbidden"}')
                 return
             body = json.dumps({"nonce": nonce, **EPISODE.result()}, sort_keys=True).encode()
             envelope = {"body": body.decode(), "signature": sign(body)}

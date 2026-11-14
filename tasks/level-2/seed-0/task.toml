@@ -1,0 +1,43 @@
+schema_version = "1.4"
+artifacts = []
+
+[task]
+name = "unknown-machine/level-2-seed-0"
+version = "1.0.0"
+description = "Bring an undocumented legacy production system back online without losing data"
+keywords = ["exploration", "operations", "irreversible-actions", "budgeted-information"]
+[[task.authors]]
+name = "Unknown Machine team"
+
+[metadata]
+seed = 0
+level = 2
+
+[verifier]
+timeout_sec = 120.0
+# Shared: tests run in `main` while the sidecar that holds the score is still up.
+# In separate mode the agent environment is torn down before the verifier starts.
+environment_mode = "shared"
+collect = []
+
+[verifier.env]
+# Passed only to the verifier command, never to the agent.
+RESULT_KEY = "e0fdd4fa921b54075f267258408f0e8d9ae517a9fb59c735"
+MACHINE_CONTROL_URL = "http://machine:8001"
+
+[agent]
+timeout_sec = 3600.0
+
+[environment]
+network_mode = "public"
+build_timeout_sec = 600.0
+os = "linux"
+
+[[environment.mcp_servers]]
+name = "machine"
+transport = "streamable-http"
+url = "http://machine:8000/mcp"
+
+[environment.env]
+
+[solution.env]
