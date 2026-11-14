@@ -2,7 +2,7 @@
 
     poetry run python scripts/watch.py                    the Harbor run in progress
     poetry run python scripts/watch.py --demo reference   a scripted policy, slowed down
-    poetry run python scripts/watch.py --demo greedy --level 3 --seed 4 --delay 0.2
+    poetry run python scripts/watch.py --demo greedy --theme aircraft --level 4 --delay 0.2
 
 It serves `viewer/index.html` on 127.0.0.1 and feeds it the episode as it grows.
 
@@ -110,14 +110,14 @@ class _Slowed:
 class Demo:
     """A scripted policy playing one seed in this process."""
 
-    def __init__(self, policy: str, seed: int, level: int, delay: float) -> None:
+    def __init__(self, policy: str, seed: int, level: int, theme: str, delay: float) -> None:
         from unknown_machine.baselines.policies import BASELINES
         from unknown_machine.calibration import build_episode
 
         if policy not in BASELINES:
             raise SystemExit(f"unknown policy {policy!r}; one of: {', '.join(sorted(BASELINES))}")
-        self._label = f"{policy}, level {level}, seed {seed}"
-        self._episode = build_episode(seed, level)
+        self._label = f"{policy}, {theme}, level {level}, seed {seed}"
+        self._episode = build_episode(seed, level, theme)
         play = BASELINES[policy]
         threading.Thread(
             target=play, args=(_Slowed(self._episode, delay),), daemon=True
@@ -166,6 +166,9 @@ def main() -> int:
     parser.add_argument("--seed", type=int, default=0, help="seed for --demo (default 0)")
     parser.add_argument("--level", type=int, default=1, help="level for --demo (default 1)")
     parser.add_argument(
+        "--theme", default="legacy", help="scenario for --demo: legacy, aircraft or residency"
+    )
+    parser.add_argument(
         "--delay", type=float, default=0.5, help="seconds between calls for --demo (default 0.5)"
     )
     parser.add_argument("--container", help="machine sidecar to watch, when several are running")
@@ -173,7 +176,12 @@ def main() -> int:
     arguments = parser.parse_args()
 
     if arguments.demo:
-        source = Demo(arguments.demo, arguments.seed, arguments.level, arguments.delay)
+        try:
+            source = Demo(
+                arguments.demo, arguments.seed, arguments.level, arguments.theme, arguments.delay
+            )
+        except ValueError as error:  # unknown theme or level
+            raise SystemExit(str(error)) from error
     else:
         source = HarborRun(arguments.container)
 

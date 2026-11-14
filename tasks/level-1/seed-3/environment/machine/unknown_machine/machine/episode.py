@@ -13,10 +13,9 @@ from unknown_machine.machine.model import (
     COST_RUN,
     CRASH,
     DATA_LOSS,
-    LAG_REGISTER,
+    LAST_LAYER,
     OK,
     REFUSED,
-    SYNC_COMMAND,
     TIER_MAX_LAYER,
     Service,
     System,
@@ -86,7 +85,7 @@ class Episode:
             }
             report["dry_run_accuracy"] = spec.accuracy
             if spec.has_sync:
-                report[LAG_REGISTER] = self._lag
+                report[self._system.vocabulary.lag_register] = self._lag
             self._record("inspect", service, None, OK, None)
             return self._close(report)
 
@@ -112,7 +111,7 @@ class Episode:
             self._spend(COST_RUN)
             outcome, code, register = self._evaluate(spec, command)
             if outcome == OK:
-                if command == SYNC_COMMAND:
+                if spec.has_sync and command == spec.sync_command:
                     self._lag -= 1
                 else:
                     self._progress[service] += 1
@@ -170,9 +169,15 @@ class Episode:
 
     def _describe_system(self) -> dict:
         """The hidden rules, for replaying and analysing an episode after it is over."""
+        words = self._system.vocabulary
         return {
             "seed": self._system.seed,
             "level": self._system.level,
+            "theme": words.name,
+            "layers": list(words.roles),  # role names, lowest layer first
+            "final_commands": [words.final_step[0], words.last_final_step[0]],
+            "sync_command": words.sync_command,
+            "lag_register": words.lag_register,
             "initial_lag": self._system.initial_lag,
             "lag_service": self._system.lag_service,
             "services": [
@@ -297,12 +302,12 @@ class Episode:
         if name in self._crashed:
             return REFUSED, E_CRASHED, None
 
-        if command == SYNC_COMMAND:
+        if spec.has_sync and command == spec.sync_command:
             if not self._serving(name):
                 return REFUSED, E_ORDER, None
             if self._lag == 0:
                 return REFUSED, E_DONE, None
-            return OK, None, LAG_REGISTER
+            return OK, None, self._system.vocabulary.lag_register
 
         for decoy, outcome in spec.decoys:
             if command == decoy:
@@ -320,7 +325,7 @@ class Episode:
         step = spec.steps[index]
         if any(not self._serving(required) for required in step.requires):
             return spec.dependency_violation, E_DEP, None
-        if index == len(spec.steps) - 1 and spec.role == "gateway" and self._lag > 0:
+        if index == len(spec.steps) - 1 and spec.layer == LAST_LAYER and self._lag > 0:
             return DATA_LOSS, E_LAG, None
         return OK, None, step.register
 

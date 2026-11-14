@@ -1,0 +1,44 @@
+schema_version = "1.4"
+artifacts = []
+
+[task]
+name = "unknown-machine/residency-level-4-seed-4"
+version = "1.0.0"
+description = "Obtain a residence permit from a state that publishes none of its rules"
+keywords = ["exploration", "operations", "irreversible-actions", "budgeted-information"]
+[[task.authors]]
+name = "Unknown Machine team"
+
+[metadata]
+seed = 4
+level = 4
+theme = "residency"
+
+[verifier]
+timeout_sec = 120.0
+# Shared: tests run in `main` while the sidecar that holds the score is still up.
+# In separate mode the agent environment is torn down before the verifier starts.
+environment_mode = "shared"
+collect = []
+
+[verifier.env]
+# Passed only to the verifier command, never to the agent.
+RESULT_KEY = "d6221007ba1b9dabb4bf830a378376fab8d5fe752b95ebf5"
+MACHINE_CONTROL_URL = "http://machine:8001"
+
+[agent]
+timeout_sec = 3600.0
+
+[environment]
+network_mode = "public"
+build_timeout_sec = 600.0
+os = "linux"
+
+[[environment.mcp_servers]]
+name = "machine"
+transport = "streamable-http"
+url = "http://machine:8000/mcp"
+
+[environment.env]
+
+[solution.env]

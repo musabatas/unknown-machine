@@ -17,23 +17,26 @@ These are not style preferences. Breaking one can zero a rubric item.
 5. **Every destructive rule is discoverable by `dry_run`, to whatever certainty the agent pays for.** At level 1 a dry run is exact. At level 2 it is right with the per-service probability that `inspect` states, independently on each call, so repeating it buys certainty; it is never wrong about how a service reacts to a mistake, and `run` is always real. A rule that can only be learned by losing data is a bug. Certainty at level 2 is never total: the reference accepts a 0.2% chance of data loss per command and does lose data on a small share of seeds. State that share wherever reference results are reported, and never present seed selection as if it did not exist.
 6. **The reference solver uses the same six tools and nothing else.** `reference/solver.py` imports only the standard library, never the simulator, and never special-cases a seed. It is copied verbatim into every task's `solution/`, so it must stay a single self-contained file.
 7. **The simulator core is pure.** `machine/` has no I/O, no MCP, no Harbor imports. The server wraps it; tests call it in-process.
-8. **Codenames carry no hint of a service's role.**
+8. **Codenames carry no hint of a service's role,** in any theme.
 9. **Every exploit found gets a test** under `tests/exploits/` in the same commit as its fix.
-10. **Tool costs and error codes are stated in three places that must agree:** `machine/model.py` and `machine/episode.py`, `reference/solver.py`, and `scripts/task_template/instruction.md`. Change all three together; the agent is only treated fairly if the instruction matches the rules.
+10. **Tool costs and error codes are stated in three places that must agree:** `machine/model.py` and `machine/episode.py`, `reference/solver.py`, and every `scripts/task_template/instructions/<theme>.md`. Change all three together; the agent is only treated fairly if the instruction matches the rules.
+12. **A theme is words only.** `machine/themes.py` owns every word a scenario changes: the five role names, the commands and registers of each role, the two final commands, the sync command and its register, the codenames. A system is drawn in the `legacy` words and reworded, so a seed has the same structure, window and reference run in every theme. A theme never changes a rule, a cost, the score, an outcome string or an error code. Adding one means: its table in `themes.py`, its row in `SCENARIOS` in `reference/solver.py` (the solver cannot import the table), its `instructions/<theme>.md` stating the same rules, and its description in `scripts/make_tasks.py`; `tests/test_themes.py` checks that these agree.
 11. **A service reacts to a kind of mistake the same way every time.** The instruction promises this and the reference depends on it. A rule that breaks it makes the reference lose data.
 
 ## Layout
 
 ```
 src/unknown_machine/
-  machine/            simulator core: model, seeded generator, episode, score
+  machine/            simulator core: model, themes, seeded generator, episode, score
   calibration.py      seed -> episode with its window (reference cost / 0.7)
   server/app.py       MCP server and verifier endpoint around one episode
   reference/solver.py reference and scripted policies, standard library only
   baselines/          do-nothing, stop-early, cautious, greedy, random
 scripts/
-  task_template/      the Harbor task every seed is generated from
-  make_tasks.py       template + package -> tasks/level-<l>/seed-<n>/
+  task_template/      the Harbor task every seed is generated from; instructions/ holds
+                      one task statement per theme
+  make_tasks.py       template + package -> tasks/level-<l>/seed-<n>/ for the legacy
+                      theme, tasks/<theme>/level-<l>/seed-<n>/ for the others
   evaluate.py, eval.sh  the one-command evaluation
   export_trajectories.py  reference episodes as training data
 tasks/level-<l>/seed-<n>/  generated evaluation tasks, five seeds per level
@@ -45,7 +48,7 @@ viewer/index.html     replay of one episode; make_replay.py embeds an episode in
                       and warns when its result differs from the recorded one
 ```
 
-`tasks/level-*/seed-*` is generated: change `src/` or `scripts/task_template/`, then run `poetry run python scripts/make_tasks.py` and commit the output with the change. Never edit a generated task by hand; it would differ from what the generator produces and from the other seeds. `tasks/smoke/` is the one hand-maintained task: a toy that proves the harness wiring (sidecar, MCP, signed result, reward file).
+`tasks/level-*/seed-*` and `tasks/<theme>/level-*/seed-*` are generated: change `src/` or `scripts/task_template/`, then run `poetry run python scripts/make_tasks.py` and commit the output with the change. Never edit a generated task by hand; it would differ from what the generator produces and from the other seeds. `tasks/smoke/` is the one hand-maintained task: a toy that proves the harness wiring (sidecar, MCP, signed result, reward file).
 
 Free checks, run after any change to the simulator, the template or the task wiring:
 

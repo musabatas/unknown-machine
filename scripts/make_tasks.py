@@ -1,21 +1,24 @@
 """Generate Harbor task directories from scripts/task_template.
 
-    poetry run python scripts/make_tasks.py              # the evaluation set, every level
-    poetry run python scripts/make_tasks.py 2 14 38      # level 2, seeds 14 and 38
+    poetry run python scripts/make_tasks.py                       # the whole evaluation set
+    poetry run python scripts/make_tasks.py 2 14 38               # level 2, seeds 14 and 38
+    poetry run python scripts/make_tasks.py 4 7 --theme aircraft  # the same, in another theme
 
 Each task gets a copy of the simulator package inside the sidecar's build
-context, the solver inside solution/, and a result-signing key (kept when the
-task already exists, so regenerating leaves a clean diff).
+context, the solver inside solution/, the instruction of its theme, and a
+result-signing key (kept when the task already exists, so regenerating leaves a
+clean diff).
 """
 
+import argparse
 import re
 import secrets
 import shutil
-import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 TEMPLATE = ROOT / "scripts" / "task_template"
+INSTRUCTIONS = TEMPLATE / "instructions"
 PACKAGE = ROOT / "src" / "unknown_machine"
 TASKS = ROOT / "tasks"
 
@@ -31,11 +34,34 @@ EVALUATION_SEEDS = {
     4: (0, 1, 2, 3, 4),
 }
 
+# A theme changes the words of a system and nothing else, so the same seeds qualify
+# in every theme. The themes other than the first are generated at the levels that
+# separate an agent from the reference.
+LEGACY = "legacy"
+DESCRIPTIONS = {
+    LEGACY: "Bring an undocumented legacy production system back online without losing data",
+    "aircraft": "Bring a captured aircraft of an unknown type to take-off without damaging it",
+    "residency": "Obtain a residence permit from a state that publishes none of its rules",
+}
+THEMED_LEVELS = (3, 4)
+
 TEXT_FILES = ("task.toml", "environment/docker-compose.yaml")
 
 
-def task_dir(level: int, seed: int) -> Path:
-    return TASKS / f"level-{level}" / f"seed-{seed}"
+def task_dir(level: int, seed: int, theme: str = LEGACY) -> Path:
+    base = TASKS if theme == LEGACY else TASKS / theme
+    return base / f"level-{level}" / f"seed-{seed}"
+
+
+def evaluation_tasks() -> list[tuple[int, int, str]]:
+    """(level, seed, theme) of every task of the evaluation set."""
+    return [
+        (level, seed, theme)
+        for theme in DESCRIPTIONS
+        for level, seeds in EVALUATION_SEEDS.items()
+        if theme == LEGACY or level in THEMED_LEVELS
+        for seed in seeds
+    ]
 
 
 def existing_key(target: Path) -> str | None:
@@ -47,13 +73,14 @@ def existing_key(target: Path) -> str | None:
     return match.group(1) if match else None
 
 
-def make_task(level: int, seed: int) -> Path:
-    target = task_dir(level, seed)
+def make_task(level: int, seed: int, theme: str = LEGACY) -> Path:
+    target = task_dir(level, seed, theme)
     key = existing_key(target) or secrets.token_hex(24)
     if target.exists():
         shutil.rmtree(target)
     target.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(TEMPLATE, target)
+    shutil.copytree(TEMPLATE, target, ignore=shutil.ignore_patterns("instructions", "__pycache__"))
+    shutil.copy(INSTRUCTIONS / f"{theme}.md", target / "instruction.md")
 
     shutil.copytree(
         PACKAGE,
@@ -62,10 +89,13 @@ def make_task(level: int, seed: int) -> Path:
     )
     shutil.copy(PACKAGE / "reference" / "solver.py", target / "solution" / "solver.py")
 
+    prefix = "" if theme == LEGACY else f"{theme}-"
     values = {
-        "__NAME__": f"level-{level}-seed-{seed}",
+        "__NAME__": f"{prefix}level-{level}-seed-{seed}",
+        "__DESCRIPTION__": DESCRIPTIONS[theme],
         "__SEED__": str(seed),
         "__LEVEL__": str(level),
+        "__THEME__": theme,
         "__RESULT_KEY__": key,
     }
     for relative in TEXT_FILES:
@@ -78,13 +108,18 @@ def make_task(level: int, seed: int) -> Path:
 
 
 def main() -> None:
-    if len(sys.argv) > 1:
-        level, *seeds = (int(argument) for argument in sys.argv[1:])
-        pairs = [(level, seed) for seed in seeds]
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("level", type=int, nargs="?", help="one level (default: evaluation set)")
+    parser.add_argument("seeds", type=int, nargs="*", help="seeds of that level")
+    parser.add_argument("--theme", choices=sorted(DESCRIPTIONS), default=LEGACY)
+    arguments = parser.parse_args()
+
+    if arguments.level is None:
+        tasks = evaluation_tasks()
     else:
-        pairs = [(level, seed) for level, seeds in EVALUATION_SEEDS.items() for seed in seeds]
-    for level, seed in pairs:
-        print(make_task(level, seed).relative_to(ROOT))
+        tasks = [(arguments.level, seed, arguments.theme) for seed in arguments.seeds]
+    for level, seed, theme in tasks:
+        print(make_task(level, seed, theme).relative_to(ROOT))
 
 
 if __name__ == "__main__":

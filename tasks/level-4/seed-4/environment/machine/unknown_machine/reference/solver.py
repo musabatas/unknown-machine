@@ -6,7 +6,9 @@ It uses nothing but the six tools the agent gets, through a `console` object
 exposing status(), inspect(s), dry_run(s, c), run(s, c), restart(s), finish().
 
 The reference relies only on facts stated in the task instruction:
-  * the last command of every service is `start` (`cutover` for the gateway);
+  * the role names and their layers, the last command of every service (`start`,
+    and `cutover` for the gateway, in the legacy scenario) and the register that
+    must be zero before the last one, with the command that lowers it (SCENARIOS);
   * a service reacts to a given kind of mistake the same way every time, and a
     dry run always shows that reaction truthfully;
   * a dry run is right about whether a command can be applied now with the
@@ -34,11 +36,21 @@ COST_INSPECT = 2
 COST_DRY_RUN = 4
 COST_RESTART = 4
 
-ROLE_LAYER = {"storage": 1, "database": 2, "middleware": 3, "application": 4, "gateway": 5}
-CUTOVER_COMMAND = "cutover"
-FINAL_COMMANDS = ("start", CUTOVER_COMMAND)
-SYNC_COMMAND = "sync"
-LAG_REGISTER = "replication_lag"
+# The words of each scenario the task comes in, as its instruction states them: the
+# five roles lowest layer first, the last command of a unit, the last command of the
+# last layer, and the register that must be zero before it with the command lowering it.
+SCENARIOS = (
+    (("storage", "database", "middleware", "application", "gateway"),
+     "start", "cutover", "replication_lag", "sync"),
+    (("power", "hydraulics", "avionics", "engines", "flight-control"),
+     "engage", "takeoff", "pressure_imbalance", "balance"),
+    (("registry", "treasury", "insurance", "labour", "immigration"),
+     "submit", "collect", "arrears", "settle"),
+)  # fmt: skip
+ROLE_LAYER = {role: layer for roles, *_ in SCENARIOS for layer, role in enumerate(roles, 1)}
+CUTOVER_COMMANDS = tuple(cutover for _, _, cutover, _, _ in SCENARIOS)
+FINAL_COMMANDS = tuple(final for _, final, _, _, _ in SCENARIOS) + CUTOVER_COMMANDS
+SYNC_COMMANDS = {register: sync for _, _, _, register, sync in SCENARIOS}
 ACCURACY_FIELD = "dry_run_accuracy"
 
 # Prior that a command's dependencies are up while some service of its layer or below is not.
@@ -59,7 +71,8 @@ class _Service:
         self.layer = ROLE_LAYER[report["role"]]
         self.accuracy = report.get(ACCURACY_FIELD, 1.0)
         self.pending = [item["cleared_by"] for item in report["pending"]]
-        self.lag = report.get(LAG_REGISTER)
+        self.lag_register = next((name for name in SYNC_COMMANDS if name in report), None)
+        self.lag = report.get(self.lag_register)
         self.order_class: str | None = None
         self.dependency_class: str | None = None
         self.not_next: set[str] = set()  # ruled out by a real refusal, so certain
@@ -98,7 +111,7 @@ class Solver:
                 break
             report = self._call(self.console.inspect(name))
             self.services[name] = _Service(name, report)
-            if LAG_REGISTER in report:
+            if self.services[name].lag_register:
                 self.lag_owner = name
         if len(self.services) == len(status["services"]):
             self._recover()
@@ -148,7 +161,7 @@ class Solver:
             if self.patient:
                 service.blocked = service.waiting
             return True
-        if command == CUTOVER_COMMAND and self._lag_pending():
+        if command in CUTOVER_COMMANDS and self._lag_pending():
             return self._sync()
 
         if self._acceptable(service, belief):
@@ -298,7 +311,7 @@ class Solver:
         owner = self.services[self.lag_owner]
         if not self._afford(COST_RUN):
             return False
-        result = self._call(self.console.run(owner.name, SYNC_COMMAND))
+        result = self._call(self.console.run(owner.name, SYNC_COMMANDS[owner.lag_register]))
         if result["outcome"] == OK:
             owner.lag -= 1
             return True
@@ -308,7 +321,8 @@ class Solver:
     def _refresh_lag(self) -> None:
         if self.lag_owner and self._afford(COST_INSPECT):
             report = self._call(self.console.inspect(self.lag_owner))
-            self.services[self.lag_owner].lag = report.get(LAG_REGISTER, 0)
+            owner = self.services[self.lag_owner]
+            owner.lag = report.get(owner.lag_register, 0)
 
     def _serving_set(self) -> frozenset:
         return frozenset(name for name, service in self.services.items() if service.serving)

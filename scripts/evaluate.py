@@ -20,7 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from make_tasks import EVALUATION_SEEDS  # noqa: E402
+from make_tasks import DESCRIPTIONS, EVALUATION_SEEDS, LEGACY, THEMED_LEVELS, task_dir  # noqa: E402
 
 from unknown_machine.baselines.policies import BASELINES  # noqa: E402
 from unknown_machine.calibration import build_episode  # noqa: E402
@@ -44,8 +44,8 @@ def harbor_rewards(task: Path, agent: str, job: str, extra: list[str]) -> list[f
     return rewards
 
 
-def in_process(policy: str, seed: int, level: int) -> float:
-    episode = build_episode(seed, level)
+def in_process(policy: str, seed: int, level: int, theme: str) -> float:
+    episode = build_episode(seed, level, theme)
     BASELINES[policy](episode)
     return episode.result()["score"]
 
@@ -53,17 +53,20 @@ def in_process(policy: str, seed: int, level: int) -> float:
 def evaluate_level(level: int, seeds: list[int], arguments, stamp: str, columns: list[str]) -> None:
     rows: dict[int, dict[str, list[float]]] = {}
     for seed in seeds:
-        task = ROOT / "tasks" / f"level-{level}" / f"seed-{seed}"
+        theme = arguments.theme
+        task = task_dir(level, seed, theme)
         if not task.exists():
-            raise SystemExit(f"{task} is missing; run scripts/make_tasks.py {level} {seed}")
-        job = f"eval-{stamp}-l{level}s{seed}"
+            raise SystemExit(
+                f"{task} is missing; run scripts/make_tasks.py {level} {seed} --theme {theme}"
+            )
+        job = f"eval-{stamp}-{theme}-l{level}s{seed}"
         row = {
             "reference": harbor_rewards(task, "oracle", f"{job}-reference", []),
             "do_nothing": harbor_rewards(task, "nop", f"{job}-nothing", []),
             "stop_early": harbor_rewards(task, "oracle", f"{job}-stopearly", STOP_EARLY),
         }
         for policy in IN_PROCESS:
-            row[policy] = [in_process(policy, seed, level)]
+            row[policy] = [in_process(policy, seed, level, theme)]
         if arguments.model:
             extra = ["-m", arguments.model, "-k", str(arguments.runs), "-n", str(arguments.runs)]
             if arguments.env_file:
@@ -72,7 +75,7 @@ def evaluate_level(level: int, seeds: list[int], arguments, stamp: str, columns:
         rows[seed] = row
         print(f"level {level} seed {seed} done", file=sys.stderr)
 
-    print(f"\nLevel {level}\n")
+    print(f"\nLevel {level}, {arguments.theme}\n")
     print("| seed | " + " | ".join(columns) + " |")
     print("|---|" + "---|" * len(columns))
     for seed, row in rows.items():
@@ -94,6 +97,9 @@ def main() -> None:
     parser.add_argument("--env-file", help="file with the API key for --model")
     parser.add_argument("--level", type=int, choices=sorted(EVALUATION_SEEDS), help="one level")
     parser.add_argument("--seeds", type=int, nargs="*", help="seeds (default: evaluation set)")
+    parser.add_argument(
+        "--theme", choices=sorted(DESCRIPTIONS), default=LEGACY, help="scenario (default legacy)"
+    )
     arguments = parser.parse_args()
 
     stamp = time.strftime("%m%d-%H%M%S")
@@ -101,6 +107,8 @@ def main() -> None:
     if arguments.model:
         columns.append("agent")
     levels = [arguments.level] if arguments.level else sorted(EVALUATION_SEEDS)
+    if arguments.theme != LEGACY:  # the other scenarios exist at the harder levels only
+        levels = [level for level in levels if level in THEMED_LEVELS]
     for level in levels:
         seeds = arguments.seeds or list(EVALUATION_SEEDS[level])
         evaluate_level(level, seeds, arguments, stamp, columns)

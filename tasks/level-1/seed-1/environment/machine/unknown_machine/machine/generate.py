@@ -4,75 +4,13 @@ import random
 from dataclasses import dataclass, replace
 
 from unknown_machine.machine.model import CRASH, DATA_LOSS, REFUSED, Service, Step, System
+from unknown_machine.machine.themes import LEGACY, THEMES, Theme, theme_of
 
-# role -> (preparation commands with the register each clears, commands never needed)
-ROLE_COMMANDS: dict[str, tuple[tuple[tuple[str, str], ...], tuple[str, ...]]] = {
-    "storage": (
-        (
-            ("fsck", "filesystem"),
-            ("replay-journal", "journal"),
-            ("attach", "volume"),
-            ("scrub", "checksums"),
-            ("verify-raid", "array"),
-            ("resize", "quota"),
-        ),
-        ("format", "reinit"),
-    ),
-    "database": (
-        (
-            ("recover", "wal"),
-            ("migrate", "schema"),
-            ("reindex", "indexes"),
-            ("unlock", "locks"),
-            ("vacuum", "bloat"),
-            ("promote", "replica-role"),
-        ),
-        ("reinit", "drop-wal"),
-    ),
-    "middleware": (
-        (
-            ("rehydrate", "snapshot"),
-            ("rotate-keys", "keys"),
-            ("drain", "backlog"),
-            ("rebalance", "partitions"),
-            ("compact", "log-segments"),
-            ("reconnect", "peers"),
-        ),
-        ("purge", "reset-offsets"),
-    ),
-    "application": (
-        (
-            ("warm-cache", "cache"),
-            ("load-config", "config"),
-            ("register", "registration"),
-            ("compile-assets", "assets"),
-            ("migrate-sessions", "sessions"),
-            ("seed-flags", "flags"),
-        ),
-        ("factory-reset", "rollback"),
-    ),
-    "gateway": (
-        (
-            ("sync-routes", "routes"),
-            ("renew-cert", "certificate"),
-            ("health-gate", "healthchecks"),
-            ("pin-upstreams", "upstreams"),
-            ("reload-acl", "acl"),
-            ("warm-tls", "tls-sessions"),
-        ),
-        ("flush-routes", "force-failover"),
-    ),
-}
-
-FINAL_STEP = {"gateway": ("cutover", "traffic")}
-DEFAULT_FINAL_STEP = ("start", "process")
-
-# Codenames carry no hint of a role.
-CODENAMES = (
-    "alder", "basalt", "bramble", "cobalt", "flint", "garnet", "heron", "juniper",
-    "kestrel", "larch", "linden", "marrow", "moss", "onyx", "osprey", "pumice",
-    "quartz", "saffron", "sedge", "sorrel", "tallow", "tern", "thistle", "wren",
-)  # fmt: skip
+# Systems are drawn in the legacy vocabulary and reworded afterwards (`_reword`), so
+# a seed has the same structure in every theme.
+_WORDS = THEMES[LEGACY]
+ROLE_COMMANDS = _WORDS.commands
+CODENAMES = _WORDS.codenames
 
 VIOLATION_OUTCOMES = (REFUSED, CRASH, DATA_LOSS)
 VIOLATION_WEIGHTS = (0.4, 0.3, 0.3)
@@ -127,14 +65,17 @@ NOISY = {1.0: 0.2, 0.9: 0.3, 0.8: 0.3, 0.7: 0.2}
 LEVELS = {1: (SMALL, EXACT, 0), 2: (SMALL, NOISY, 0), 3: (LARGE, NOISY, 0), 4: (LARGE, NOISY, 4)}
 
 
-def generate(seed: int, level: int = 1) -> System:
+def generate(seed: int, level: int = 1, theme: str = LEGACY) -> System:
     """Level 1: 5 to 8 services, exact dry runs. Level 2: the same systems, but each
     service's dry runs are only right with a stated probability. Level 3: 12 to 14
     services with longer procedures, and the same inexact dry runs. Level 4: the level 3
     systems, with more services that need another service of their own layer first and
-    destroy their data when started without it."""
+    destroy their data when started without it.
+
+    The theme changes the words and nothing else."""
     if level not in LEVELS:
         raise ValueError(f"unknown level {level}")
+    words = theme_of(theme)
     size, accuracy_weights, peer_hazards = LEVELS[level]
     rng = random.Random(seed)
 
@@ -169,12 +110,53 @@ def generate(seed: int, level: int = 1) -> System:
     services = [
         replace(service, accuracy=level_rng.choices(values, weights)[0]) for service in services
     ]
-    return System(
+    system = System(
         seed=seed,
         level=level,
         services=tuple(sorted(services, key=lambda service: service.codename)),
         initial_lag=initial_lag,
         lag_service=lag_service,
+    )
+    return system if words is _WORDS else _reword(system, words)
+
+
+def _reword(system: System, words: Theme) -> System:
+    """The same system told in another theme's words.
+
+    Every mapping keeps alphabetical order (codenames, and the commands of each role),
+    so anything that walks a system in sorted order meets the same structure in the
+    same sequence in every theme.
+    """
+    role = dict(zip(_WORDS.roles, words.roles, strict=True))
+    name = dict(zip(sorted(_WORDS.codenames), sorted(words.codenames), strict=True))
+
+    def renamed(service: Service) -> Service:
+        ours, theirs = _WORDS.commands[service.role], words.commands[role[service.role]]
+        pairs = dict(zip(sorted(ours[0]), sorted(theirs[0]), strict=True))
+        decoy = dict(zip(sorted(ours[1]), sorted(theirs[1]), strict=True))
+        last = words.last_final_step if service.role == _WORDS.roles[-1] else words.final_step
+        steps = tuple(
+            Step(
+                *(pairs.get((step.command, step.register)) or last),
+                requires=tuple(sorted(name[required] for required in step.requires)),
+            )
+            for step in service.steps
+        )
+        return replace(
+            service,
+            codename=name[service.codename],
+            role=role[service.role],
+            steps=steps,
+            idle=tuple(pairs[pair] for pair in service.idle),
+            decoys=tuple((decoy[command], outcome) for command, outcome in service.decoys),
+            sync_command=words.sync_command,
+        )
+
+    return replace(
+        system,
+        services=tuple(sorted(map(renamed, system.services), key=lambda s: s.codename)),
+        lag_service=name[system.lag_service],
+        theme=words.name,
     )
 
 
@@ -225,7 +207,8 @@ def _service(
         )
         for command, register in chosen
     ]
-    final_command, final_register = FINAL_STEP.get(role, DEFAULT_FINAL_STEP)
+    last = _WORDS.last_final_step if role == _WORDS.roles[-1] else _WORDS.final_step
+    final_command, final_register = last
     steps.append(Step(command=final_command, register=final_register, requires=dependencies))
 
     idle = tuple(pair for pair in preparation if pair not in chosen)

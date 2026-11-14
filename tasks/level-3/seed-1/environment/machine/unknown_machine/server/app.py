@@ -20,7 +20,11 @@ MCP_PORT = 8000
 CONTROL_PORT = 8001
 MAX_NONCE_LENGTH = 128
 
-EPISODE = build_episode(int(os.environ["SEED"]), int(os.environ.get("LEVEL", "1")))
+EPISODE = build_episode(
+    int(os.environ["SEED"]),
+    int(os.environ.get("LEVEL", "1")),
+    os.environ.get("THEME", "legacy"),
+)
 RESULT_KEY = os.environ["RESULT_KEY"].encode()
 
 mcp = MCPServer("machine")

@@ -12,6 +12,7 @@ name = "Unknown Machine team"
 [metadata]
 seed = 3
 level = 1
+theme = "legacy"
 
 [verifier]
 timeout_sec = 120.0

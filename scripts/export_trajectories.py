@@ -22,7 +22,7 @@ from make_tasks import EVALUATION_SEEDS  # noqa: E402
 from unknown_machine.calibration import build_episode  # noqa: E402
 from unknown_machine.reference.solver import solve  # noqa: E402
 
-INSTRUCTION = (ROOT / "scripts" / "task_template" / "instruction.md").read_text()
+INSTRUCTION = (ROOT / "scripts" / "task_template" / "instructions" / "legacy.md").read_text()
 TOOLS = ("status", "inspect", "dry_run", "run", "restart", "finish")
 
 

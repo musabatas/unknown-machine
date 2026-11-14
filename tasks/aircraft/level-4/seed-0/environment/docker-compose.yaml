@@ -1,0 +1,29 @@
+services:
+  # Harbor's own template builds `main` from environment/Dockerfile.
+  main:
+    depends_on:
+      machine:
+        condition: service_healthy
+
+  machine:
+    build:
+      context: ./machine
+    environment:
+      # These values exist only in this container. They are literals on purpose:
+      # a ${VAR} here or in task.toml makes `harbor run` stop for confirmation.
+      SEED: "0"
+      LEVEL: "4"
+      THEME: "aircraft"
+      RESULT_KEY: 5433ae99d2cfacac85bd9551de473b1cb28ad2209563aa08
+    expose:
+      - "8000"
+      - "8001"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen("http://localhost:8001/health", timeout=2)
+      interval: 2s
+      timeout: 5s
+      retries: 30

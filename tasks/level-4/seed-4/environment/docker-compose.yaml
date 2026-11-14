@@ -9,10 +9,11 @@ services:
     build:
       context: ./machine
     environment:
-      # Both values exist only in this container. They are literals on purpose:
+      # These values exist only in this container. They are literals on purpose:
       # a ${VAR} here or in task.toml makes `harbor run` stop for confirmation.
       SEED: "4"
       LEVEL: "4"
+      THEME: "legacy"
       RESULT_KEY: 3d2d57a3afb01e7eb93e3a94b33584a072076f743cb752da
     expose:
       - "8000"

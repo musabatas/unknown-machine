@@ -4,7 +4,7 @@ You work only through the `machine` MCP server. Nothing you write to disk or say
 
 ## The system
 
-It has 5 to 8 services, known only by internal codenames. Each has one role: `storage`, `database`, `middleware`, `application` or `gateway`. The codename tells you nothing about the role; `inspect` does.
+It has several services (`status` lists them), known only by internal codenames. Each has one role: `storage`, `database`, `middleware`, `application` or `gateway`. The codename tells you nothing about the role; `inspect` does.
 
 A service is brought up by applying its pending commands in the right order. The order is not documented, and some commands also need other services to be serving first. A service whose pending list is empty is `serving`.
 

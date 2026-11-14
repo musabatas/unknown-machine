@@ -35,8 +35,11 @@ from pathlib import Path
 COSTS = {"run": 1, "inspect": 2, "dry_run": 4, "restart": 4}
 DESTRUCTIVE = ("crash", "data_loss")
 KINDS = ("E_ORDER", "E_DEP")
-FINAL_COMMANDS = ("start", "cutover")
-LAYER = {"storage": 1, "database": 2, "middleware": 3, "application": 4, "gateway": 5}
+# The words of the legacy scenario, for episode files recorded before the result
+# named its own (system.layers, final_commands, sync_command).
+LEGACY_LAYERS = ("storage", "database", "middleware", "application", "gateway")
+LEGACY_FINAL_COMMANDS = ("start", "cutover")
+LEGACY_SYNC = "sync"
 
 
 class _Risk:
@@ -44,6 +47,9 @@ class _Risk:
 
     def __init__(self, system: dict) -> None:
         self.specs = {spec["codename"]: spec for spec in system["services"]}
+        layers = system.get("layers", LEGACY_LAYERS)
+        self.layer = {role: number for number, role in enumerate(layers, start=1)}
+        self.sync = system.get("sync_command", LEGACY_SYNC)
         self.done = {name: 0 for name in self.specs}
         self.lost: set[str] = set()
         self.ruled_out: dict[str, set[str]] = {name: set() for name in self.specs}
@@ -64,7 +70,8 @@ class _Risk:
         below = (
             other
             for other in self.specs
-            if other != name and LAYER[self.specs[other]["role"]] <= LAYER[spec["role"]]
+            if other != name
+            and self.layer[self.specs[other]["role"]] <= self.layer[spec["role"]]
         )
         if (
             not dependency_checked
@@ -76,7 +83,7 @@ class _Risk:
 
     def record(self, entry: dict) -> None:
         name = entry["service"]
-        if entry["outcome"] == "ok" and entry["command"] != "sync":
+        if entry["outcome"] == "ok" and entry["command"] != self.sync:
             self.done[name] += 1
             self.ruled_out[name].clear()
         elif entry["outcome"] == "data_loss":
@@ -95,8 +102,11 @@ def analyze(result: dict) -> dict:
     previews: Counter = Counter()  # dry runs per (service, command) since the last change
     accuracy: dict[str, float] = {}  # stated dry-run accuracy per service
     inspected: set[str] = set()
-    lag_service = next((entry["service"] for entry in log if entry["command"] == "sync"), None)
-    risk = _Risk(result["system"]) if "system" in result else None
+    system = result.get("system", {})
+    sync = system.get("sync_command", LEGACY_SYNC)
+    final_commands = system.get("final_commands", LEGACY_FINAL_COMMANDS)
+    lag_service = next((entry["service"] for entry in log if entry["command"] == sync), None)
+    risk = _Risk(system) if system else None
     order_checked: set[str] = set()  # services dry-run since their own last step
 
     def note(category: str, step: int, entry: dict, detail: str, cost: int) -> None:
@@ -159,7 +169,7 @@ def analyze(result: dict) -> dict:
                         f"whose dry runs are right {accuracy.get(service, 1.0):.0%} of the time",
                         cost,
                     )
-            if risk and outcome == "ok" and command != "sync":
+            if risk and outcome == "ok" and command != sync:
                 # A dry run speaks about the order until its service moves, and about
                 # dependencies until the set of serving services does.
                 fatal = risk.fatal_mistakes(
@@ -182,7 +192,7 @@ def analyze(result: dict) -> dict:
             if outcome == "ok" or outcome in DESTRUCTIVE:
                 # What a dry run said stays valid until its own service moves, or until
                 # the set of serving services does (a final command, a crash, a loss).
-                everything = command in FINAL_COMMANDS or outcome in DESTRUCTIVE
+                everything = command in final_commands or outcome in DESTRUCTIVE
                 for record in (previewed, previews, last_preview):
                     for stale in [p for p in record if everything or p[0] == service]:
                         if isinstance(record, set):

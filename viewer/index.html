@@ -523,7 +523,7 @@ body.live .bar i { transition: width 320ms ease-out; }
       <div class="tiers" id="m-tiers"></div>
     </div>
     <div class="meter">
-      <p class="label">Replication lag</p>
+      <p class="label" id="m-laglabel">Replication lag</p>
       <div class="value" id="m-lag">0</div>
       <div class="sub" id="m-lagsub"></div>
     </div>
@@ -594,18 +594,30 @@ body.live .bar i { transition: width 320ms ease-out; }
 <script>
 "use strict";
 /* core:start  (pure replay logic, no DOM; also run under node for verification) */
-const ROLES = ["storage", "database", "middleware", "application", "gateway"];
-const ROLE_LAYER = { storage: 1, database: 2, middleware: 3, application: 4, gateway: 5 };
+/* The words of the scenario an episode is told in. Episodes name their own (system.layers,
+   sync_command, lag_register); files recorded before that were all the legacy scenario. */
+const LEGACY_LAYERS = ["storage", "database", "middleware", "application", "gateway"];
+let ROLES = LEGACY_LAYERS;
+let ROLE_LAYER = {};
+let SYNC = "sync";
+let LAG_NAME = "replication lag";
+function useVocabulary(system) {
+  ROLES = Array.isArray(system.layers) && system.layers.length === 5 ? system.layers : LEGACY_LAYERS;
+  ROLE_LAYER = {};
+  ROLES.forEach((role, i) => { ROLE_LAYER[role] = i + 1; });
+  SYNC = system.sync_command || "sync";
+  LAG_NAME = (system.lag_register || "replication_lag").replace(/_/g, " ");
+}
+useVocabulary({});
 const TIER_MAX_LAYER = { 1: 1, 2: 2, 3: 4, 4: 5 };
 const TIER_POINTS = { 1: 0.10, 2: 0.15, 3: 0.25, 4: 0.50 };
 const LOSS_PENALTY = 0.15;
 const COST = { run: 1, inspect: 2, dry_run: 4, restart: 4 };
-const SYNC = "sync";
 const CODE_TEXT = {
   E_ORDER: "another command of this service has to be applied first",
   E_DEP: "a service this command depends on is not serving",
   E_DONE: "already applied, nothing to do",
-  E_LAG: "replication lag is not zero",
+  E_LAG: "the lag register is not zero",
   E_FOREIGN: "the command is not part of this service's recovery",
   E_CRASHED: "the service is in a crash loop",
   E_LOST: "the service has lost its data",
@@ -619,6 +631,7 @@ function validateEpisode(ep) {
     return "This episode has no 'system' field. It was recorded before the environment stored "
       + "the hidden rules with the result, so it cannot be replayed. Record the episode again.";
   }
+  useVocabulary(ep.system);
   for (const s of ep.system.services) {
     if (!(s.role in ROLE_LAYER) || !Array.isArray(s.steps)) {
       return "Service '" + s.codename + "' has an unknown role or no steps.";
@@ -669,7 +682,7 @@ function evaluate(ep, byName, frame, service, command) {
   if (index > done) return { outcome: spec.order_violation, code: "E_ORDER" };
   const unmet = spec.steps[index].requires.some((r) => !byName[r] || !isServing(byName[r], frame));
   if (unmet) return { outcome: spec.dependency_violation, code: "E_DEP" };
-  if (index === spec.steps.length - 1 && spec.role === "gateway" && frame.lag > 0) {
+  if (index === spec.steps.length - 1 && ROLE_LAYER[spec.role] === ROLES.length && frame.lag > 0) {
     return { outcome: "data_loss", code: "E_LAG" };
   }
   return { outcome: "ok", code: null };
@@ -929,7 +942,8 @@ function verifyReplay(ep, frames) {
       box.append(cell);
     }
     $("m-total").textContent = ep.window_total;
-    $("m-lagsub").textContent = ep.system.lag_service ? "sync on " + ep.system.lag_service : "";
+    $("m-laglabel").textContent = LAG_NAME;
+    $("m-lagsub").textContent = ep.system.lag_service ? SYNC + " on " + ep.system.lag_service : "";
   }
 
   function buildKeys() {
@@ -1108,7 +1122,7 @@ function verifyReplay(ep, frames) {
       $("c-step").textContent = "Start";
       $("c-cost").textContent = "";
       line.textContent = "System down";
-      result.textContent = ep.system.services.length + " services stopped, replication lag " + frame.lag
+      result.textContent = ep.system.services.length + " services stopped, " + LAG_NAME + " " + frame.lag
         + ", window " + ep.window_total + " min.";
       return;
     }
@@ -1131,7 +1145,7 @@ function verifyReplay(ep, frames) {
         "Gone for good. -" + fmt(LOSS_PENALTY) + ", and nothing that depends on it can serve."));
     } else if (key && key.kind === "crash") {
       banners.append(banner("crash", "Crash loop: " + e.service,
-        "Replication lag +1. A restart costs " + COST.restart + " min."));
+        "Lag +1 (" + LAG_NAME + "). A restart costs " + COST.restart + " min."));
     } else if (key && key.kind === "wrong") {
       const t = frame.truth;
       banners.append(banner("wrong", "Forecast wrong",

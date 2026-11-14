@@ -4,7 +4,7 @@ artifacts = []
 [task]
 name = "unknown-machine/__NAME__"
 version = "1.0.0"
-description = "Bring an undocumented legacy production system back online without losing data"
+description = "__DESCRIPTION__"
 keywords = ["exploration", "operations", "irreversible-actions", "budgeted-information"]
 [[task.authors]]
 name = "Unknown Machine team"
@@ -12,6 +12,7 @@ name = "Unknown Machine team"
 [metadata]
 seed = __SEED__
 level = __LEVEL__
+theme = "__THEME__"
 
 [verifier]
 timeout_sec = 120.0

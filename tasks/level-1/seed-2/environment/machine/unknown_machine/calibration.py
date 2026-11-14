@@ -10,6 +10,7 @@ import math
 from unknown_machine.machine.episode import Episode
 from unknown_machine.machine.generate import generate
 from unknown_machine.machine.model import System
+from unknown_machine.machine.themes import LEGACY
 from unknown_machine.reference.solver import solve
 
 REFERENCE_WINDOW_SHARE = 0.7
@@ -27,6 +28,6 @@ def window_for(system: System) -> int:
     return math.ceil(reference_cost(system) / REFERENCE_WINDOW_SHARE)
 
 
-def build_episode(seed: int, level: int = 1) -> Episode:
-    system = generate(seed, level)
+def build_episode(seed: int, level: int = 1, theme: str = LEGACY) -> Episode:
+    system = generate(seed, level, theme)
     return Episode(system, window_for(system))
