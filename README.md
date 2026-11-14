@@ -75,7 +75,7 @@ Requirements: Docker, [Harbor](https://github.com/laude-institute/harbor) (`uv t
 ./scripts/eval.sh
 ```
 
-This runs the reference and the do-nothing agent through Harbor on the twenty evaluation tasks (five per level) and the scripted baselines in-process, then prints the table. It needs no API key.
+This runs the reference, the do-nothing agent and the stop-early baseline through Harbor on the twenty evaluation tasks (five per level) and the other scripted baselines in-process, then prints the table. It needs no API key.
 
 To add three agent runs per task:
 
@@ -88,9 +88,10 @@ Both run all four levels; `--level 3` limits them to one, and `--seeds 3` to one
 A single run:
 
 ```
-harbor run -p tasks/level-3/seed-3 -a oracle
-harbor run -p tasks/level-3/seed-3 -a nop
-harbor run -p tasks/level-3/seed-3 -a opencode -m openai/gpt-6.1-sol --env-file .env
+harbor run -p tasks/level-4/seed-3 -a oracle                           # reference, 1.0
+harbor run -p tasks/level-4/seed-3 -a nop                              # do nothing, 0.0
+harbor run -p tasks/level-4/seed-3 -a oracle --ae POLICY=stop_early    # stop after tier 1, 0.1
+harbor run -p tasks/level-4/seed-3 -a opencode -m openai/gpt-6.1-sol --env-file .env
 ```
 
 Every run is kept under `jobs/`. To see which decisions cost an agent score or window:

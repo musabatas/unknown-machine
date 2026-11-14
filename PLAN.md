@@ -151,9 +151,9 @@ Verified by reading the installed Harbor 0.26.0 source on 2026-11-14 (`tasks/smo
 
 Not verified:
 
-- How the judges invoke the stop-early baseline.
+- How the judges invoke the stop-early baseline. Ours is `-a oracle --ae POLICY=stop_early` (the task's solution told to stop after tier 1; 0.10 through Harbor on every level 4 task), and it is a column of `scripts/eval.sh`.
 - How a frontier model scores over repeated runs. `openai/gpt-6.1-sol` has one run per level (section 11).
-- The result key is a constant in the task files. An agent with network access could read it if the repository is public; generate it per run before the repository is opened.
+- The result key is a constant in the task files. That is safe only while the repository is private (section 7).
 
 Consequence to design around: the agent container can reach the sidecar over HTTP, so the agent may script its own exploration loop. Budget, state and seed therefore live only in the sidecar.
 
@@ -189,8 +189,8 @@ Status of each item. "Tested" means a test in `tests/` fails if it regresses.
 | A forged, replayed or out-of-range result is rejected by the verifier | Tested |
 | Agent container has no server source, seed or shared volume with the sidecar | By construction of the compose file; not tested |
 | The agent cannot write the reward: `/tests` arrives only after it has finished and the score must carry the sidecar's signature | By Harbor's order of operations (read in its source); not tested against a hostile agent |
-| The signing key is a constant in the task files | Open: readable by an agent with network access once the repository is public |
-| The agent container has public network access | Open: lets an agent download our own solver if the repository is public |
+| The signing key is a constant in the task files | Accepted: the repository stays private, so an agent cannot read it. Holds only while that is true |
+| The agent container has public network access | Accepted for the same reason. If the repository is ever opened: `[agent] network_mode = "allowlist"` with the model provider's host works on Docker (tried with the reference), but then every service shares one network namespace, so `expose` must go from the compose file and the sidecar is addressed as `localhost`, not `machine` |
 
 ## 8. Repository layout
 
@@ -237,7 +237,7 @@ As of Saturday 14 Nov. Hacking opened Friday 13 Nov 19:30; submissions opened Sa
 | Turn dials if the gate fails (section 6) | Open, after the gate |
 | Post-training experiment: fine-tune a small open model on reference trajectories, evaluate on held-out seeds | Open: `scripts/export_trajectories.py` produces the data; training not started |
 | Hand-written README, demo video, submission | Open: team |
-| Rotate the signing key per run and cut the agent's network before opening the repository | Open |
+| Rotate the signing key per run and cut the agent's network | Not needed: the repository stays private (section 7) |
 
 ## 10. Deliverables for judging
 

@@ -1,8 +1,8 @@
 """Reproduce the evaluation: reference, baselines and (optionally) agent runs.
 
     poetry run python scripts/evaluate.py
-        Free. Reference and do-nothing through Harbor, the scripted baselines
-        in-process, on every evaluation task.
+        Free. Reference, do-nothing and stop-early through Harbor, the other
+        scripted baselines in-process, on every evaluation task.
 
     poetry run python scripts/evaluate.py --model openai/gpt-6.1-sol --env-file .env
         Also runs the OpenCode agent --runs times per task. Costs API credits.
@@ -25,7 +25,9 @@ from make_tasks import EVALUATION_SEEDS  # noqa: E402
 from unknown_machine.baselines.policies import BASELINES  # noqa: E402
 from unknown_machine.calibration import build_episode  # noqa: E402
 
-IN_PROCESS = ("stop_early", "cautious", "greedy", "random")
+IN_PROCESS = ("cautious", "greedy", "random")
+# The stop-early baseline is the task's own solution told to stop after tier 1.
+STOP_EARLY = ["--ae", "POLICY=stop_early"]
 
 
 def harbor_rewards(task: Path, agent: str, job: str, extra: list[str]) -> list[float]:
@@ -58,6 +60,7 @@ def evaluate_level(level: int, seeds: list[int], arguments, stamp: str, columns:
         row = {
             "reference": harbor_rewards(task, "oracle", f"{job}-reference", []),
             "do_nothing": harbor_rewards(task, "nop", f"{job}-nothing", []),
+            "stop_early": harbor_rewards(task, "oracle", f"{job}-stopearly", STOP_EARLY),
         }
         for policy in IN_PROCESS:
             row[policy] = [in_process(policy, seed, level)]
@@ -94,7 +97,7 @@ def main() -> None:
     arguments = parser.parse_args()
 
     stamp = time.strftime("%m%d-%H%M%S")
-    columns = ["reference", "do_nothing", *IN_PROCESS]
+    columns = ["reference", "do_nothing", "stop_early", *IN_PROCESS]
     if arguments.model:
         columns.append("agent")
     levels = [arguments.level] if arguments.level else sorted(EVALUATION_SEEDS)
@@ -104,7 +107,7 @@ def main() -> None:
 
     if arguments.model:
         print(f"\nagent: opencode with {arguments.model}, {arguments.runs} runs per task")
-    print("\nreference and do_nothing ran through Harbor; the other baselines in-process.")
+    print("\nreference, do_nothing and stop_early ran through Harbor; the others in-process.")
     print("cautious = one dry run before every command; greedy = no dry runs.")
 
 
