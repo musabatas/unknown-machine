@@ -6,35 +6,50 @@ The last administrator of a legacy production system has left. There is no docum
 
 ## What the agent has to do
 
-The system has 5 to 8 services known only by codenames. Each comes up by applying its pending commands in an order nobody wrote down, and some commands need other services to be serving first. The agent works through six MCP tools:
+The system's services are known only by codenames. Each comes up by applying its pending commands in an order nobody wrote down, and some commands need other services to be serving first. The agent works through six MCP tools:
 
 | Tool | Effect | Cost (window minutes) |
 |---|---|---|
 | `status()` | Mode and command list of every service, banked tiers, window left | 0 |
-| `inspect(service)` | Role, and which commands are still pending | 2 |
-| `dry_run(service, command)` | What the command would do right now. Always truthful | 4 |
+| `inspect(service)` | Role, which commands are still pending, how reliable its dry runs are | 2 |
+| `dry_run(service, command)` | What the command would do right now | 4 |
 | `run(service, command)` | Executes it | 1 |
 | `restart(service)` | Clears a crash loop | 4 |
 | `finish()` | Ends the window | 0 |
 
-A command used too early is refused, or crashes the service, or destroys its data. Which of the three is fixed per service and per kind of mistake, and the agent is told so. The full task statement is in [`tasks/seed-0/instruction.md`](tasks/seed-0/instruction.md).
+A command used too early is refused, or crashes the service, or destroys its data. Which of the three is fixed per service and per kind of mistake, and the agent is told so. The full task statement is in [`tasks/level-1/seed-0/instruction.md`](tasks/level-1/seed-0/instruction.md); it is the same at every level.
+
+There are three levels. The tools, their costs and the score do not change between them.
+
+| Level | System | Dry runs |
+|---|---|---|
+| 1 | 5 to 8 services, 2 or 3 preparation commands each | Always right |
+| 2 | Same | Right 70% to 100% of the time, depending on the service |
+| 3 | 12 to 14 services, 3 or 4 preparation commands each | As level 2 |
+
+At levels 2 and 3 `inspect` tells the agent how reliable each service's dry runs are. Every dry run is wrong independently of the others, so repeating one buys certainty at four minutes a repeat. A dry run can only be wrong about whether a command can be applied now; how the service reacts to a mistake is always reported truthfully, and `run` is always real.
 
 ## Why it is hard
 
-A dry run costs four runs. The window is too short to dry-run everything, and running blindly destroys data. So every command is a decision: is what I could lose here worth four minutes of certainty?
+A dry run costs four runs. The window is too short to dry-run everything, and running blindly destroys data. So every command is a decision: is what I could lose here worth four minutes of certainty? Above level 1 it is also a question of how many: one report from a service that is right 70% of the time is not enough to stake its data on, and five reports on every command do not fit in the window.
 
-The information to decide well is there. One observed mistake on a service tells you how that service reacts to that kind of mistake from then on. A service that only refuses can be driven by trial and error at one minute a try. A service that destroys data must be dry-run every time the order is uncertain. The reference does exactly this and nothing else, with the same six tools, and finishes every seed using 70% of the window without losing data.
+The information to decide well is there. One observed mistake on a service tells you how that service reacts to that kind of mistake from then on. A service that only refuses can be driven by trial and error at one minute a try. A service that destroys data must be dry-run whenever the order is uncertain, as often as its reliability demands. The reference does exactly this and nothing else, with the same six tools. The window of every task is the reference's own cost divided by 0.7, so it always finishes with 30% to spare.
 
-The two obvious strategies both fail, for opposite reasons:
+The two obvious strategies both fail, for opposite reasons. Mean score in the simulator, over the first 300 seeds at levels 1 and 2 and the first 60 at level 3:
 
-| Policy | Mean score, 300 seeds | Why |
-|---|---|---|
-| Reference | 1.00 | Dry-runs only where a mistake costs more than the dry run |
-| Dry-run everything | 0.52 | Runs out of window, usually before the cutover |
-| Never dry-run | 0.14 | Destroys data on most seeds |
-| Stop after tier 1 | 0.10 | |
-| Random commands | 0.00 | |
-| Do nothing | 0.00 | |
+| Policy | Level 1 | Level 2 | Level 3 | Why |
+|---|---|---|---|---|
+| Reference | 1.00 | 0.99 | 1.00 | Buys certainty only where a mistake costs more than the dry runs |
+| One dry run before every command | 0.54 | 0.25 | 0.03 | Runs out of window; above level 1 it also acts on wrong reports |
+| Never dry-run | 0.15 | 0.15 | 0.00 | Destroys data on almost every seed |
+| Stop after tier 1 | 0.10 | 0.10 | 0.10 | |
+| Random commands | 0.00 | 0.00 | 0.00 | |
+| Do nothing | 0.00 | 0.00 | 0.00 | |
+
+Two things these numbers do not say by themselves:
+
+- **The reference is not perfect where dry runs can be wrong.** It runs a command once the chance of destroying data is below 0.2%, and that risk is real: at level 2 it lost data on 2 of the 300 seeds. At level 1 it never does.
+- **The evaluation tasks are selected seeds.** Per level they are the first five seeds on which the reference scores 1.0 and neither naive strategy scores above 0.5; about two seeds in three qualify. The table above is over all seeds, selected or not. The rule is a test in `tests/test_baselines.py`.
 
 ## How it is scored
 
@@ -59,7 +74,7 @@ Requirements: Docker, [Harbor](https://github.com/laude-institute/harbor) (`uv t
 ./scripts/eval.sh
 ```
 
-This runs the reference and the do-nothing agent through Harbor on the five evaluation tasks and the scripted baselines in-process, then prints the table. It needs no API key.
+This runs the reference and the do-nothing agent through Harbor on the fifteen evaluation tasks (five per level) and the scripted baselines in-process, then prints the table. It needs no API key.
 
 To add three agent runs per task:
 
@@ -67,12 +82,14 @@ To add three agent runs per task:
 ./scripts/eval.sh --model openai/gpt-6.1-sol --env-file .env
 ```
 
+Both run all three levels; `--level 3` limits them to one, and `--seeds 3` to one task.
+
 A single run:
 
 ```
-harbor run -p tasks/seed-0 -a oracle
-harbor run -p tasks/seed-0 -a nop
-harbor run -p tasks/seed-0 -a opencode -m openai/gpt-6.1-sol --env-file .env
+harbor run -p tasks/level-3/seed-3 -a oracle
+harbor run -p tasks/level-3/seed-3 -a nop
+harbor run -p tasks/level-3/seed-3 -a opencode -m openai/gpt-6.1-sol --env-file .env
 ```
 
 Every run is kept under `jobs/`. To see which decisions cost an agent score or window:
@@ -83,15 +100,18 @@ poetry run python analysis/analyze.py jobs/<job-name>
 
 ## Results
 
-Reference and do-nothing through Harbor on seed 0: 1.0 (102 of 146 window minutes) and 0.0.
+Through Harbor, the reference scores 1.0 and the do-nothing agent 0.0 on all five level 1 tasks. The reference also scores 1.0 on `level-2/seed-0` (252 of 360 window minutes) and `level-3/seed-3` (499 of 713).
 
-Agent runs so far:
+Agent runs so far, one run each:
 
-| Task | Agent | Score | What it did |
-|---|---|---|---|
-| seed-0 | OpenCode, `openai/gpt-5.4-mini` | 0.00 | Never dry-ran. Three services tolerated its wrong guesses with refusals; it treated the fourth the same way and destroyed a database |
+| Task | Agent | Score | Window used | What it did |
+|---|---|---|---|---|
+| `level-1/seed-0` | OpenCode, `openai/gpt-5.4-mini` | 0.00 | 27 of 146 | Never dry-ran. Three services tolerated its wrong guesses with refusals; it treated the fourth the same way and destroyed a database |
+| `level-1/seed-0` | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 85 of 146 | Solved it, in less window than the reference (102) |
+| `level-2/seed-0` | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 282 of 360 | Solved it by repeating dry runs; used more window than the reference (252) |
+| `level-3/seed-3` | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 339 of 713 | Solved it in far less window than the reference (499). It took single dry runs where the worst case was a crash, and ran every `start` unchecked |
 
-Frontier-model runs are not in yet.
+**No gap against a frontier model has been shown.** `gpt-6.1-sol` scored 1.0 on one task of each level, and at levels 1 and 3 it was more economical than the reference. Two caveats on reading that: it is one run per task, and at level 3 the model was lucky as well as good (3 of its 60 dry runs were wrong, where the stated reliabilities predict about 10, and several commands it ran unchecked could have destroyed data on a different seed). Neither caveat changes the result.
 
 ## Repository
 
@@ -101,7 +121,7 @@ Frontier-model runs are not in yet.
 | `src/unknown_machine/reference/solver.py` | The reference and the scripted policies; uses only the six tools |
 | `src/unknown_machine/server/app.py` | MCP server and verifier endpoint around one episode |
 | `scripts/task_template/`, `scripts/make_tasks.py` | The Harbor task and the generator that stamps one per seed |
-| `tasks/seed-0` to `seed-4` | The evaluation tasks |
+| `tasks/level-1` to `level-3` | The evaluation tasks, five seeds per level |
 | `tests/` | Rules of the simulator, baseline scores, reward exploits |
 | `analysis/analyze.py` | Episode log to decisions |
 | `PLAN.md` | Design, measurements, open items |

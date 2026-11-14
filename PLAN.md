@@ -47,6 +47,25 @@ As built (`src/unknown_machine/machine/`):
 - Each service also exposes two commands that are never needed and crash or destroy data, and the preparation commands it does not need (refused, harmless).
 - One database carries replication lag (0 to 3 at the start). `sync` lowers it by 1; `cutover` with lag above 0 destroys the gateway's data.
 
+### Levels
+
+The description above is level 1. Two harder levels were added after a frontier model solved level 1 (section 11). `generate(seed, level)` owns the difference; the tools, costs and score are the same at every level.
+
+| Level | System | Dry runs |
+|---|---|---|
+| 1 | 5 to 8 services, 2 or 3 preparation commands each, at least 2 services that lose data on a wrong order | Exact |
+| 2 | As level 1 | Right with a probability fixed per service: 1.0, 0.9, 0.8 or 0.7 (weights 0.2, 0.3, 0.3, 0.2) |
+| 3 | 12 to 14 services, 3 or 4 preparation commands each (from 6 per role), at least 5 that lose data on a wrong order | As level 2 |
+
+Where a dry run can be wrong:
+
+- `inspect` states the service's `dry_run_accuracy`, so the agent knows how much one report is worth.
+- Each call is wrong independently, so repeating a dry run buys certainty at 4 minutes a repeat.
+- Only one question can be misreported: whether a step of the recovery can be applied now (yes, not its turn, or a dependency is missing). The reaction shown for a mistake is always the service's real reaction. Unknown, foreign and finished commands, lag and crash loops are reported exactly, and `run` is always real.
+- The errors come from a stream seeded by seed and level: the same sequence of calls gets the same reports.
+
+The decision under test changes from "where do I need a dry run" to "how many, given what this service does on a mistake and how often its dry runs lie".
+
 ### Tools exposed over MCP
 
 | Tool | Effect | Budget cost (window minutes) |
@@ -54,7 +73,7 @@ As built (`src/unknown_machine/machine/`):
 | `status()` | Mode and command list of every service, banked tiers, remaining window | 0 |
 | `run(service, command)` | Executes the command for real; charged whatever the outcome | 1 |
 | `inspect(service)` | Role, pending registers with the command that clears each, replication lag | 2 |
-| `dry_run(service, command)` | Reports whether the command would succeed, be refused, crash-loop, or lose data. Never changes state | 4 |
+| `dry_run(service, command)` | Reports whether the command would succeed, be refused, crash-loop, or lose data. Never changes state. Exact at level 1, right with the stated probability above it | 4 |
 | `restart(service)` | Clears a crash loop | 4 |
 | `finish()` | Ends the episode | 0 |
 
@@ -86,18 +105,24 @@ The lag rule is built in, not a later phase. With little window left, the cheap 
 4. Record what each failure teaches: the service's reaction to that kind of mistake, which command is not next, which command is blocked until another service comes up.
 5. Before `cutover`, bring lag to zero with `sync`, counting its own crashes.
 
-It runs unchanged on every seed and never loses data. That is the proof that the information needed is available.
+Where dry runs can be wrong it keeps a belief per question instead of a fact: each report updates the probability that the command can be applied now, weighted by the service's stated accuracy, and it repeats the dry run until the chance of destroying data by running is below 0.2% (`LOSS_TOLERANCE`) or the chance of a crash below 30% (`CRASH_TOLERANCE`).
 
-Measured in-process over 300 seeds (`tests/test_baselines.py` enforces these on 100):
+It runs unchanged on every seed and level. At level 1 it never loses data. Above level 1 certainty is never total, and it does lose data on a small share of seeds: 2 of 300 at level 2. That share is part of every reference result we state.
 
-| Policy | Mean score | Notes |
-|---|---|---|
-| Reference | 1.00 | every seed, 70% of the window, no data loss |
-| Dry-run everything | 0.52 | runs out of window, usually at tier 3 |
-| Never dry-run | 0.14 | loses data on most seeds |
-| Stop after tier 1 | 0.10 | |
-| Random commands | 0.00 | |
-| Do nothing | 0.00 | |
+Measured in-process (`tests/test_baselines.py` enforces these on 100 seeds per level):
+
+| Policy | Level 1, 300 seeds | Level 2, 300 seeds | Level 3, 60 seeds |
+|---|---|---|---|
+| Reference | 1.00, no data loss | 0.993, data lost on 2 seeds | 1.00, no data loss |
+| One dry run before every command | 0.54 | 0.25 | 0.03 |
+| Never dry-run | 0.15 | 0.15 | 0.00 |
+| Stop after tier 1 | 0.10 | 0.10 | 0.10 |
+| Random commands | 0.00 | 0.00 | 0.00 |
+| Do nothing | 0.00 | 0.00 | 0.00 |
+
+The reference uses 70% of the window at every level, because the window is defined from its cost. A level 3 episode is 160 to 312 tool calls for the reference, in a window of 580 to 1443 minutes.
+
+Evaluation seeds are selected, not arbitrary: per level, the first five seeds on which the reference scores 1.0 and neither naive policy scores above 0.5 (`EVALUATION_SEEDS` in `scripts/make_tasks.py`, enforced by a test). About two seeds in three qualify. Results on the evaluation set therefore overstate the reference slightly at level 2, where it is not perfect on every seed.
 
 ## 5. Harbor integration
 
@@ -124,14 +149,14 @@ Verified by reading the installed Harbor 0.26.0 source on 2026-11-14 (`tasks/smo
 Not verified:
 
 - How the judges invoke the stop-early baseline.
-- How a frontier model scores. Only `openai/gpt-5.4-mini` has been run so far (section 11).
+- How a frontier model scores over repeated runs. `openai/gpt-6.1-sol` has one run per level (section 11).
 - The result key is a constant in the task files. An agent with network access could read it if the repository is public; generate it per run before the repository is opened.
 
 Consequence to design around: the agent container can reach the sidecar over HTTP, so the agent may script its own exploration loop. Budget, state and seed therefore live only in the sidecar.
 
 ## 6. Difficulty dials
 
-In the order we turn them if the gap is too small:
+Two were turned after the first frontier run and became levels 2 and 3 (section 3): dry-run accuracy per service, and system size. The rest, in the order we turn them if the gap is still too small:
 
 1. `REFERENCE_WINDOW_SHARE` in `calibration.py` (0.7): raise it and the window shrinks. Never above what leaves the reference clear slack.
 2. `COST_DRY_RUN` in `model.py` and `solver.py` (4): the price of information.
@@ -183,9 +208,9 @@ unknown-machine/
     reference/solver.py     reference and scripted policies; standard library only
     baselines/policies.py   do-nothing, stop-early, cautious, greedy, random
   scripts/task_template/    the Harbor task every seed is generated from
-  scripts/make_tasks.py     template + package -> tasks/seed-<n>/
+  scripts/make_tasks.py     template + package -> tasks/level-<l>/seed-<n>/
   scripts/eval.sh           one command: reference, baselines, optional agent runs
-  tasks/seed-<n>/           generated evaluation tasks (seeds 0 to 4)
+  tasks/level-<l>/seed-<n>/ generated evaluation tasks, five seeds per level
   tasks/smoke/              hand-maintained harness smoke test
   tests/                    simulator rules, baseline scores, exploits
   analysis/analyze.py       episode log -> decisions that cost score or window
@@ -200,10 +225,10 @@ As of Saturday 14 Nov. Hacking opened Friday 13 Nov 19:30; submissions opened Sa
 | Harbor installed; sidecar, MCP, signed result and reward file proven on `tasks/smoke` with oracle, nop and OpenCode | Done |
 | Simulator core, seeded generator, score | Done |
 | Reference solver and scripted baselines | Done |
-| MCP server, task template, generator, five evaluation tasks | Done |
-| Tests for simulator rules, baseline scores and exploits | Done (34 tests) |
+| MCP server, task template, generator, fifteen evaluation tasks over three levels | Done |
+| Tests for simulator rules, baseline scores and exploits | Done (54 tests) |
 | One-command evaluation and episode analysis | Done |
-| **Gate: frontier agent, 3 runs per task, against section 1** | **Open: needs paid runs** |
+| **Gate: frontier agent, 3 runs per task, against section 1** | **Failed on one run per level (section 11); dials being turned** |
 | Read the frontier trajectories; write the failure taxonomy from `analysis/analyze.py` output | Open, after the gate |
 | Turn dials if the gate fails (section 6) | Open, after the gate |
 | Post-training experiment: fine-tune a small open model on reference trajectories, evaluate on held-out seeds | Open: `scripts/export_trajectories.py` produces the data; training not started |
@@ -226,9 +251,20 @@ Judging context (Junction participant guide): the challenge prize is decided by 
 
 | Date | Task | Agent | Score | What happened | Cost |
 |---|---|---|---|---|---|
-| 2026-11-14 | seed-0 | OpenCode, `openai/gpt-5.4-mini` | 0.00 | Inspected all seven services, then ran pending commands directly, never dry-running. Three services came up because their wrong-order mistakes were only refused. It treated the fourth the same way: `migrate` on the second database, out of order, destroyed its data (0.10 for tier 1, minus 0.15). It called `finish` at once, with 119 of 146 minutes unused | USD 0.08 |
+| 2026-11-14 | level-1/seed-0 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | Solved in 85 of 146 minutes; the reference used 102. Level 1 shows no gap against a frontier model | USD 0.08 |
+| 2026-11-14 | level-2/seed-0 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | Solved in 282 of 360 minutes; the reference used 252. It repeated dry runs on services with low accuracy, more often than needed | USD 0.19 |
+| 2026-11-14 | level-3/seed-3 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | Solved in 339 of 713 minutes with 146 calls; the reference used 499. 60 dry runs against the reference's 101: one dry run where the worst case was a crash, repeats only where it was data loss, and every `start` run unchecked. Only 3 of its dry runs were wrong (about 10 expected) | USD 0.31 |
+| 2026-11-14 | level-1/seed-0 | OpenCode, `openai/gpt-5.4-mini` | 0.00 | Inspected all seven services, then ran pending commands directly, never dry-running. Three services came up because their wrong-order mistakes were only refused. It treated the fourth the same way: `migrate` on the second database, out of order, destroyed its data (0.10 for tier 1, minus 0.15). It called `finish` at once, with 119 of 146 minutes unused | USD 0.08 |
 
-The mistake is the one the task is built around: two refusals on one service were taken as evidence about a different service. One run of a small model is not evidence about a frontier model; the gate needs the frontier runs.
+The small model's mistake is the one the task is built around: two refusals on one service were taken as evidence about a different service. The frontier model does not make it. It dry-runs where the reaction is unknown and stops once it has seen a service only refuse, which is the reference's own policy; that is why levels 2 and 3 were added.
+
+Gate result so far: **failed.** One frontier run per level, all 1.0. What the level 3 run shows about why:
+
+- The window does not bind. The reference is over-cautious (it repeats dry runs where the worst case is only a crash, and dry-runs `start` twice), and the window is its cost divided by 0.7, so the agent finished with half the window unused.
+- Unchecked risks are rarely punished. The agent ran `start` blind on services that destroy data on a missing dependency; dependencies inside a layer are rare enough that this paid off.
+- One run is not a distribution. The agent's dry runs were wrong half as often as expected on this run.
+
+Next step, in this order: make the reference as economical as the agent was (dial 1 then means something), raise how often a blind `start` meets a missing dependency (dial 5), then measure three runs on one task before spending on more.
 
 ## 12. Risks
 

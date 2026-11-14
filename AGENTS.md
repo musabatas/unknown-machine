@@ -33,24 +33,24 @@ src/unknown_machine/
   baselines/          do-nothing, stop-early, cautious, greedy, random
 scripts/
   task_template/      the Harbor task every seed is generated from
-  make_tasks.py       template + package -> tasks/seed-<n>/
+  make_tasks.py       template + package -> tasks/level-<l>/seed-<n>/
   evaluate.py, eval.sh  the one-command evaluation
   export_trajectories.py  reference episodes as training data
-tasks/seed-<n>/       generated evaluation tasks
+tasks/level-<l>/seed-<n>/  generated evaluation tasks, five seeds per level
 tasks/smoke/          hand-maintained harness smoke test
 tests/                simulator rules, baseline scores, exploits
 analysis/analyze.py   episode log -> decisions that cost score or window
 ```
 
-`tasks/seed-*` is generated: change `src/` or `scripts/task_template/`, then run `poetry run python scripts/make_tasks.py` and commit the output with the change. Never edit a generated task by hand; it would differ from what the generator produces and from the other seeds. `tasks/smoke/` is the one hand-maintained task: a toy that proves the harness wiring (sidecar, MCP, signed result, reward file).
+`tasks/level-*/seed-*` is generated: change `src/` or `scripts/task_template/`, then run `poetry run python scripts/make_tasks.py` and commit the output with the change. Never edit a generated task by hand; it would differ from what the generator produces and from the other seeds. `tasks/smoke/` is the one hand-maintained task: a toy that proves the harness wiring (sidecar, MCP, signed result, reward file).
 
 Free checks, run after any change to the simulator, the template or the task wiring:
 
 ```
 poetry run pytest
-harbor lint tasks/seed-0
-harbor run -p tasks/seed-0 -a oracle   # expect reward 1.0
-harbor run -p tasks/seed-0 -a nop      # expect reward 0.0
+harbor lint tasks/level-1/seed-0
+harbor run -p tasks/level-1/seed-0 -a oracle   # expect reward 1.0
+harbor run -p tasks/level-1/seed-0 -a nop      # expect reward 0.0
 ```
 
 A change to the generator or to tool costs moves every seed. After one, rerun the tests: `tests/test_baselines.py` holds the scores the README states and the property that picked the evaluation seeds.
@@ -79,7 +79,7 @@ Ask the maintainer before any of these:
 ## Working in the repository
 
 - Several people and several agents work here at once. Treat changes you did not make as someone's live work: no stash, reset, clean or checkout over them.
-- Work on a branch named `<person>/<topic>`. Background agent sessions edit in a worktree under `.claude/worktrees/` (ignored by git).
+- Work in the main checkout. Work left in a worktree is invisible to the rest of the team; `.claude/settings.json` turns off the worktree isolation of background agent sessions for this reason. A session that is still forced into `.claude/worktrees/` (ignored by git) commits there and fast-forwards `main` to it after every commit.
 - One logical change per commit, conventional lowercase subject, body stating why. Stage explicit paths.
 - Secrets go in `.env`, which is ignored. Never commit keys, never print them, never put personal data in source, fixtures or task files; the repository is handed to judges.
 - Do not create `CLAUDE.md`; it would shadow this file.
