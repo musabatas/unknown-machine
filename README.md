@@ -4,6 +4,19 @@ An RL environment for the AfterQuery "Break the Agent" challenge at Junction 202
 
 The last administrator of a legacy production system has left. There is no documentation and the system is down. The agent has one maintenance window to bring it back, and some commands destroy data if they are used at the wrong moment.
 
+## The task to run
+
+The submitted task is **`tasks/level-4/seed-0`**:
+
+```
+harbor run -p tasks/level-4/seed-0 -a opencode -m openai/gpt-6.1-sol --env-file .env
+harbor run -p tasks/level-4/seed-0 -a oracle                           # reference: 1.0
+harbor run -p tasks/level-4/seed-0 -a nop                              # do nothing: 0.0
+harbor run -p tasks/level-4/seed-0 -a oracle --ae POLICY=stop_early    # stop early: 0.1
+```
+
+On it the reference scores 1.00 and `gpt-6.1-sol` scored 0.00 in three runs out of three; the logs are in `runs/`. The repository holds more tasks than this one: four levels of difficulty with five seeds each, and the hardest two levels again in two other scenarios. Levels 1 and 2 are solved by a frontier model and are here to show where the difficulty comes from, not to be judged on. Everything below explains the task, the levels and the measurements.
+
 ## What the agent has to do
 
 The system's services are known only by codenames. Each comes up by applying its pending commands in an order nobody wrote down, and some commands need other services to be serving first. The agent works through six MCP tools:
