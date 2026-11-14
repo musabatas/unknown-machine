@@ -97,17 +97,21 @@ Required by AfterQuery (organiser announcement on the Junction Discord, 2026-11-
 - No scoring skeleton was distributed, so the implementation language inside the container is our choice.
 - They explicitly want post-training experiments alongside the environment.
 
-Verified against docs.harborframework.com on 2026-11-14:
+Verified by reading the installed Harbor 0.26.0 source on 2026-11-14 (`tasks/smoke` implements all of it):
 
-- A task may use `environment/docker-compose.yaml` for sidecars. The machine runs as a sidecar and is declared with `[[environment.mcp_servers]]` (`transport = "streamable-http"`, `url = "http://machine:8000/mcp"`).
-- `-k <attempts>` repeats a task; the `oracle` agent executes `solution/`.
-- With a separate verifier environment, in-memory state is not visible to the verifier, so the server must write the episode result to a file.
+- **Sidecar.** The agent container must be the compose service `main`; Harbor builds it from `environment/Dockerfile` and merges `environment/docker-compose.yaml` on top. Sidecars share the default network, so `main` reaches `http://machine:8000`. Harbor waits for sidecar health checks before starting the agent.
+- **MCP.** `[[environment.mcp_servers]]` needs `transport = "streamable-http"` set explicitly (the default is `sse`). The `opencode` agent writes the server into its own config automatically, so no OpenCode config is shipped in the image. `opencode` cannot send MCP headers; `opencode-v2` can.
+- **Verifier mode must be `shared`.** In `separate` mode Harbor tears the whole agent environment down, sidecars included, before the verifier starts, so the server-side score is gone. In `shared` mode `tests/test.sh` runs in `main` with the sidecar still up. `harbor lint` flags shared mode; that warning is accepted.
+- **Score integrity in shared mode.** `/tests` is copied into `main` only after the agent has finished, and `[verifier.env]` reaches only the verifier command. The verifier therefore asks the sidecar for the result with a fresh nonce and checks an HMAC signature with a key the agent never sees; anything unverifiable scores 0. The key lives in the sidecar's compose environment and in `[verifier.env]`, never in `main`.
+- **Reward.** Harbor reads `/logs/verifier/reward.json` first, then `reward.txt`; any finite float is accepted and a missing file counts as 0. We write `reward.txt` and enforce 0..1 ourselves.
+- **Baselines.** `-a nop` is a built-in agent that does nothing; `-a oracle` runs `solution/solve.sh`. Both ignore MCP server declarations.
+- **Model strings.** Gemini must be `-m gemini/<model>` (with `google/<model>` no API key is forwarded into the container); OpenAI is `-m openai/<model>` with `OPENAI_API_KEY`.
 
-Not verified; settle with the mentors or by a first run:
+Not verified:
 
-- Whether OpenCode auto-registers MCP servers declared in `task.toml` (docs name Claude Code and Codex). If it does not, the task image ships an OpenCode config that registers the server.
-- How `tests/` obtains the score from the sidecar without the agent being able to forge it.
-- How the do-nothing and stop-early baselines are invoked by the judges.
+- That the `opencode` agent installs and runs in our `main` image and actually calls the MCP tools. Needs one paid run.
+- How the judges invoke the stop-early baseline.
+- The result key is a constant in the task files. An agent with network access could read it if the repository is public; generate it per run before the repository is opened.
 
 Consequence to design around: the agent container can reach the sidecar over HTTP, so the agent may script its own exploration loop. Budget, state and seed therefore live only in the sidecar.
 

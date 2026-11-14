@@ -34,7 +34,15 @@ tests/          simulator, determinism, exploits
 analysis/       trajectory viewer and failure taxonomy
 ```
 
-Create a directory when its first real code lands, not before. `tasks/` is generated: change the generator, never the output.
+Create a directory when its first real code lands, not before. `tasks/` is generated: change the generator, never the output. The one exception is `tasks/smoke/`, a hand-maintained toy task that proves the harness wiring (sidecar, MCP, signed result, reward file); keep it passing, and scaffold new tasks with `harbor init`.
+
+Free harness checks, run after any change to task wiring:
+
+```
+harbor lint tasks/smoke
+harbor run -p tasks/smoke -a oracle    # expect reward 1.0
+harbor run -p tasks/smoke -a nop       # expect reward 0.0
+```
 
 ## Tooling
 
