@@ -1,0 +1,134 @@
+{
+    "schema_version": 1,
+    "id": "0c0d3e43-f2b1-4a22-8cab-36efd0891029",
+    "task_name": "unknown-machine/level-4-seed-0",
+    "trial_name": "seed-0__DinDecH",
+    "trial_uri": "file://<repo>/jobs/l4s0-zen-gemini-3-8-flash/seed-0__DinDecH",
+    "task_id": {
+        "path": "tasks/level-4/seed-0"
+    },
+    "source": null,
+    "task_checksum": "806a90d869d56078419b0095ca703fcd6a2e9f5cb47209bcc4dbd968dc071786",
+    "config": {
+        "schema_version": 1,
+        "task": {
+            "path": "tasks/level-4/seed-0",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": null
+        },
+        "trial_name": "seed-0__DinDecH",
+        "trials_dir": "jobs/l4s0-zen-gemini-3-8-flash",
+        "install_only": false,
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "opencode",
+            "import_path": null,
+            "model_name": "opencode/gemini-3.8-flash",
+            "base_url": null,
+            "model_api_key_name": "OPENCODE_API_KEY",
+            "model_api_format": null,
+            "skip_model_parsing": false,
+            "n_concurrent": null,
+            "concurrency_group": null,
+            "skills": [],
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "resume_trajectory": false,
+            "load_trajectory": null,
+            "extra_allowed_hosts": [],
+            "kwargs": {},
+            "mcp_servers": []
+        },
+        "user_agent": null,
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "stream": false,
+            "cpu_enforcement_policy": "auto",
+            "memory_enforcement_policy": "auto",
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "override_tpu": null,
+            "mounts": null,
+            "extra_docker_compose": [],
+            "kwargs": {},
+            "extra_allowed_hosts": []
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "override_error_policy": {},
+        "artifacts": [],
+        "extra_instruction_paths": [],
+        "extra_instructions": [],
+        "job_id": "2c412b5b-a719-46b6-9d4b-9fc28ee22df7",
+        "source_trial": null
+    },
+    "agent_info": {
+        "name": "opencode",
+        "version": "1.19.5",
+        "model_info": {
+            "name": "opencode/gemini-3.8-flash",
+            "provider": null
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 5891555,
+        "n_cache_tokens": 5429247,
+        "n_output_tokens": 8426,
+        "cost_usd": 1.7013865500000005,
+        "model_usage": {
+            "opencode/gemini-3.8-flash": {
+                "n_input_tokens": 5891555,
+                "n_cache_tokens": 5429247,
+                "n_output_tokens": 8426,
+                "cost_usd": 1.7013865500000005
+            }
+        },
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.25
+        }
+    },
+    "verifier_environment_mode": "shared",
+    "exception_info": null,
+    "started_at": "2026-11-14T19:05:15.208410Z",
+    "finished_at": "2026-11-14T19:12:57.137236Z",
+    "environment_setup": {
+        "started_at": "2026-11-14T19:05:15.234785Z",
+        "finished_at": "2026-11-14T19:05:27.682585Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-11-14T19:05:27.682679Z",
+        "finished_at": "2026-11-14T19:05:28.275519Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-11-14T19:05:28.276269Z",
+        "finished_at": "2026-11-14T19:12:51.852873Z"
+    },
+    "verifier": {
+        "started_at": "2026-11-14T19:12:52.208790Z",
+        "finished_at": "2026-11-14T19:12:52.649462Z"
+    },
+    "step_results": null,
+    "reward_valid": true
+}

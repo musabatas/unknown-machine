@@ -1,0 +1,40 @@
+{
+    "schema_version": 1,
+    "id": "45800505-bfc1-45ba-9d9a-e60dfc8bc73b",
+    "started_at": "2026-11-14T21:13:00.856655",
+    "updated_at": "2026-11-14T21:25:10.389094",
+    "finished_at": "2026-11-14T21:25:10.389094",
+    "n_total_trials": 1,
+    "stats": {
+        "n_completed_trials": 1,
+        "n_errored_trials": 0,
+        "n_running_trials": 0,
+        "n_pending_trials": 0,
+        "n_cancelled_trials": 0,
+        "n_retries": 0,
+        "evals": {
+            "opencode__opencode/big-pickle__adhoc": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "pass_at_k": {},
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "seed-0__2VZymfR"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        },
+        "n_input_tokens": 5367871,
+        "n_cache_tokens": 5277184,
+        "n_output_tokens": 18227,
+        "cost_usd": null
+    }
+}

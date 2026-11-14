@@ -184,10 +184,23 @@ Other models on the submitted task, one complete run each through OpenCode:
 
 | Model | Score | What happened |
 |---|---|---|
+| `big-pickle` (OpenCode Zen) | 1.00 | Solved it: every tier, nothing destroyed, 1157 of 1170 minutes in 364 calls. The reference uses 819 |
+| `gemini-3.8-flash` | 0.25 | Destroyed nothing, reached tier 2, used 1155 of 1170 minutes |
 | `gpt-6-luna` | 0.25 | Destroyed nothing, reached tier 2, used 1158 of 1170 minutes |
 | `gpt-5.4-mini` | 0.10 | Destroyed nothing, reached tier 1, used the whole window |
 | `deepseek-v4-pro` | 0.00 | Destroyed two services' data before any tier |
 | `deepseek-v4.1-flash` | 0.00 | Destroyed a storage service's data before any tier |
+
+One of the six models solved the submitted task in its single run. That is the evidence that the task is solvable by an agent through OpenCode and not only by the scripted reference; it also means the gap is a property of the model as much as of the task.
+
+The same system in the other two scenarios (same structure, window and reference run, other words), `gpt-6.1-sol`, one complete run each:
+
+| Task | Score | What happened |
+|---|---|---|
+| `aircraft/level-4/seed-0` | 0.00 | Banked tier 1, then destroyed a service's data and called `finish` after 76 calls and 210 of 1170 minutes |
+| `residency/level-4/seed-0` | 1.00 | Solved it in 860 of 1170 minutes |
+
+So the six zeros on the legacy wording of this system do not carry over to every wording of it. One run per scenario is too few to say whether the wording matters or whether this is the same run-to-run swing as on the other seeds.
 
 The logs of the counted runs are in `runs/`.
 

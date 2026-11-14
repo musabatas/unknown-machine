@@ -274,6 +274,10 @@ Judging context (Junction participant guide): the challenge prize is decided by 
 | 2026-11-14 | level-4/seed-0 | OpenCode, `gpt-6-luna` (OpenCode Go) | 0.25 | Destroyed nothing, tiers 1 and 2, 1158 of 1170 minutes, 332 calls | subscription |
 | 2026-11-14 | level-4/seed-0 | OpenCode, `deepseek-v4-pro` (OpenCode Go) | 0.00 | Destroyed `heron` and `kestrel` before any tier; 554 of 1170 minutes | subscription |
 | 2026-11-14 | level-4/seed-0 | OpenCode, `deepseek-v4.1-flash` (OpenCode Go) | 0.00 | Destroyed the storage service `quartz` before any tier; 874 of 1170 minutes | subscription |
+| 2026-11-14 | level-4/seed-0 | OpenCode, `big-pickle` (OpenCode Zen) | 1.00 | Solved the submitted task: all four tiers, nothing destroyed, 1157 of 1170 minutes, 364 calls. The only agent run that has | free tier |
+| 2026-11-14 | level-4/seed-0 | OpenCode, `gemini-3.8-flash` (OpenCode Zen) | 0.25 | Destroyed nothing, tiers 1 and 2, 1155 of 1170 minutes, 329 calls | USD 1.70 (OpenCode balance) |
+| 2026-11-14 | aircraft/level-4/seed-0 (`scripts/eval.sh`) | OpenCode, `openai/gpt-6.1-sol` | 0.00 | Tier 1, then destroyed `marn` and called `finish` after 76 calls, 210 of 1170 minutes. Reference 1.00, do-nothing 0.00, stop-early 0.10 | USD 0.15 |
+| 2026-11-14 | residency/level-4/seed-0 (`scripts/eval.sh`) | OpenCode, `openai/gpt-6.1-sol` | 1.00 | Solved in 860 of 1170 minutes, 286 calls. The same system as level-4/seed-0, on which the legacy wording gave six zeros | USD 0.78 |
 | 2026-11-14 | level-3/seed-1 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 560 of 800 minutes, the same as the reference. Two crashes from unchecked commands, both restarted | USD 0.46 |
 | 2026-11-14 | level-3/seed-2 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 817 of 1050 minutes; the reference used 735. One `start` run unchecked on a service that destroys data on a missing dependency; none was missing | USD 0.67 |
 | 2026-11-14 | level-3/seed-4 | OpenCode, `openai/gpt-6.1-sol` | 1.00 | 1018 of 1123 minutes; the reference used 786. No unchecked risk, at the price of 231 dry runs | USD 0.87 |
