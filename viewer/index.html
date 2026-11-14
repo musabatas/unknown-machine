@@ -394,15 +394,104 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
   .meter .sub { white-space: normal; }
   .card { flex-basis: 160px; }
 }
+
+/* ---- live mode (window.LIVE): status and motion. Nothing here applies to a replay. ---- */
+#live { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-1) var(--s-2); margin: 0; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 var(--s-3);
+  border: var(--hair) solid var(--ink);
+  font-size: var(--fs-1);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.chip i { display: block; width: 8px; height: 8px; background: currentColor; }
+.chip.on { background: var(--ink); color: var(--paper); }
+.chip.on i { animation: blink 1.2s steps(2, jump-none) infinite; }
+.chip.wait { border-style: dashed; color: var(--ink-2); }
+.chip.wait i { background: none; border: var(--hair) solid currentColor; }
+.chip.done { border-width: 3px; border-style: double; }
+.chip.done i { display: none; }
+#live-note { font-family: var(--font-mono); font-size: var(--fs-1); color: var(--ink-2); }
+body.finished .meter.score { background: var(--ink); color: var(--paper); }
+body.finished .meter.score .label, body.finished .meter.score .sub { color: inherit; }
+body.finished #m-lost.has { color: inherit; }
+body.live .banner.end { background: var(--ink); color: var(--paper); }
+body.live .banner.end b { font-size: var(--fs-3); }
+
+/* a dry run looks without touching (dashed ring), an inspect is a hairline, a run is solid */
+body.live .card.acting.t-dry_run { outline-style: dashed; }
+body.live .card.acting.t-inspect { outline-width: var(--hair); }
+.card.fx-run, .card.fx-restart { animation: pulse var(--pulse) ease-out 1; }
+.card.fx-inspect { animation: pulse 260ms ease-out 1; }
+.card.fx-dry_run { animation: probe 720ms ease-in-out 1; }
+.card.fx-dry_run .pip.target { animation: blink 240ms steps(2, jump-none) 3; }
+.card.fx-run .pip.done.target { animation: fill 460ms cubic-bezier(0.2, 0.8, 0.2, 1) 1; }
+.card.fx-refused { animation: nudge 280ms ease-in-out 1; }
+.card.fx-crash, .card.fx-loss { animation: shake 560ms linear 1; }
+.card.fx-loss::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: var(--accent);
+  pointer-events: none;
+  animation: burn 1500ms ease-out 1 forwards;
+}
+.stage.fx-loss { animation: alarm 1500ms ease-out 1; }
+.stage.fx-crash { animation: alarm-thin 900ms ease-out 1; }
+.tier.fx-bank { animation: bank 900ms ease-out 1; }
+body.live .bar { position: relative; }
+body.live .bar i { transition: width 320ms ease-out; }
+.bar b {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  opacity: 0;
+  background: repeating-linear-gradient(135deg, var(--ink) 0 2px, var(--paper) 2px 4px);
+}
+.bar b.fx { animation: spent 1000ms ease-out 1; }
+@keyframes blink { from { opacity: 1; } to { opacity: 0.15; } }
+@keyframes probe { 0%, 100% { outline-offset: 3px; } 45% { outline-offset: 12px; } }
+@keyframes fill { from { transform: scale(2.4); opacity: 0.2; } to { transform: none; opacity: 1; } }
+@keyframes nudge { 30% { transform: translateX(-3px); } 70% { transform: translateX(3px); } }
+@keyframes shake {
+  0%, 100% { transform: none; }
+  15% { transform: translateX(-8px) rotate(-1deg); }
+  30% { transform: translateX(8px) rotate(1deg); }
+  45% { transform: translateX(-6px); }
+  60% { transform: translateX(5px); }
+  80% { transform: translateX(-3px); }
+}
+@keyframes burn { 0%, 25% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes alarm { from { box-shadow: inset 0 0 0 9px var(--accent); } to { box-shadow: inset 0 0 0 0 var(--accent); } }
+@keyframes alarm-thin { from { box-shadow: inset 0 0 0 4px var(--accent); } to { box-shadow: inset 0 0 0 0 var(--accent); } }
+@keyframes bank {
+  0% { transform: scale(1.3); outline: var(--heavy) solid var(--ink); outline-offset: 9px; }
+  100% { transform: none; outline: var(--heavy) solid transparent; outline-offset: 0; }
+}
+@keyframes spent { from { opacity: 1; } to { opacity: 0; } }
+
 @media (prefers-reduced-motion: reduce) {
-  .card.pulse { animation: none; }
+  .card.pulse, .card[class*="fx-"], .card[class*="fx-"] .pip, .stage[class*="fx-"], .tier.fx-bank, .bar b.fx, .chip.on i { animation: none; }
+  .card.fx-loss::after { display: none; }
+  body.live .bar i { transition: none; }
 }
 </style>
 </head>
 <body>
 <header class="top">
-  <h1>Unknown Machine <span>replay</span></h1>
+  <h1>Unknown Machine <span id="mode">replay</span></h1>
   <p id="meta"></p>
+  <p id="live" hidden>
+    <span class="chip wait" id="live-chip" role="status"><i></i><span id="live-text">Waiting</span></span>
+    <span id="live-note"></span>
+    <button class="btn" id="golive" type="button" hidden>Back to live</button>
+  </p>
   <button class="btn" id="open" type="button">Open episode</button>
   <input id="file" type="file" accept="application/json,.json" hidden aria-label="Episode JSON file">
 </header>
@@ -411,7 +500,7 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
 
 <section id="empty" aria-label="Load an episode">
   <div class="drop">
-    <p>Drop an episode JSON here, or choose a file.</p>
+    <p id="empty-title">Drop an episode JSON here, or choose a file.</p>
     <button class="btn" id="open2" type="button">Choose file</button>
     <p class="hint" id="empty-hint">The file is the verifier's <span class="mono">episode.json</span>. It is read in this page and sent nowhere.</p>
   </div>
@@ -422,10 +511,10 @@ body.dragging .drop, body.dragging #app { outline: var(--heavy) dashed var(--ink
     <div class="meter">
       <p class="label">Window</p>
       <div class="value"><span id="m-window">0</span> <small>/ <span id="m-total">0</span> min</small></div>
-      <div class="bar" aria-hidden="true"><i id="m-bar"></i></div>
+      <div class="bar" aria-hidden="true"><i id="m-bar"></i><b id="m-spent"></b></div>
     </div>
-    <div class="meter">
-      <p class="label">Score so far</p>
+    <div class="meter score">
+      <p class="label" id="m-score-label">Score so far</p>
       <div class="value" id="m-score">0.00</div>
       <div class="sub"><span id="m-banked">0.00</span> banked, <span id="m-lost">0 lost</span></div>
     </div>
@@ -707,6 +796,12 @@ function verifyReplay(ep, frames) {
   let cards = {}, edges = [], keyButtons = [];
   let pos = 0, playing = false, timer = null;
 
+  // Live mode: the page polls a run in progress and follows its head.
+  const live = window.LIVE && window.LIVE.url ? window.LIVE : null;
+  const POLL_MS = 700;
+  const HOLD_MS = { loss: 1200, crash: 1000, wrong: 450 }; // least time a key moment stays up while catching up
+  let following = false, chaseTimer = null, liveError = "", liveDone = false;
+
   function fmt(x) { return x.toFixed(2); }
   function callText(e) { return e.tool + " " + e.service + (e.command ? " " + e.command : ""); }
 
@@ -725,10 +820,8 @@ function verifyReplay(ep, frames) {
     box.hidden = false;
   }
 
-  function load(data, label) {
-    const error = validateEpisode(data);
-    if (error) { showWarn(error); return; }
-    stop();
+  /* Take `data` as the episode: replay it, check the replay against it, describe it. */
+  function adopt(data, label) {
     ep = data;
     frames = buildFrames(ep);
     keys = keyMoments(ep);
@@ -740,7 +833,14 @@ function verifyReplay(ep, frames) {
     const head = "seed " + sys.seed + ", level " + sys.level;
     $("meta").textContent = (label ? label + " / " : "") + head + " / " + sys.services.length
       + " services / " + ep.log.length + " steps";
-    document.title = "Replay: " + (label || head);
+    document.title = (live ? "Live: " : "Replay: ") + (label || head);
+  }
+
+  function load(data, label) {
+    const error = validateEpisode(data);
+    if (error) { showWarn(error); return; }
+    stop();
+    adopt(data, label);
     $("empty").hidden = true;
     $("app").hidden = false;
     buildStage();
@@ -905,8 +1005,27 @@ function verifyReplay(ep, frames) {
     const lost = $("m-lost");
     lost.textContent = frame.lost.size ? frame.lost.size + " lost, -" + fmt(LOSS_PENALTY * frame.lost.size) : "0 lost";
     lost.classList.toggle("has", frame.lost.size > 0);
-    for (const t of [1, 2, 3, 4]) $("tier-" + t).classList.toggle("banked", frame.banked.includes(t));
+    const before = pos > 0 ? frames[pos - 1] : frame;
+    const moving = !!live && animate && !!e;
+    const fx = !moving ? "" : e.tool !== "run" ? e.tool
+      : e.outcome === "ok" ? "run" : e.outcome === "data_loss" ? "loss" : e.outcome === "crash" ? "crash" : "refused";
+    for (const t of [1, 2, 3, 4]) {
+      const cell = $("tier-" + t);
+      cell.className = "tier" + (frame.banked.includes(t) ? " banked" : "");
+      if (moving && frame.banked.includes(t) && !before.banked.includes(t)) restart(cell, "fx-bank");
+    }
     $("m-lag").textContent = frame.lag;
+    if (live) {
+      const spent = $("m-spent"), stage = document.querySelector(".stage"), scale = 100 / Math.max(1, ep.window_total);
+      spent.className = "";
+      stage.classList.remove("fx-loss", "fx-crash");
+      if (moving) {
+        spent.style.left = Math.min(100, before.window * scale) + "%";
+        spent.style.width = Math.max(0, Math.min(100, frame.window * scale) - Math.min(100, before.window * scale)) + "%";
+        restart(spent, "fx");
+        if (fx === "loss" || fx === "crash") restart(stage, "fx-" + fx);
+      }
+    }
 
     // services
     for (const name in cards) {
@@ -914,7 +1033,7 @@ function verifyReplay(ep, frames) {
       const mode = modeOf(c.spec, frame);
       const done = frame.progress[name];
       const acting = !!e && e.service === name;
-      c.card.className = "card " + mode + (acting ? " acting" : "") + (acting && key ? " alarm" : "");
+      c.card.className = "card " + mode + (acting ? " acting t-" + e.tool : "") + (acting && key ? " alarm" : "");
       c.state.textContent = STATE_TEXT[mode] + (mode === "partial" || mode === "crashed" || mode === "lost"
         ? " " + done + "/" + c.spec.steps.length : "");
       c.pips.forEach((pip, i) => {
@@ -926,10 +1045,7 @@ function verifyReplay(ep, frames) {
         name === ep.system.lag_service ? "lag " + frame.lag : "",
         c.spec.accuracy < 1 ? "dry run " + Math.round(c.spec.accuracy * 100) + "%" : "",
       ].filter(Boolean).join(" / ");
-      if (acting && animate) {
-        void c.card.offsetWidth;
-        c.card.classList.add("pulse");
-      }
+      if (acting && animate) restart(c.card, fx ? "fx-" + fx : "pulse");
     }
     for (const edge of edges) {
       const dep = cards[edge.to].spec;
@@ -939,6 +1055,20 @@ function verifyReplay(ep, frames) {
 
     renderCall(frame, e, key, total);
     renderLog();
+    renderTransport();
+  }
+
+  /* Start a CSS animation class again, even when the element already carries it. */
+  function restart(node, cls) {
+    node.classList.remove(cls);
+    void node.offsetWidth;
+    node.classList.add(cls);
+  }
+
+  /* Everything that depends on the playhead and the log length but not on the frame. */
+  function renderTransport() {
+    const e = pos > 0 ? ep.log[pos - 1] : null;
+    const total = ep.log.length;
     keyButtons.forEach((k) => {
       const current = k.step === pos;
       k.b.setAttribute("aria-current", current ? "true" : "false");
@@ -957,8 +1087,10 @@ function verifyReplay(ep, frames) {
       : "Start, before the first call");
     $("count").textContent = pos + " / " + total;
     const play = $("play");
-    play.textContent = playing ? "Pause" : "Play";
-    play.setAttribute("aria-pressed", playing ? "true" : "false");
+    play.textContent = playing || following ? "Pause" : "Play";
+    play.setAttribute("aria-pressed", playing || following ? "true" : "false");
+    if (e) $("c-step").textContent = "Step " + pos + " of " + total;
+    updateLive();
   }
 
   function banner(kind, title, text) {
@@ -1009,7 +1141,7 @@ function verifyReplay(ep, frames) {
     for (const t of frame.banked) {
       if (!prev.banked.includes(t)) banners.append(banner("tier", "Tier " + t + " banked", "+" + fmt(TIER_POINTS[t])));
     }
-    if (pos === total) {
+    if (pos === total && (!live || ep.finished)) {
       const why = ep.window_used >= ep.window_total ? "window exhausted" : ep.finished ? "agent called finish" : "episode not finished";
       banners.append(banner("end", "End: score " + fmt(frame.score), why + ", " + frame.window + " of " + ep.window_total + " min used."));
     }
@@ -1044,28 +1176,127 @@ function verifyReplay(ep, frames) {
     const speed = parseFloat($("speed").value) || 1;
     const dwell = keyByStep[pos] ? Math.max(STEP_MS * KEY_DWELL / speed, 1200) : STEP_MS / speed;
     timer = setTimeout(() => {
-      if (pos >= ep.log.length) { stop(); return; }
+      if (pos >= ep.log.length) { atEnd(); return; }
       go(pos + 1, true);
-      if (pos >= ep.log.length) stop(); else schedule();
+      if (pos >= ep.log.length) atEnd(); else schedule();
     }, dwell);
+  }
+
+  /* Playback ran out of log: a replay stops; a live run that is still going is followed. */
+  function atEnd() {
+    if (live && !ep.finished) goLive(); else stop();
   }
 
   function stop() {
     playing = false;
+    following = false;
     clearTimeout(timer);
+    clearTimeout(chaseTimer);
+    chaseTimer = null;
     if (ep) render(false);
   }
 
   function toggle() {
     if (!ep) return;
-    if (playing) { stop(); return; }
+    if (playing || following) { stop(); return; }
+    if (live && !ep.finished && pos >= ep.log.length) { goLive(); return; }
     if (pos >= ep.log.length) pos = 0;
     playing = true;
     render(false);
     schedule();
   }
 
+  /* ---------- live ---------- */
+  function goLive() {
+    stop();
+    following = true;
+    go(ep.log.length, false);
+    chase();
+  }
+
+  /* Play the entries that arrived, one after another: fast when many are waiting, never skipping. */
+  function chase() {
+    if (!following || chaseTimer || !ep) return;
+    const waiting = ep.log.length - pos;
+    if (waiting <= 0) {
+      if (ep.finished) { following = false; renderTransport(); } // nothing more will come
+      return;
+    }
+    let delay = waiting === 1 ? 60 : Math.min(280, Math.max(80, 2000 / waiting));
+    if (keyByStep[pos]) delay = Math.max(delay, HOLD_MS[keyByStep[pos].kind]);
+    chaseTimer = setTimeout(() => {
+      chaseTimer = null;
+      if (!following) return;
+      go(pos + 1, true);
+      chase();
+    }, delay);
+  }
+
+  function updateLive() {
+    if (!live) return;
+    const chip = $("live-chip"), note = $("live-note"), button = $("golive");
+    if (!ep) {
+      chip.className = "chip wait";
+      $("live-text").textContent = "Waiting";
+      note.textContent = "";
+      $("empty-title").textContent = "Waiting for a run";
+      $("empty-hint").textContent = liveError || "Asking " + live.url + " for the episode.";
+      return;
+    }
+    const behind = ep.log.length - pos;
+    const done = !!ep.finished && behind <= 0;
+    let state = "wait", text = "Paused", detail = behind + " behind";
+    if (done) {
+      state = "done"; text = "Finished"; detail = "final score " + fmt(frames[frames.length - 1].score);
+    } else if (following && liveError) {
+      text = "Waiting"; detail = "waiting for a run: " + liveError;
+    } else if (following) {
+      state = "on"; text = "Live"; detail = behind > 1 ? "catching up, " + behind + " to go" : "";
+    }
+    chip.className = "chip " + state;
+    $("live-text").textContent = text;
+    note.textContent = detail;
+    button.hidden = following || done;
+    button.textContent = ep.finished ? "Go to end" : "Back to live";
+    document.body.classList.toggle("finished", done);
+    $("m-score-label").textContent = done ? "Final score" : "Score so far";
+  }
+
+  function onSnapshot(data) {
+    const error = validateEpisode(data);
+    if (error) { liveError = error; updateLive(); return; }
+    liveError = "";
+    const label = live.label || "";
+    if (!ep || data.log.length < ep.log.length || JSON.stringify(data.system) !== JSON.stringify(ep.system)) {
+      load(data, label);
+      following = true;
+    } else if (data.log.length !== ep.log.length || data.finished !== ep.finished
+      || data.window_used !== ep.window_used || data.score !== ep.score) {
+      const ended = data.finished !== ep.finished;
+      adopt(data, label);
+      buildKeys();
+      $("seek").max = String(ep.log.length);
+      // A full render would cut the animation of the step on screen; only the end needs one.
+      if (ended && pos >= ep.log.length) render(false); else renderTransport();
+    }
+    liveDone = !!data.finished;
+    updateLive();
+    chase();
+  }
+
+  function poll() {
+    fetch(live.url, { cache: "no-store" })
+      .then((r) => r.json().catch(() => null).then((body) => {
+        if (!r.ok) throw new Error((body && body.error) || "HTTP " + r.status);
+        if (!body) throw new Error("the answer is not JSON");
+        onSnapshot(body);
+      }))
+      .catch((err) => { liveError = (err && err.message) || String(err); updateLive(); })
+      .then(() => { if (!liveDone) setTimeout(poll, POLL_MS); });
+  }
+
   /* ---------- wiring ---------- */
+  $("golive").addEventListener("click", goLive);
   $("open").addEventListener("click", () => $("file").click());
   $("open2").addEventListener("click", () => $("file").click());
   $("file").addEventListener("change", (ev) => { loadFile(ev.target.files[0]); ev.target.value = ""; });
@@ -1105,14 +1336,22 @@ function verifyReplay(ep, frames) {
     ev.preventDefault();
     depth = 0;
     document.body.classList.remove("dragging");
-    loadFile(ev.dataTransfer && ev.dataTransfer.files[0]);
+    if (!live) loadFile(ev.dataTransfer && ev.dataTransfer.files[0]);
   });
 
   if (typeof ResizeObserver === "function") new ResizeObserver(drawEdges).observe($("stage"));
   window.addEventListener("resize", drawEdges);
 
   const wanted = new URLSearchParams(location.search).get("episode");
-  if (window.EPISODE) {
+  if (live) {
+    document.body.classList.add("live");
+    $("mode").textContent = "live";
+    $("live").hidden = false;
+    $("open").hidden = true;
+    $("open2").hidden = true;
+    updateLive();
+    poll();
+  } else if (window.EPISODE) {
     load(window.EPISODE, window.EPISODE_LABEL || "");
   } else if (wanted) {
     if (/^https?:$/.test(location.protocol)) {

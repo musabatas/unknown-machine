@@ -98,7 +98,16 @@ Every run is kept under `jobs/`. To see which decisions cost an agent score or w
 poetry run python analysis/analyze.py jobs/<job-name>
 ```
 
-To watch an episode step by step, with the hidden rules of every service shown next to what the agent did:
+To watch a run live while the agent is playing it, start this next to `harbor run` and open the address it prints:
+
+```
+poetry run python scripts/watch.py                              # the Harbor run in progress
+poetry run python scripts/watch.py --demo reference --level 3   # a scripted policy, no API key
+```
+
+The page shows every action as it happens on the layered system, with each service's hidden reactions beside it. The state is read from inside the sidecar, so no port is opened and the agent's container learns nothing.
+
+To replay a finished episode step by step:
 
 ```
 poetry run python scripts/make_replay.py jobs/<job-name> --out replays/
@@ -133,7 +142,7 @@ Levels 1 and 2 do not separate a frontier model from the reference. Level 3 does
 | `tasks/level-1` to `level-3` | The evaluation tasks, five seeds per level |
 | `tests/` | Rules of the simulator, baseline scores, reward exploits |
 | `analysis/analyze.py` | Episode log to decisions |
-| `viewer/index.html`, `scripts/make_replay.py` | Step-by-step replay of an episode |
+| `viewer/index.html`, `scripts/watch.py`, `scripts/make_replay.py` | Live view of a run in progress, and replay of a finished one |
 | `PLAN.md` | Design, measurements, open items |
 | `AGENTS.md` | Rules for contributors and coding agents |
 
