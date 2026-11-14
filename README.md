@@ -165,7 +165,7 @@ The logs of the counted runs are in `runs/`.
 | 77 | `run bramble unlock` | `ok`. Not checked: it was the only preparation command left |
 | 78 | `run bramble start` | **`data_loss`, `E_DEP`**. Not checked: it was the only command left |
 
-The model spent fifteen dry runs, 60 minutes, making sure of the order, and it was right about the order every time. By step 69 it had been shown twice what this service does when a dependency is missing. At step 78 two of the three databases were still down, so a missing dependency was possible, and `start` needed one of them. One more dry run, four minutes, would have said so with 80% reliability; two would have settled it. It had 960 minutes left.
+The model spent sixteen dry runs, 64 minutes, making sure of the order, and it was right about the order every time. By step 69 it had been shown twice what this service does when a dependency is missing. At step 78 two of the three databases were still down, so a missing dependency was possible, and `start` needed one of them. One more dry run, four minutes, would have said so with 80% reliability; two would have settled it. It had 960 minutes left.
 
 That is the decision the environment is built to test: the model treated "which command is next" as the only open question, and "is everything this command needs up" as answered by the layer below being up. The reference asks both questions before every command whose mistake would destroy data, and on this seed it spends 836 minutes and loses nothing. `analysis/analyze.py` reports these as `unchecked_risk` (a command that went through although a fatal mistake was possible) and `blind_data_loss` (the one that did not): seven and one in this run, none of either for the reference.
 
