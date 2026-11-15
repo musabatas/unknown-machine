@@ -236,7 +236,7 @@ Each of these is a test in `tests/` that fails if it regresses:
 - `finish` at step 0 scores 0; after tier 1 it scores 0.10.
 - A forged, replayed or out-of-range result is rejected by the verifier and scores 0.
 
-Two things rest on the repository staying private rather than on a test: the result-signing key is a constant in each task, and the agent's container can reach the internet.
+One known weakness is not covered by a test. The result-signing key is a constant in each task and the agent's container can reach the internet. The repository was private while the runs reported here were made and was made public on 2026-11-15 so that the judges can run the task; from then on an agent that finds this repository can read the key and sign a result of its own. Rotating the key per run and cutting the agent's network would close this; neither is done.
 
 The same systems are also told as two other scenarios, with the rules, costs and score unchanged: bringing a captured aircraft to take-off (`tasks/aircraft/`) and obtaining a residence permit from a state that publishes no rules (`tasks/residency/`), at levels 3 and 4. A seed has the same structure in all three, and the reference plays the identical episode in each (1.0 through Harbor on `level-4/seed-3` of both). No agent has been run on them yet.
 

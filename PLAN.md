@@ -153,7 +153,7 @@ Not verified:
 
 - How the judges invoke the stop-early baseline. Ours is `-a oracle --ae POLICY=stop_early` (the task's solution told to stop after tier 1; 0.10 through Harbor on every level 4 task), and it is a column of `scripts/eval.sh`.
 - How a frontier model scores on the task the judges pick. `openai/gpt-6.1-sol` has three complete runs on every level 4 task (section 11): 0.00 in six complete runs on seed 0, a mean of 0.55 on the other four. The gap is firm only on the submitted task.
-- The result key is a constant in the task files. That is safe only while the repository is private (section 7).
+- The result key is a constant in the task files. The repository was made public on 2026-11-15 for judging, so an agent with internet access can now read it (section 7).
 
 Consequence to design around: the agent container can reach the sidecar over HTTP, so the agent may script its own exploration loop. Budget, state and seed therefore live only in the sidecar.
 
@@ -189,7 +189,7 @@ Status of each item. "Tested" means a test in `tests/` fails if it regresses.
 | A forged, replayed or out-of-range result is rejected by the verifier | Tested |
 | Agent container has no server source, seed or shared volume with the sidecar | By construction of the compose file; not tested |
 | The agent cannot write the reward: `/tests` arrives only after it has finished and the score must carry the sidecar's signature | By Harbor's order of operations (read in its source); not tested against a hostile agent |
-| The signing key is a constant in the task files | Accepted: the repository stays private, so an agent cannot read it. Holds only while that is true |
+| The signing key is a constant in the task files | Open: the repository was private for every reported run and was made public on 2026-11-15 so the judges can run the task. An agent that finds it can read the key and forge a result |
 | The agent container has public network access | Accepted for the same reason. If the repository is ever opened: `[agent] network_mode = "allowlist"` with the model provider's host works on Docker (tried with the reference), but then every service shares one network namespace, so `expose` must go from the compose file and the sidecar is addressed as `localhost`, not `machine` |
 
 ## 8. Repository layout
@@ -239,7 +239,7 @@ As of Saturday 14 Nov. Hacking opened Friday 13 Nov 19:30; submissions opened Sa
 | Turn dials if the gate fails (section 6) | Open, after the gate |
 | Post-training experiment: fine-tune a small open model on reference trajectories, evaluate on held-out seeds | Done once, locally (`training/README.md`): Qwen2.5-0.5B with LoRA, level 1, 40 held-out seeds. It improves a lot and does not get there: the untrained model scores 0.000 in all six conditions tried, the fine-tuned one 0.400 with free decoding and 0.428 restricted to legal actions after three passes over the data (0.003 after a quarter pass, 0.086 after one), with a full recovery on 13 and 14 of the 40 seeds and data lost on 3. Choosing legal actions at random scores 0.000, the reference 1.000; the fine-tuned model is above the never-dry-run script (0.291) and below the always-dry-run one (0.519). Level 1 only, one small model, one training run per point |
 | Hand-written README, demo video, submission | Open: team |
-| Rotate the signing key per run and cut the agent's network | Not needed: the repository stays private (section 7) |
+| Rotate the signing key per run and cut the agent's network | Not done. Needed since the repository became public on 2026-11-15 (section 7) |
 
 ## 10. Deliverables for judging
 
